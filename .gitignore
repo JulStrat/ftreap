@@ -38,6 +38,7 @@
 
 # Pascal
 lib/
+backup/
 
 # NetBeans
 nbproject/
