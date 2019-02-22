@@ -28,8 +28,12 @@
 *.x86_64
 *.hex
 
+*.bat
+
+
 # Debug files
 *.dSYM/
+*.dbg
 
 # Coverage files
 *.gcov
@@ -37,6 +41,7 @@
 *.gcda
 
 # Pascal
+*.res
 lib/
 backup/
 
