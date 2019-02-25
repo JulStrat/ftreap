@@ -20,6 +20,16 @@ var
   i, j: longint;
 
 begin
+  WriteLn('SizeOf(LongInt): ', SizeOf(LongInt));
+  WriteLn('SizeOf(SizeUInt): ', SizeOf(SizeUInt));
+  WriteLn('SizeOf(Pointer): ', SizeOf(Pointer));
+
+  WriteLn('Heap MaxHeapSize - ', GetFPCHeapStatus().MaxHeapSize);
+  WriteLn('Heap MaxHeapUsed - ', GetFPCHeapStatus().MaxHeapUsed);
+  WriteLn('Heap CurrHeapSize - ', GetFPCHeapStatus().CurrHeapSize);
+  WriteLn('Heap CurrHeapUsed - ', GetFPCHeapStatus().CurrHeapUsed);
+  WriteLn('Heap CurrHeapFree - ', GetFPCHeapStatus().CurrHeapFree);
+
   SetLength(ta, NODES_NUM);
   for i := 0 to NODES_NUM - 1 do
   begin
@@ -61,11 +71,31 @@ begin
   WriteLn('PASSED...');
 
   ReadLn();
+  i := 5;
+  while i < 1000000 do
+  begin
+    ra := TIntTreapNode.Append(ra, i);
+    ra := TIntTreapNode.Append(ra, i+2);
+    i := i + 6;
+  end;
+  WriteLn('Size - ', TIntTreapNode.GetSize(ra));
+  WriteLn('Check treap structure - ', TIntTreapNode.CheckStucture(ra));
+
+  WriteLn('Heap MaxHeapSize - ', GetFPCHeapStatus().MaxHeapSize);
+  WriteLn('Heap MaxHeapUsed - ', GetFPCHeapStatus().MaxHeapUsed);
+  WriteLn('Heap CurrHeapSize - ', GetFPCHeapStatus().CurrHeapSize);
+  WriteLn('Heap CurrHeapUsed - ', GetFPCHeapStatus().CurrHeapUsed);
+  WriteLn('Heap CurrHeapFree - ', GetFPCHeapStatus().CurrHeapFree);
+
+  ReadLn();
   // Assert error
+  (*
   TIntTreapNode.DeleteAt(ra, 0);
   WriteLn(TIntTreapNode.GetSize(ra));
   if ra <> nil then
     WriteLn(ra.key);
   ReadLn();
+  *)
+
 
 end.

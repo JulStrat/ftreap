@@ -8,33 +8,36 @@ interface
 
 type
   generic TTreapNode<T> = class
-  public
+  private
     key: T;
     rank: extended;
     size: SizeUInt;
     left: TTreapNode;
     right: TTreapNode;
-    constructor Create(k: T);
+  public
+    constructor Create(const k: T);
     class function GetSize(const node: TTreapNode): SizeUInt; static; inline;
     class procedure UpdateSize(const node: TTreapNode); static; inline;
 
     class function Meld(l: TTreapNode; r: TTreapNode): TTreapNode; static;
     class procedure Divide(treap: TTreapNode; k: T; var l: TTreapNode;
       var r: TTreapNode); static;
-    class procedure DivideAt(treap: TTreapNode; pos: SizeUInt;
+    class procedure DivideAt(treap: TTreapNode; const pos: SizeUInt;
       var l: TTreapNode; var r: TTreapNode); static;
 
-    class function Append(root: TTreapNode; k: T): TTreapNode; static;
-    class function Insert(root: TTreapNode; k: T): TTreapNode; static;
-    class function Find(root: TTreapNode; k: T): boolean; static;
-    class function DeleteAt(var root: TTreapNode; pos: SizeUInt): T; static;
+    class function Append(root: TTreapNode; const k: T): TTreapNode; static;
+    class function Insert(root: TTreapNode; const k: T): TTreapNode; static;
+    class function Find(root: TTreapNode; const k: T): boolean; static;
+    class function Min(root: TTreapNode): T; static;
+    class function Max(root: TTreapNode): T; static;
+    class function DeleteAt(var root: TTreapNode; const pos: SizeUInt): T; static;
 
     class function CheckStucture(root: TTreapNode): boolean; static;
   end;
 
 implementation
 
-constructor TTreapNode.Create(k: T);
+constructor TTreapNode.Create(const k: T);
 begin
   key := k;
   rank := Random;
@@ -45,10 +48,8 @@ end;
 
 class function TTreapNode.GetSize(const node: TTreapNode): SizeUInt; static; inline;
 begin
-  if node <> nil then
-    Result := node.size
-  else
-    Result := 0;
+  if node <> nil then Exit(node.size);
+  Exit(0);
 end;
 
 class procedure TTreapNode.UpdateSize(const node: TTreapNode); static; inline;
@@ -77,7 +78,7 @@ begin
   end;
 end;
 
-class procedure TTreapNode.DivideAt(treap: TTreapNode; pos: SizeUInt;
+class procedure TTreapNode.DivideAt(treap: TTreapNode; const pos: SizeUInt;
   var l: TTreapNode; var r: TTreapNode); static;
 begin
   if treap = nil then
@@ -122,12 +123,12 @@ begin
   UpdateSize(treap);
 end;
 
-class function TTreapNode.Append(root: TTreapNode; k: T): TTreapNode; static; inline;
+class function TTreapNode.Append(root: TTreapNode; const k: T): TTreapNode; static; inline;
 begin
   Result := Meld(root, TTreapNode.Create(k));
 end;
 
-class function TTreapNode.Insert(root: TTreapNode; k: T): TTreapNode; static; inline;
+class function TTreapNode.Insert(root: TTreapNode; const k: T): TTreapNode; static; inline;
 var
   l, r: TTreapNode;
 begin
@@ -135,9 +136,9 @@ begin
   Result := Meld(l, Meld(TTreapNode.Create(k), r));
 end;
 
-class function TTreapNode.Find(root: TTreapNode; k: T): boolean; static;
+class function TTreapNode.Find(root: TTreapNode; const k: T): boolean; static;
 begin
-  Result := False;
+  // Result := False;
   while root <> nil do
   begin
     if root.key < k then
@@ -147,9 +148,27 @@ begin
     else
       Exit(True);
   end;
+  Exit(False);
 end;
 
-class function TTreapNode.DeleteAt(var root: TTreapNode; pos: SizeUInt): T; static;
+class function TTreapNode.Min(root: TTreapNode): T; static;
+begin
+  Assert(root <> nil);
+  while root.left <> nil do
+    root := root.left;
+  Exit(root.key)
+end;
+
+class function TTreapNode.Max(root: TTreapNode): T; static;
+begin
+  Assert(root <> nil);
+  while root.right <> nil do
+    root := root.right;
+  Exit(root.key)
+end;
+
+
+class function TTreapNode.DeleteAt(var root: TTreapNode; const pos: SizeUInt): T; static;
 begin
   Assert(root <> nil);
   Assert(pos < GetSize(root));
@@ -163,8 +182,7 @@ begin
     end
     else if pos > GetSize(left) then
     begin
-      pos := pos - GetSize(left) - 1;
-      Result := DeleteAt(right, pos);
+      Result := DeleteAt(right, pos - GetSize(left) - 1);
       UpdateSize(root);
     end
     else
@@ -199,3 +217,4 @@ begin
 end;
 
 end.
+
