@@ -48,7 +48,8 @@ end;
 
 class function TTreapNode.GetSize(const node: TTreapNode): SizeUInt; static; inline;
 begin
-  if node <> nil then Exit(node.size);
+  if node <> nil then
+    Exit(node.size);
   Exit(0);
 end;
 
@@ -123,12 +124,14 @@ begin
   UpdateSize(treap);
 end;
 
-class function TTreapNode.Append(root: TTreapNode; const k: T): TTreapNode; static; inline;
+class function TTreapNode.Append(root: TTreapNode; const k: T): TTreapNode;
+  static; inline;
 begin
   Result := Meld(root, TTreapNode.Create(k));
 end;
 
-class function TTreapNode.Insert(root: TTreapNode; const k: T): TTreapNode; static; inline;
+class function TTreapNode.Insert(root: TTreapNode; const k: T): TTreapNode;
+  static; inline;
 var
   l, r: TTreapNode;
 begin
@@ -156,7 +159,7 @@ begin
   Assert(root <> nil);
   while root.left <> nil do
     root := root.left;
-  Exit(root.key)
+  Exit(root.key);
 end;
 
 class function TTreapNode.Max(root: TTreapNode): T; static;
@@ -164,7 +167,7 @@ begin
   Assert(root <> nil);
   while root.right <> nil do
     root := root.right;
-  Exit(root.key)
+  Exit(root.key);
 end;
 
 
@@ -217,4 +220,3 @@ begin
 end;
 
 end.
-
