@@ -16,6 +16,7 @@ type
     right: TTreapNode;
   public
     constructor Create(const k: T);
+
     class function GetSize(const node: TTreapNode): SizeUInt; static; inline;
     class procedure UpdateSize(const node: TTreapNode); static; inline;
 
@@ -33,9 +34,12 @@ type
     class function DeleteAt(var root: TTreapNode; const pos: SizeUInt): T; static;
 
     class function CheckStucture(root: TTreapNode): boolean; static;
+    class procedure DestroyTreap(var root: TTreapNode); static;
   end;
 
 implementation
+
+uses SysUtils;
 
 constructor TTreapNode.Create(const k: T);
 begin
@@ -172,27 +176,39 @@ end;
 
 
 class function TTreapNode.DeleteAt(var root: TTreapNode; const pos: SizeUInt): T; static;
+var
+  n: TTreapNode;
 begin
   Assert(root <> nil);
   Assert(pos < GetSize(root));
 
-  with root do
-  begin
-    if pos < GetSize(left) then
+    if pos < GetSize(root.left) then
     begin
-      Result := DeleteAt(left, pos);
+      Result := DeleteAt(root.left, pos);
       UpdateSize(root);
     end
-    else if pos > GetSize(left) then
+    else if pos > GetSize(root.left) then
     begin
-      Result := DeleteAt(right, pos - GetSize(left) - 1);
+      Result := DeleteAt(root.right, pos - GetSize(root.left) - 1);
       UpdateSize(root);
     end
     else
     begin
-      Result := key;
-      root := Meld(left, right);
+      Result := root.key;
+      n := root;
+      root := Meld(root.left, root.right);
+      FreeAndNil(n);
     end;
+
+end;
+
+class procedure TTreapNode.DestroyTreap(var root: TTreapNode); static;
+begin
+  if root <> nil then
+  begin
+    DestroyTreap(root.left);
+    DestroyTreap(root.right);
+    FreeAndNil(root);
   end;
 end;
 

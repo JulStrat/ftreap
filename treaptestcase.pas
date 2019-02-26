@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, fpcunit, testutils, testregistry, ftreap;
 
 const
-  KEYS_NUMBER = 100000;
+  KEYS_NUMBER = 10000;
 
 type
   TIntTreapNode = specialize TTreapNode<LongInt>;
@@ -105,7 +105,7 @@ end;
 
 procedure TTreapTestCase.TearDown;
 begin
-  root := nil;
+  TIntTreapNode.DestroyTreap(root);
 end;
 
 initialization

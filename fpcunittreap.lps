@@ -9,64 +9,32 @@
         <Filename Value="fpcunittreap.lpr"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="22"/>
+        <UsageCount Value="24"/>
       </Unit0>
       <Unit1>
         <Filename Value="treaptestcase.pas"/>
         <IsPartOfProject Value="True"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="75"/>
-        <CursorPos Y="114"/>
-        <UsageCount Value="22"/>
+        <TopLine Value="2"/>
+        <CursorPos X="22" Y="11"/>
+        <UsageCount Value="24"/>
         <Loaded Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="ftreap.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="9"/>
-        <CursorPos X="23" Y="135"/>
-        <UsageCount Value="22"/>
+        <TopLine Value="186"/>
+        <CursorPos X="47" Y="192"/>
+        <UsageCount Value="24"/>
         <Loaded Value="True"/>
       </Unit2>
     </Units>
-    <JumpHistory Count="9" HistoryIndex="8">
+    <JumpHistory Count="1">
       <Position1>
-        <Filename Value="treaptestcase.pas"/>
-        <Caret Line="57" Column="15" TopLine="40"/>
+        <Filename Value="ftreap.pas"/>
+        <Caret Line="117" TopLine="104"/>
       </Position1>
-      <Position2>
-        <Filename Value="treaptestcase.pas"/>
-        <Caret Line="44" TopLine="31"/>
-      </Position2>
-      <Position3>
-        <Filename Value="treaptestcase.pas"/>
-        <Caret Line="66" TopLine="51"/>
-      </Position3>
-      <Position4>
-        <Filename Value="treaptestcase.pas"/>
-        <Caret Line="73" TopLine="53"/>
-      </Position4>
-      <Position5>
-        <Filename Value="treaptestcase.pas"/>
-        <Caret Line="43" Column="17" TopLine="63"/>
-      </Position5>
-      <Position6>
-        <Filename Value="treaptestcase.pas"/>
-        <Caret Line="53" Column="32"/>
-      </Position6>
-      <Position7>
-        <Filename Value="treaptestcase.pas"/>
-        <Caret Line="52" TopLine="6"/>
-      </Position7>
-      <Position8>
-        <Filename Value="treaptestcase.pas"/>
-        <Caret Line="74" Column="29" TopLine="65"/>
-      </Position8>
-      <Position9>
-        <Filename Value="treaptestcase.pas"/>
-        <Caret Line="73" Column="10" TopLine="65"/>
-      </Position9>
     </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>

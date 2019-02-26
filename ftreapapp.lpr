@@ -11,8 +11,8 @@ type
   TIntTreapNode = specialize TTreapNode<longint>;
 
 const
-  NODES_NUM = 100;
-  MAX_KEY = 1000000;
+  NODES_NUM = 10;
+  MAX_KEY = 1000;
 
 var
   ra: TIntTreapNode = nil;
@@ -71,6 +71,7 @@ begin
   WriteLn('PASSED...');
 
   ReadLn();
+  (*
   i := 5;
   while i < 1000000 do
   begin
@@ -88,6 +89,9 @@ begin
   WriteLn('Heap CurrHeapFree - ', GetFPCHeapStatus().CurrHeapFree);
 
   ReadLn();
+  *)
+  TIntTreapNode.DestroyTreap(ra);
+
   // Assert error
   (*
   TIntTreapNode.DeleteAt(ra, 0);
@@ -96,6 +100,21 @@ begin
     WriteLn(ra.key);
   ReadLn();
   *)
+  for i := 0 to NODES_NUM - 1 do
+  begin
+    ra := TIntTreapNode.Insert(ra, ta[i]);
+  end;
+
+  WriteLn('Check treap structure - ', TIntTreapNode.CheckStucture(ra));
+  WriteLn('Size - ', TIntTreapNode.GetSize(ra));
+  if ra <> nil then
+    WriteLn(ra.key);
+  WriteLn('PASSED...');
+  ReadLn();
+  TIntTreapNode.DestroyTreap(ra);
+  Assert(ra = nil);
+  Assert(TIntTreapNode.GetSize(ra) = 0);
+
 
 
 end.
