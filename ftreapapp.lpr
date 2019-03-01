@@ -1,4 +1,5 @@
 {$mode objfpc}{$H+}{$J-}
+{$MODESWITCH ADVANCEDRECORDS}
 {$warnings on}
 {$hints on}
 
@@ -7,11 +8,37 @@ program ftreapapp;
 uses
   ftreap;
 
+(*
 type
-  TIntTreapNode = specialize TTreapNode<longint>;
+  TStudent = record
+    sname: String;
+    sage: LongInt;
+    class operator < (const A, B: TStudent): Boolean;
+    class operator > (const A, B: TStudent): Boolean;
+    class operator = (const A, B: TStudent): Boolean;
+  end;
+
+  class operator TStudent.< (const A, B: TStudent): Boolean;
+  begin
+    Result := A.sage < B.sage;
+  end;
+
+  class operator TStudent.> (const A, B: TStudent): Boolean;
+  begin
+    Result := A.sage > B.sage;
+  end;
+
+  class operator TStudent.= (const A, B: TStudent): Boolean;
+  begin
+    Result := (A.sage = B.sage) and (A.sname = B.sname);
+  end;
+*)
+type
+  TIntTreapNode = specialize TTreapNode<LongInt>;
+  //TStTreapNode = specialize TTreapNode<TStudent>;
 
 const
-  NODES_NUM = 10;
+  NODES_NUM = 1000;
   MAX_KEY = 1000;
 
 var
@@ -23,6 +50,8 @@ begin
   WriteLn('SizeOf(LongInt): ', SizeOf(LongInt));
   WriteLn('SizeOf(SizeUInt): ', SizeOf(SizeUInt));
   WriteLn('SizeOf(Pointer): ', SizeOf(Pointer));
+
+  TIntTreapNode.ClassInfo;
 
   WriteLn('Heap MaxHeapSize - ', GetFPCHeapStatus().MaxHeapSize);
   WriteLn('Heap MaxHeapUsed - ', GetFPCHeapStatus().MaxHeapUsed);
@@ -107,6 +136,7 @@ begin
 
   WriteLn('Check treap structure - ', TIntTreapNode.CheckStucture(ra));
   WriteLn('Size - ', TIntTreapNode.GetSize(ra));
+  TIntTreapNode.StuctureInfo(ra);
   if ra <> nil then
     WriteLn(ra.key);
   WriteLn('PASSED...');
@@ -114,7 +144,5 @@ begin
   TIntTreapNode.DestroyTreap(ra);
   Assert(ra = nil);
   Assert(TIntTreapNode.GetSize(ra) = 0);
-
-
 
 end.
