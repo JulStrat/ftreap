@@ -4,159 +4,146 @@
     <PathDelim Value="\"/>
     <Version Value="11"/>
     <BuildModes Active="Debug"/>
-    <Units Count="4">
+    <Units Count="2">
       <Unit0>
         <Filename Value="ftreapapp.lpr"/>
         <IsPartOfProject Value="True"/>
         <IsVisibleTab Value="True"/>
-        <CursorPos X="31" Y="29"/>
-        <UsageCount Value="29"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="73"/>
+        <CursorPos Y="88"/>
+        <UsageCount Value="30"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="ftreap.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="176"/>
-        <CursorPos X="30" Y="187"/>
-        <UsageCount Value="28"/>
+        <TopLine Value="189"/>
+        <CursorPos Y="196"/>
+        <UsageCount Value="30"/>
         <Loaded Value="True"/>
       </Unit1>
-      <Unit2>
-        <Filename Value="ftreap_or.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="68"/>
-        <CursorPos X="7" Y="74"/>
-        <UsageCount Value="22"/>
-      </Unit2>
-      <Unit3>
-        <Filename Value="LazProfilerCore.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="130"/>
-        <CursorPos X="12" Y="264"/>
-        <UsageCount Value="10"/>
-      </Unit3>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="ftreap.pas"/>
-        <Caret Line="140" Column="3" TopLine="135"/>
+        <Caret Line="36" Column="70" TopLine="23"/>
       </Position1>
       <Position2>
         <Filename Value="ftreap.pas"/>
-        <Caret Line="138" Column="15" TopLine="62"/>
+        <Caret Line="20" Column="50" TopLine="10"/>
       </Position2>
       <Position3>
         <Filename Value="ftreap.pas"/>
-        <Caret Line="35" Column="6" TopLine="7"/>
+        <Caret Line="181" TopLine="167"/>
       </Position3>
       <Position4>
         <Filename Value="ftreap.pas"/>
-        <Caret Line="36" Column="3" TopLine="28"/>
+        <Caret Line="121" Column="10" TopLine="114"/>
       </Position4>
       <Position5>
         <Filename Value="ftreap.pas"/>
-        <Caret Line="141" Column="21" TopLine="131"/>
+        <Caret Line="118" Column="28" TopLine="102"/>
       </Position5>
       <Position6>
         <Filename Value="ftreap.pas"/>
-        <Caret Line="165" Column="10" TopLine="159"/>
+        <Caret Line="30" Column="34" TopLine="14"/>
       </Position6>
       <Position7>
         <Filename Value="ftreap.pas"/>
-        <Caret Line="167" Column="6" TopLine="154"/>
+        <Caret Line="228" Column="56" TopLine="218"/>
       </Position7>
       <Position8>
         <Filename Value="ftreap.pas"/>
-        <Caret Line="170" Column="41" TopLine="156"/>
+        <Caret Line="266" Column="10" TopLine="254"/>
       </Position8>
       <Position9>
-        <Filename Value="ftreapapp.lpr"/>
-        <Caret Line="32" Column="14" TopLine="20"/>
+        <Filename Value="ftreap.pas"/>
+        <Caret Line="277" Column="12" TopLine="270"/>
       </Position9>
       <Position10>
         <Filename Value="ftreap.pas"/>
-        <Caret Line="5" Column="10"/>
+        <Caret Line="309" Column="24" TopLine="292"/>
       </Position10>
       <Position11>
-        <Filename Value="ftreapapp.lpr"/>
-        <Caret Line="45" Column="20" TopLine="28"/>
+        <Filename Value="ftreap.pas"/>
+        <Caret Line="66" Column="47" TopLine="49"/>
       </Position11>
       <Position12>
-        <Filename Value="ftreap.pas"/>
-        <Caret Line="29" Column="42" TopLine="18"/>
+        <Filename Value="ftreapapp.lpr"/>
+        <Caret Line="70" Column="5" TopLine="57"/>
       </Position12>
       <Position13>
         <Filename Value="ftreap.pas"/>
-        <Caret Line="146" Column="13" TopLine="132"/>
+        <Caret Line="189" Column="79" TopLine="184"/>
       </Position13>
       <Position14>
         <Filename Value="ftreap.pas"/>
-        <Caret Line="148" Column="25" TopLine="132"/>
+        <Caret Line="42" Column="20" TopLine="39"/>
       </Position14>
       <Position15>
         <Filename Value="ftreap.pas"/>
-        <Caret Line="145" Column="5" TopLine="132"/>
+        <Caret Line="203" Column="43" TopLine="190"/>
       </Position15>
       <Position16>
         <Filename Value="ftreap.pas"/>
-        <Caret Line="134" Column="23" TopLine="121"/>
+        <Caret Line="208" Column="32" TopLine="196"/>
       </Position16>
       <Position17>
         <Filename Value="ftreap.pas"/>
-        <Caret Line="128" TopLine="121"/>
+        <Caret Line="196" TopLine="189"/>
       </Position17>
       <Position18>
         <Filename Value="ftreap.pas"/>
-        <Caret Line="134" Column="23" TopLine="121"/>
+        <Caret Line="197" TopLine="189"/>
       </Position18>
       <Position19>
-        <Filename Value="ftreap.pas"/>
-        <Caret Line="32" Column="54" TopLine="129"/>
+        <Filename Value="ftreapapp.lpr"/>
+        <Caret Line="88" TopLine="73"/>
       </Position19>
       <Position20>
         <Filename Value="ftreap.pas"/>
-        <Caret Line="147" Column="5" TopLine="134"/>
+        <Caret Line="197" TopLine="189"/>
       </Position20>
       <Position21>
         <Filename Value="ftreap.pas"/>
-        <Caret Line="134" Column="23" TopLine="121"/>
+        <Caret Line="199" Column="8" TopLine="189"/>
       </Position21>
       <Position22>
         <Filename Value="ftreap.pas"/>
-        <Caret Line="153" Column="6" TopLine="134"/>
+        <Caret Line="205" TopLine="189"/>
       </Position22>
       <Position23>
-        <Filename Value="ftreapapp.lpr"/>
-        <Caret Line="47" Column="26" TopLine="34"/>
+        <Filename Value="ftreap.pas"/>
+        <Caret Line="197" TopLine="189"/>
       </Position23>
       <Position24>
         <Filename Value="ftreap.pas"/>
-        <Caret Line="148" Column="18" TopLine="133"/>
+        <Caret Line="199" TopLine="189"/>
       </Position24>
       <Position25>
         <Filename Value="ftreap.pas"/>
-        <Caret Line="138" Column="32" TopLine="131"/>
+        <Caret Line="204" TopLine="189"/>
       </Position25>
       <Position26>
         <Filename Value="ftreap.pas"/>
-        <Caret Line="54" Column="45" TopLine="36"/>
+        <Caret Line="205" TopLine="189"/>
       </Position26>
       <Position27>
-        <Filename Value="ftreapapp.lpr"/>
-        <Caret Line="68" TopLine="43"/>
+        <Filename Value="ftreap.pas"/>
+        <Caret Line="197" TopLine="189"/>
       </Position27>
       <Position28>
         <Filename Value="ftreap.pas"/>
-        <Caret Line="39" Column="8" TopLine="36"/>
+        <Caret Line="199" TopLine="189"/>
       </Position28>
       <Position29>
-        <Filename Value="ftreapapp.lpr"/>
-        <Caret Line="45" Column="46" TopLine="34"/>
+        <Filename Value="ftreap.pas"/>
+        <Caret Line="204" TopLine="189"/>
       </Position29>
       <Position30>
         <Filename Value="ftreap.pas"/>
-        <Caret Line="116" Column="11" TopLine="113"/>
+        <Caret Line="205" TopLine="189"/>
       </Position30>
     </JumpHistory>
     <RunParams>
@@ -165,14 +152,16 @@
     </RunParams>
   </ProjectSession>
   <Debugging>
-    <BreakPoints Count="1">
+    <Watches Count="3">
       <Item1>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
-        <Source Value="LazProfilerCore.pas"/>
-        <Line Value="264"/>
+        <Expression Value="k"/>
       </Item1>
-    </BreakPoints>
+      <Item2>
+        <Expression Value="node.key"/>
+      </Item2>
+      <Item3>
+        <Expression Value="pos"/>
+      </Item3>
+    </Watches>
   </Debugging>
 </CONFIG>
