@@ -38,7 +38,7 @@ type
   //TStTreapNode = specialize TTreapNode<TStudent>;
 
 const
-  NODES_NUM = 1000;
+  NODES_NUM = 100;
   MAX_KEY = 1000;
 
 var
@@ -67,7 +67,7 @@ begin
 
   for i := 0 to NODES_NUM - 1 do
   begin
-    ra := TIntTreapNode.Insert(ra, ta[i]);
+    TIntTreapNode.Insert(ra, ta[i]);
   end;
 
   WriteLn('Check treap structure - ', TIntTreapNode.CheckStucture(ra));
@@ -131,7 +131,7 @@ begin
   *)
   for i := 0 to NODES_NUM - 1 do
   begin
-    ra := TIntTreapNode.Insert(ra, ta[i]);
+    TIntTreapNode.Insert(ra, ta[i]);
   end;
 
   WriteLn('Check treap structure - ', TIntTreapNode.CheckStucture(ra));

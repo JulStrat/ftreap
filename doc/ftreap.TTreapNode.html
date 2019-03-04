@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>ftreap: ftreap: Class TTreapNode</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="PasDoc 0.15.0">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<table class="container"><tr><td class="navigation">
+<h2>ftreap</h2><p><a href="AllUnits.html" class="navigation">Units</a></p><p><a href="ClassHierarchy.html" class="navigation">Class Hierarchy</a></p><p><a href="AllClasses.html" class="navigation">Classes, Interfaces, Objects and Records</a></p><p><a href="AllTypes.html" class="navigation">Types</a></p><p><a href="AllVariables.html" class="navigation">Variables</a></p><p><a href="AllConstants.html" class="navigation">Constants</a></p><p><a href="AllFunctions.html" class="navigation">Functions and Procedures</a></p><p><a href="AllIdentifiers.html" class="navigation">Identifiers</a></p></td><td class="content">
+<span id="TTreapNode"></span><h1 class="cio">Class TTreapNode</h1>
+<div class="sections">
+<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Hierarchy">Hierarchy</a></div><div class="one_section">Fields</div><div class="one_section"><a class="section" href="#PasDoc-Methods">Methods</a></div><div class="one_section">Properties</div></div>
+<span id="PasDoc-Description"></span><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a  href="ftreap.html">ftreap</a></p>
+<h2 class="declaration">Declaration</h2>
+<p class="declaration">
+<code>type generic TTreapNode&lt;T&gt; = class(TObject)</code></p>
+<h2 class="description">Description</h2>
+<span id="PasDoc-Hierarchy"></span><h2 class="hierarchy">Hierarchy</h2>
+<ul class="hierarchy"><li class="ancestor">TObject</li>
+<li class="thisitem">TTreapNode</li></ul><h2 class="overview">Overview</h2>
+<span id="PasDoc-Methods"></span><h3 class="summary">Methods</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>constructor <b><a  href="ftreap.TTreapNode.html#Create">Create</a></b>(const k: T);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>class function <b><a  href="ftreap.TTreapNode.html#GetSize">GetSize</a></b>(const node: <a  href="ftreap.TTreapNode.html">TTreapNode</a>): SizeUInt; inline;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>class procedure <b><a  href="ftreap.TTreapNode.html#UpdateSize">UpdateSize</a></b>(const node: <a  href="ftreap.TTreapNode.html">TTreapNode</a>); inline;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>class function <b><a  href="ftreap.TTreapNode.html#Meld">Meld</a></b>(l: <a  href="ftreap.TTreapNode.html">TTreapNode</a>; r: <a  href="ftreap.TTreapNode.html">TTreapNode</a>): <a  href="ftreap.TTreapNode.html">TTreapNode</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>class procedure <b><a  href="ftreap.TTreapNode.html#Divide">Divide</a></b>(node: <a  href="ftreap.TTreapNode.html">TTreapNode</a>; k: T; var l: <a  href="ftreap.TTreapNode.html">TTreapNode</a>; var r: <a  href="ftreap.TTreapNode.html">TTreapNode</a>);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>class procedure <b><a  href="ftreap.TTreapNode.html#DivideAt">DivideAt</a></b>(node: <a  href="ftreap.TTreapNode.html">TTreapNode</a>; const pos: SizeUInt; var l: <a  href="ftreap.TTreapNode.html">TTreapNode</a>; var r: <a  href="ftreap.TTreapNode.html">TTreapNode</a>);</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>class function <b><a  href="ftreap.TTreapNode.html#IsEmpty">IsEmpty</a></b>(const node: <a  href="ftreap.TTreapNode.html">TTreapNode</a>): boolean; inline;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>class function <b><a  href="ftreap.TTreapNode.html#Append">Append</a></b>(node: <a  href="ftreap.TTreapNode.html">TTreapNode</a>; const k: T): <a  href="ftreap.TTreapNode.html">TTreapNode</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>class function <b><a  href="ftreap.TTreapNode.html#Insert">Insert</a></b>(var node: <a  href="ftreap.TTreapNode.html">TTreapNode</a>; const k: T): Boolean; inline;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>class function <b><a  href="ftreap.TTreapNode.html#Find">Find</a></b>(node: <a  href="ftreap.TTreapNode.html">TTreapNode</a>; const k: T): Boolean;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>class function <b><a  href="ftreap.TTreapNode.html#Min">Min</a></b>(node: <a  href="ftreap.TTreapNode.html">TTreapNode</a>): T;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>class function <b><a  href="ftreap.TTreapNode.html#Max">Max</a></b>(node: <a  href="ftreap.TTreapNode.html">TTreapNode</a>): T;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>class function <b><a  href="ftreap.TTreapNode.html#Delete">Delete</a></b>(var node: <a  href="ftreap.TTreapNode.html">TTreapNode</a>; const k: T): Boolean;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>class function <b><a  href="ftreap.TTreapNode.html#DeleteAt">DeleteAt</a></b>(var node: <a  href="ftreap.TTreapNode.html">TTreapNode</a>; const pos: SizeUInt): T;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>class procedure <b><a  href="ftreap.TTreapNode.html#DestroyTreap">DestroyTreap</a></b>(var node: <a  href="ftreap.TTreapNode.html">TTreapNode</a>);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>class function <b><a  href="ftreap.TTreapNode.html#CheckStucture">CheckStucture</a></b>(node: <a  href="ftreap.TTreapNode.html">TTreapNode</a>): boolean;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>class procedure <b><a  href="ftreap.TTreapNode.html#ClassInfo">ClassInfo</a></b>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>class procedure <b><a  href="ftreap.TTreapNode.html#StuctureInfo">StuctureInfo</a></b>(node: <a  href="ftreap.TTreapNode.html">TTreapNode</a>);</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Methods</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><span id="Create"></span><code>constructor <b>Create</b>(const k: T);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Tree node constructor.</p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><span id="GetSize"></span><code>class function <b>GetSize</b>(const node: <a  href="ftreap.TTreapNode.html">TTreapNode</a>): SizeUInt; inline;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Returns number of keys in the tree rooted at <code>node</code>.</p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><span id="UpdateSize"></span><code>class procedure <b>UpdateSize</b>(const node: <a  href="ftreap.TTreapNode.html">TTreapNode</a>); inline;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Recalculates number of keys in the tree rooted at <code>node</code> after insert, delete operations.</p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><span id="Meld"></span><code>class function <b>Meld</b>(l: <a  href="ftreap.TTreapNode.html">TTreapNode</a>; r: <a  href="ftreap.TTreapNode.html">TTreapNode</a>): <a  href="ftreap.TTreapNode.html">TTreapNode</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Creates new tree from two trees, where <code>Min(r) &gt; Max(l)</code>.</p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><span id="Divide"></span><code>class procedure <b>Divide</b>(node: <a  href="ftreap.TTreapNode.html">TTreapNode</a>; k: T; var l: <a  href="ftreap.TTreapNode.html">TTreapNode</a>; var r: <a  href="ftreap.TTreapNode.html">TTreapNode</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Divides tree into two trees. Where <code>Max(l) &lt;= k</code>.</p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><span id="DivideAt"></span><code>class procedure <b>DivideAt</b>(node: <a  href="ftreap.TTreapNode.html">TTreapNode</a>; const pos: SizeUInt; var l: <a  href="ftreap.TTreapNode.html">TTreapNode</a>; var r: <a  href="ftreap.TTreapNode.html">TTreapNode</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Divides tree into two trees. Where <code>Size(l) = pos + 1</code>.</p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><span id="IsEmpty"></span><code>class function <b>IsEmpty</b>(const node: <a  href="ftreap.TTreapNode.html">TTreapNode</a>): boolean; inline;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Returns <code>True</code> if tree rooted at <code>node</code> is empty, <code>False</code> otherwise</p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><span id="Append"></span><code>class function <b>Append</b>(node: <a  href="ftreap.TTreapNode.html">TTreapNode</a>; const k: T): <a  href="ftreap.TTreapNode.html">TTreapNode</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><span id="Insert"></span><code>class function <b>Insert</b>(var node: <a  href="ftreap.TTreapNode.html">TTreapNode</a>; const k: T): Boolean; inline;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Insert key <code>k</code> in tree rooted at <code>node</code>.</p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><span id="Find"></span><code>class function <b>Find</b>(node: <a  href="ftreap.TTreapNode.html">TTreapNode</a>; const k: T): Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Check if tree rooted at <code>root</code> node contains key <code>k</code>.</p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><span id="Min"></span><code>class function <b>Min</b>(node: <a  href="ftreap.TTreapNode.html">TTreapNode</a>): T;</code></td>
+</tr>
+<tr><td colspan="2">
+<p class="hint_directive">Warning: this symbol is deprecated.</p>&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><span id="Max"></span><code>class function <b>Max</b>(node: <a  href="ftreap.TTreapNode.html">TTreapNode</a>): T;</code></td>
+</tr>
+<tr><td colspan="2">
+<p class="hint_directive">Warning: this symbol is deprecated.</p>&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><span id="Delete"></span><code>class function <b>Delete</b>(var node: <a  href="ftreap.TTreapNode.html">TTreapNode</a>; const k: T): Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Deletes key from the tree. </p>
+<h6 class="description_section">Returns</h6>
+<p class="return"><code>True</code> if successful, <code>False</code> otherwise</p></td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><span id="DeleteAt"></span><code>class function <b>DeleteAt</b>(var node: <a  href="ftreap.TTreapNode.html">TTreapNode</a>; const pos: SizeUInt): T;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Deletes key from the given position. </p>
+<h6 class="description_section">Returns</h6>
+<p class="return"><code>True</code> if successful, <code>False</code> otherwise</p></td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><span id="DestroyTreap"></span><code>class procedure <b>DestroyTreap</b>(var node: <a  href="ftreap.TTreapNode.html">TTreapNode</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Destroy tree.</p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><span id="CheckStucture"></span><code>class function <b>CheckStucture</b>(node: <a  href="ftreap.TTreapNode.html">TTreapNode</a>): boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><span id="ClassInfo"></span><code>class procedure <b>ClassInfo</b>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><span id="StuctureInfo"></span><code>class procedure <b>StuctureInfo</b>(node: <a  href="ftreap.TTreapNode.html">TTreapNode</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<hr><span class="appinfo"><em>Generated by <a  href="https://github.com/pasdoc/pasdoc/wiki">PasDoc 0.15.0</a>. </em>
+</span>
+</td></tr></table></body></html>

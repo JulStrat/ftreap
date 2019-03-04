@@ -10,37 +10,54 @@ type
   generic TTreapNode<T> = class
   private
     key: T;
-    rank: extended;
+    priority: extended;
     size: SizeUInt;
     left: TTreapNode;
     right: TTreapNode;
   public
+    (* Tree node constructor. *)
     constructor Create(const k: T);
+    (* Returns number of keys in the tree rooted at @code(node). *)
+    class function GetSize(const node: TTreapNode): SizeUInt; inline;
+    (* Recalculates number of keys in the tree rooted at @code(node) after insert, delete operations. *)
+    class procedure UpdateSize(const node: TTreapNode); inline;
+    (* Creates new tree from two trees, where @code(Min(r) > Max(l)). *)
+    class function Meld(l: TTreapNode; r: TTreapNode): TTreapNode;
+    (* Divides tree into two trees. Where @code(Max(l) <= k). *)
+    class procedure Divide(node: TTreapNode; k: T; var l: TTreapNode;
+      var r: TTreapNode);
+    (* Divides tree into two trees. Where @code(Size(l) = pos + 1). *)
+    class procedure DivideAt(node: TTreapNode; const pos: SizeUInt;
+      var l: TTreapNode; var r: TTreapNode);
 
-    class function GetSize(const node: TTreapNode): SizeUInt; static; inline;
-    class procedure UpdateSize(const node: TTreapNode); static; inline;
+    (* Returns @true if tree rooted at @code(node) is empty, @false otherwise *)
+    class function IsEmpty(const node: TTreapNode): boolean; inline;
 
-    class function Meld(l: TTreapNode; r: TTreapNode): TTreapNode; static;
-    class procedure Divide(treap: TTreapNode; k: T; var l: TTreapNode;
-      var r: TTreapNode); static;
-    class procedure DivideAt(treap: TTreapNode; const pos: SizeUInt;
-      var l: TTreapNode; var r: TTreapNode); static;
+    class function Append(node: TTreapNode; const k: T): TTreapNode;
 
-    (* IsEmpty
-      @param(root)
-      @returns(@true if set is empty, @false otherwise) *)
-    class function IsEmpty(const root: TTreapNode): Boolean; static; inline;
-    class function Append(root: TTreapNode; const k: T): TTreapNode; static;
-    class function Insert(root: TTreapNode; const k: T): TTreapNode; static; inline;
-    class function Find(root: TTreapNode; const k: T): boolean; static;
-    class function Min(root: TTreapNode): T; static;
-    class function Max(root: TTreapNode): T; static;
-    class function DeleteAt(var root: TTreapNode; const pos: SizeUInt): T; static;
+    (* Insert key @code(k) in tree rooted at @code(node).  *)
+    class function Insert(var node: TTreapNode; const k: T): Boolean; inline;
+    (* Check if tree rooted at @code(root) node contains key @code(k). *)
+    class function Find(node: TTreapNode; const k: T): Boolean;
 
-    class function CheckStucture(root: TTreapNode): boolean; static;
-    class procedure DestroyTreap(var root: TTreapNode); static;
-    class procedure ClassInfo; static;
-    class procedure StuctureInfo(root: TTreapNode); static;
+    (* @deprecated *)
+    class function Min(node: TTreapNode): T;
+    (* @deprecated *)
+    class function Max(node: TTreapNode): T;
+
+    (* Deletes key from the tree.
+       @returns(@true if successful, @false otherwise) *)
+    class function Delete(var node: TTreapNode; const k: T): Boolean;
+    (* Deletes key from the given position.
+       @returns(@true if successful, @false otherwise) *)
+    class function DeleteAt(var node: TTreapNode; const pos: SizeUInt): T;
+
+    (* Destroy tree. *)
+    class procedure DestroyTreap(var node: TTreapNode);
+
+    class function CheckStucture(node: TTreapNode): boolean;
+    class procedure ClassInfo;
+    class procedure StuctureInfo(node: TTreapNode);
   end;
 
 implementation
@@ -50,37 +67,37 @@ uses SysUtils, TypInfo;
 constructor TTreapNode.Create(const k: T);
 begin
   key := k;
-  rank := Random;
+  priority := Random;
   size := 1;
   left := nil;
   right := nil;
 end;
 
-class function TTreapNode.GetSize(const node: TTreapNode): SizeUInt; static; inline;
+class function TTreapNode.GetSize(const node: TTreapNode): SizeUInt; inline;
 begin
   if node <> nil then
     Exit(node.size);
   Exit(0);
 end;
 
-class procedure TTreapNode.UpdateSize(const node: TTreapNode); static; inline;
+class procedure TTreapNode.UpdateSize(const node: TTreapNode); inline;
 begin
   if node <> nil then
     node.size := GetSize(node.left) + GetSize(node.right) + 1;
 end;
 
-class function TTreapNode.IsEmpty(const root: TTreapNode): Boolean; static; inline;
+class function TTreapNode.IsEmpty(const node: TTreapNode): boolean; inline;
 begin
-  Exit(GetSize(root) = 0);
+  Exit(GetSize(node) = 0);
 end;
 
-class function TTreapNode.Meld(l: TTreapNode; r: TTreapNode): TTreapNode; static;
+class function TTreapNode.Meld(l: TTreapNode; r: TTreapNode): TTreapNode;
 begin
   if l = nil then
     Exit(r)
   else if r = nil then
     Exit(l)
-  else if l.rank > r.rank then
+  else if l.priority > r.priority then
   begin
     l.right := Meld(l.right, r);
     UpdateSize(l);
@@ -94,158 +111,186 @@ begin
   end;
 end;
 
-class procedure TTreapNode.DivideAt(treap: TTreapNode; const pos: SizeUInt;
-  var l: TTreapNode; var r: TTreapNode); static;
+class procedure TTreapNode.DivideAt(node: TTreapNode; const pos: SizeUInt;
+  var l: TTreapNode; var r: TTreapNode);
 begin
-  if treap = nil then
+  if node = nil then
   begin
     l := nil;
     r := nil;
     Exit;
   end;
 
-  if pos <= GetSize(treap.left) then
+  if pos <= GetSize(node.left) then
   begin
-    DivideAt(treap.left, pos, l, treap.left);
-    r := treap;
+    DivideAt(node.left, pos, l, node.left);
+    r := node;
   end
   else
   begin
-    DivideAt(treap.right, pos - GetSize(treap.left) - 1, treap.right, r);
-    l := treap;
+    DivideAt(node.right, pos - GetSize(node.left) - 1, node.right, r);
+    l := node;
   end;
-  UpdateSize(treap);
+  UpdateSize(node);
 end;
 
-class procedure TTreapNode.Divide(treap: TTreapNode; k: T;
-  var l: TTreapNode; var r: TTreapNode); static;
+class procedure TTreapNode.Divide(node: TTreapNode; k: T; var l: TTreapNode;
+  var r: TTreapNode);
 begin
-  if treap = nil then
+  if node = nil then
   begin
     l := nil;
     r := nil;
     Exit;
   end;
-  if k < treap.key then
+  if k < node.key then
   begin
-    Divide(treap.left, k, l, treap.left);
-    r := treap;
+    Divide(node.left, k, l, node.left);
+    r := node;
   end
   else
   begin
-    Divide(treap.right, k, treap.right, r);
-    l := treap;
+    Divide(node.right, k, node.right, r);
+    l := node;
   end;
-  UpdateSize(treap);
+  UpdateSize(node);
 end;
 
-class function TTreapNode.Append(root: TTreapNode; const k: T): TTreapNode;
-  static;
+class function TTreapNode.Append(node: TTreapNode; const k: T): TTreapNode;
+
 begin
-  Result := Meld(root, TTreapNode.Create(k));
+  Result := Meld(node, TTreapNode.Create(k));
 end;
 
-class function TTreapNode.Insert(root: TTreapNode; const k: T): TTreapNode;
-  static; inline;
+class function TTreapNode.Insert(var node: TTreapNode; const k: T): Boolean;
+  inline;
 var
   l, r: TTreapNode;
 begin
-  Divide(root, k, l, r);
-  Result := Meld(l, Meld(TTreapNode.Create(k), r));
+  Divide(node, k, l, r);
+  node := Meld(l, Meld(TTreapNode.Create(k), r));
+  Exit(True);
 end;
 
-class function TTreapNode.Find(root: TTreapNode; const k: T): boolean; static;
+class function TTreapNode.Find(node: TTreapNode; const k: T): boolean;
 begin
-  // Result := False;
-  while root <> nil do
+  while node <> nil do
   begin
-    if root.key < k then
-      root := root.right
-    else if root.key > k then
-      root := root.left
+    if node.key < k then
+      node := node.right
+    else if node.key > k then
+      node := node.left
     else
       Exit(True);
   end;
   Exit(False);
 end;
 
-class function TTreapNode.Min(root: TTreapNode): T; static;
+class function TTreapNode.Min(node: TTreapNode): T;
 begin
-  Assert(root <> nil);
-  while root.left <> nil do
-    root := root.left;
-  Exit(root.key);
+  Assert(node <> nil);
+  while node.left <> nil do
+    node := node.left;
+  Exit(node.key);
 end;
 
-class function TTreapNode.Max(root: TTreapNode): T; static;
+class function TTreapNode.Max(node: TTreapNode): T;
 begin
-  Assert(root <> nil);
-  while root.right <> nil do
-    root := root.right;
-  Exit(root.key);
+  Assert(node <> nil);
+  while node.right <> nil do
+    node := node.right;
+  Exit(node.key);
 end;
 
-class function TTreapNode.DeleteAt(var root: TTreapNode; const pos: SizeUInt): T; static;
+class function TTreapNode.Delete(var node: TTreapNode; const k: T): Boolean;
 var
   n: TTreapNode;
-begin
-  Assert(root <> nil);
-  Assert(pos < GetSize(root));
 
-    if pos < GetSize(root.left) then
+begin
+  if node <> nil then
+  begin
+    if k < node.key then
     begin
-      Result := DeleteAt(root.left, pos);
-      UpdateSize(root);
+      Result := Delete(node.left, k);
+      if Result then UpdateSize(node);
     end
-    else if pos > GetSize(root.left) then
+    else if k > node.key then
     begin
-      Result := DeleteAt(root.right, pos - GetSize(root.left) - 1);
-      UpdateSize(root);
+      Result := Delete(node.right, k);
+      if Result then UpdateSize(node);
     end
     else
     begin
-      Result := root.key;
-      n := root;
-      root := Meld(root.left, root.right);
+      n := node;
+      node := Meld(node.left, node.right);
       FreeAndNil(n);
+      Exit(True);
     end;
+  end;
+  Exit(False);
+end;
+
+class function TTreapNode.DeleteAt(var node: TTreapNode; const pos: SizeUInt): T;
+var
+  n: TTreapNode;
+begin
+  Assert(node <> nil);
+  Assert(pos < GetSize(node));
+
+  if pos < GetSize(node.left) then
+  begin
+    Result := DeleteAt(node.left, pos);
+    UpdateSize(node);
+  end
+  else if pos > GetSize(node.left) then
+  begin
+    Result := DeleteAt(node.right, pos - GetSize(node.left) - 1);
+    UpdateSize(node);
+  end
+  else
+  begin
+    Result := node.key;
+    n := node;
+    node := Meld(node.left, node.right);
+    FreeAndNil(n);
+  end;
 
 end;
 
-class procedure TTreapNode.DestroyTreap(var root: TTreapNode); static;
+class procedure TTreapNode.DestroyTreap(var node: TTreapNode);
 begin
-  if root <> nil then
+  if node <> nil then
   begin
-    DestroyTreap(root.left);
-    DestroyTreap(root.right);
-    FreeAndNil(root);
+    DestroyTreap(node.left);
+    DestroyTreap(node.right);
+    FreeAndNil(node);
   end;
 end;
 
-class function TTreapNode.CheckStucture(root: TTreapNode): boolean; static;
+class function TTreapNode.CheckStucture(node: TTreapNode): boolean;
 begin
   Result := True;
-  if root = nil then
+  if node = nil then
     Exit(Result);
-  with root do
+  with node do
   begin
-    Result := Result and CheckStucture(left);
-    Result := Result and CheckStucture(right);
-    Result := Result and (GetSize(root) = GetSize(left) + GetSize(right) + 1);
-    if left <> nil then
+    Result := Result and CheckStucture(node.left);
+    Result := Result and CheckStucture(node.right);
+    Result := Result and (GetSize(node) = GetSize(node.left) + GetSize(node.right) + 1);
+    if node.left <> nil then
     begin
-      Result := Result and (rank >= left.rank);
-      Result := Result and ((key > left.key) or (key = left.key));
+      Result := Result and (node.priority >= node.left.priority);
+      Result := Result and ((node.key > node.left.key) or (node.key = node.left.key));
     end;
-    if right <> nil then
+    if node.right <> nil then
     begin
-      Result := Result and (rank >= right.rank);
-      Result := Result and (key < right.key);
+      Result := Result and (node.priority >= node.right.priority);
+      Result := Result and (node.key < node.right.key);
     end;
   end;
 end;
 
-class procedure TTreapNode.ClassInfo; static;
+class procedure TTreapNode.ClassInfo;
 begin
   WriteLn('*** Class Info ***');
   //WriteLn('Default       - ', Default(T));
@@ -257,10 +302,12 @@ begin
   WriteLn('*** Class Info ***');
 end;
 
-class procedure TTreapNode.StuctureInfo(root: TTreapNode); static;
+class procedure TTreapNode.StuctureInfo(node: TTreapNode);
 begin
-  WriteLn('Size - ', GetSize(root), '. Left subtree size - ', GetSize(root.left),
-    '. Right subtree size - ', GetSize(root.right), '. Ratio - ', GetSize(root.left)/GetSize(root.right));
+  if GetSize(node) <> 0 then
+  WriteLn('Size - ', GetSize(node), '. Left subtree size - ', GetSize(node.left),
+    '. Right subtree size - ', GetSize(node.right), '. Ratio - ',
+    GetSize(node.left) / GetSize(node.right));
 end;
 
 end.

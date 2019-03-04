@@ -100,7 +100,7 @@ var
   i: LongInt;
 begin
   for i := 0 to KEYS_NUMBER-1 do
-    root := TIntTreapNode.Insert(root, 2*i);
+    TIntTreapNode.Insert(root, 2*i);
 end;
 
 procedure TTreapTestCase.TearDown;
