@@ -62,7 +62,7 @@ begin
   SetLength(ta, NODES_NUM);
   for i := 0 to NODES_NUM - 1 do
   begin
-    ta[i] := Random(MAX_KEY);
+    ta[i] := 2*i; //Random(MAX_KEY);
   end;
 
   for i := 0 to NODES_NUM - 1 do
@@ -76,14 +76,22 @@ begin
     WriteLn(ra.key);
   WriteLn('PASSED...');
 
-  WriteLn('Check treap Find method.');
+  WriteLn('Check treap Contains method.');
   for i := 0 to NODES_NUM - 1 do
   begin
-    Assert(TIntTreapNode.Find(ra, ta[i]));
+    Assert(TIntTreapNode.Contains(ra, ta[i]));
   end;
-  Assert(not TIntTreapNode.Find(ra, -1));
-  Assert(not TIntTreapNode.Find(ra, MAX_KEY + 1));
-  Assert(not TIntTreapNode.Find(ra, MAX_KEY + 2));
+
+  WriteLn('Check treap GetPosition method.');
+  for i := 0 to NODES_NUM - 1 do
+  begin
+    writeLn('Key - ', ta[i], ' Pos - ', TIntTreapNode.GetPosition(ra, ta[i]));
+    Assert(i = TIntTreapNode.GetPosition(ra, ta[i]));
+  end;
+
+  Assert(not TIntTreapNode.Contains(ra, -1));
+  Assert(not TIntTreapNode.Contains(ra, MAX_KEY + 1));
+  Assert(not TIntTreapNode.Contains(ra, MAX_KEY + 2));
   WriteLn('PASSED...');
 
   WriteLn('Check treap DeleteAt method.');

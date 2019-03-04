@@ -42,6 +42,7 @@
 
 # Pascal
 *.res
+*.lps
 lib/
 backup/
 
