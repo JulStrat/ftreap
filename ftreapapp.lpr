@@ -73,7 +73,7 @@ begin
   WriteLn('Check treap structure - ', TIntTreapNode.CheckStucture(ra));
   WriteLn('Size - ', TIntTreapNode.GetSize(ra));
   if ra <> nil then
-    WriteLn(ra.key);
+    WriteLn(ra.FKey);
   WriteLn('PASSED...');
 
   WriteLn('Check treap Contains method.');
@@ -104,7 +104,7 @@ begin
   WriteLn('Check treap structure - ', TIntTreapNode.CheckStucture(ra));
   WriteLn('Size - ', TIntTreapNode.GetSize(ra));
   if ra <> nil then
-    WriteLn(ra.key);
+    WriteLn(ra.FKey);
   WriteLn('PASSED...');
 
   ReadLn();
@@ -146,7 +146,7 @@ begin
   WriteLn('Size - ', TIntTreapNode.GetSize(ra));
   TIntTreapNode.StuctureInfo(ra);
   if ra <> nil then
-    WriteLn(ra.key);
+    WriteLn(ra.FKey);
   WriteLn('PASSED...');
   ReadLn();
   TIntTreapNode.DestroyTreap(ra);
