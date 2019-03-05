@@ -24,6 +24,7 @@ type
     procedure TestFindExisting;
     procedure TestFindNotExisting;
     procedure TestGetPosition;
+    procedure TestRemove;
     procedure TestMin;
     procedure TestMax;
   end;
@@ -87,6 +88,26 @@ begin
     Fail('GetPosition failed!');
   end;
 end;
+
+procedure TTreapTestCase.TestRemove;
+var
+  i: longint;
+begin
+  try
+    begin
+      for i := 0 to KEYS_NUMBER - 1 do
+      begin
+        TIntTreapNode.Remove(root, 2 * i);
+        AssertEquals(False, TIntTreapNode.Contains(root, 2 * i));
+      end;
+      AssertEquals(0, TIntTreapNode.GetSize(root));
+    end;
+  except
+    Fail('GetPosition failed!');
+  end;
+end;
+
+
 
 procedure TTreapTestCase.TestMin;
 begin

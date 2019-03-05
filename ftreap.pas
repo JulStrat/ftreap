@@ -15,25 +15,29 @@ type
     priority: extended;
     // Number of nodes in subtree
     size: SizeUInt;
-    // Left subtree
+    // Left subtree reference
     left: TTreapNode;
-    // Right subtree
+    // Right subtree reference
     right: TTreapNode;
   public
     (* Tree node constructor. *)
     constructor Create(const k: T);
+    (* Tree node destructor. *)
+    destructor Destroy; override;
+
     (* Returns number of keys in the tree rooted at @code(node). *)
     class function GetSize(const node: TTreapNode): SizeUInt; inline;
     (* Recalculates number of keys in the tree rooted at @code(node) after insert, delete operations. *)
     class procedure UpdateSize(const node: TTreapNode); inline;
+
+    class procedure RemoveNode(var node: TTreapNode); inline;
+
     (* Creates new tree from two trees, where @code(Min(r) >= Max(l)). *)
-    class function Meld(l: TTreapNode; r: TTreapNode): TTreapNode;
+    class function Meld(l, r: TTreapNode): TTreapNode;
     (* Divides tree into two trees. Where @code(Max(l) <= k). *)
-    class procedure Divide(node: TTreapNode; k: T; var l: TTreapNode;
-      var r: TTreapNode);
+    class procedure Divide(node: TTreapNode; k: T; var l, r: TTreapNode);
     (* Divides tree into two trees. Where @code(Size(l) = pos + 1). *)
-    class procedure DivideAt(node: TTreapNode; const pos: SizeUInt;
-      var l: TTreapNode; var r: TTreapNode);
+    class procedure DivideAt(node: TTreapNode; const pos: SizeUInt; var l, r: TTreapNode);
 
     (* Returns @true if tree rooted at @code(node) is empty, @false otherwise *)
     class function IsEmpty(const node: TTreapNode): boolean; inline;
@@ -52,12 +56,12 @@ type
     (* @deprecated *)
     class function Max(node: TTreapNode): T;
 
-    (* Deletes key from the tree.
+    (* Removes key from the tree.
        @returns(@true if successful, @false otherwise) *)
-    class function Delete(var node: TTreapNode; const k: T): boolean;
-    (* Deletes key from the given position.
+    class function Remove(var node: TTreapNode; const k: T): boolean;
+    (* Removes key from the given position.
        @returns(@true if successful, @false otherwise) *)
-    class function DeleteAt(var node: TTreapNode; const pos: SizeUInt): T;
+    class function RemoveAt(var node: TTreapNode; const pos: SizeUInt): T;
 
     (* Destroy tree. *)
     class procedure DestroyTreap(var node: TTreapNode);
@@ -80,6 +84,13 @@ begin
   right := nil;
 end;
 
+destructor TTreapNode.Destroy;
+begin
+  left := nil;
+  right := nil;
+  inherited;
+end;
+
 class function TTreapNode.GetSize(const node: TTreapNode): SizeUInt; inline;
 begin
   if node <> nil then
@@ -93,12 +104,24 @@ begin
     node.size := GetSize(node.left) + GetSize(node.right) + 1;
 end;
 
+class procedure TTreapNode.RemoveNode(var node: TTreapNode); inline;
+var
+  n: TTreapNode;
+begin
+  if node <> nil then
+  begin
+     n := Meld(node.left, node.right);
+     FreeAndNil(node);
+     node := n
+  end;
+end;
+
 class function TTreapNode.IsEmpty(const node: TTreapNode): boolean; inline;
 begin
   Exit(GetSize(node) = 0);
 end;
 
-class function TTreapNode.Meld(l: TTreapNode; r: TTreapNode): TTreapNode;
+class function TTreapNode.Meld(l, r: TTreapNode): TTreapNode;
 begin
   if l = nil then Exit(r);
   if r = nil then Exit(l);
@@ -117,7 +140,7 @@ begin
 end;
 
 class procedure TTreapNode.DivideAt(node: TTreapNode; const pos: SizeUInt;
-  var l: TTreapNode; var r: TTreapNode);
+  var l, r: TTreapNode);
 begin
   if node = nil then
   begin
@@ -139,8 +162,7 @@ begin
   UpdateSize(node);
 end;
 
-class procedure TTreapNode.Divide(node: TTreapNode; k: T; var l: TTreapNode;
-  var r: TTreapNode);
+class procedure TTreapNode.Divide(node: TTreapNode; k: T; var l, r: TTreapNode);
 begin
   if node = nil then
   begin
@@ -227,7 +249,7 @@ begin
   Exit(node.key);
 end;
 
-class function TTreapNode.Delete(var node: TTreapNode; const k: T): boolean;
+class function TTreapNode.Remove(var node: TTreapNode; const k: T): boolean;
 var
   n: TTreapNode;
 
@@ -236,13 +258,13 @@ begin
   begin
     if k < node.key then
     begin
-      Result := Delete(node.left, k);
+      Result := Remove(node.left, k);
       if Result then
         UpdateSize(node);
     end
     else if k > node.key then
     begin
-      Result := Delete(node.right, k);
+      Result := Remove(node.right, k);
       if Result then
         UpdateSize(node);
     end
@@ -257,7 +279,7 @@ begin
   Exit(False);
 end;
 
-class function TTreapNode.DeleteAt(var node: TTreapNode; const pos: SizeUInt): T;
+class function TTreapNode.RemoveAt(var node: TTreapNode; const pos: SizeUInt): T;
 var
   n: TTreapNode;
 begin
@@ -266,12 +288,12 @@ begin
 
   if pos < GetSize(node.left) then
   begin
-    Result := DeleteAt(node.left, pos);
+    Result := RemoveAt(node.left, pos);
     UpdateSize(node);
   end
   else if pos > GetSize(node.left) then
   begin
-    Result := DeleteAt(node.right, pos - GetSize(node.left) - 1);
+    Result := RemoveAt(node.right, pos - GetSize(node.left) - 1);
     UpdateSize(node);
   end
   else

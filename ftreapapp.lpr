@@ -97,7 +97,7 @@ begin
   WriteLn('Check treap DeleteAt method.');
   for i := 0 to NODES_NUM - 1 do
   begin
-    j := TIntTreapNode.DeleteAt(ra, 0);
+    j := TIntTreapNode.RemoveAt(ra, 0);
     WriteLn(j);
   end;
 
