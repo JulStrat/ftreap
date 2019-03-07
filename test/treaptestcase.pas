@@ -122,8 +122,6 @@ begin
   end;
 end;
 
-
-
 procedure TTreapTestCase.TestMin;
 begin
   try
