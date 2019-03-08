@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, fpcunit, testutils, testregistry, ftreap;
 
 const
-  KEYS_NUMBER = 10000;
+  KEYS_NUMBER = 1000000;
 
 type
   TIntTreapNode = specialize TTreapNode<longint>;
@@ -42,6 +42,7 @@ begin
   try
     begin
       AssertEquals(True, TIntTreapNode.CheckStucture(root));
+      AssertEquals(KEYS_NUMBER, TIntTreapNode.GetSize(root));
     end;
   except
     Fail('Invalid Treap structure!');
