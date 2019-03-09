@@ -285,6 +285,7 @@ class function TTreapNode.Remove(var node: TTreapNode; const k: T): boolean;
 var
   n: TTreapNode;
 begin
+  Result := False;
   if node <> nil then
   begin
     if k < node.FKey then
@@ -307,7 +308,6 @@ begin
       Exit(True);
     end;
   end;
-  Exit(False);
 end;
 
 class function TTreapNode.RemoveAt(var node: TTreapNode; const pos: SizeUInt): T;
