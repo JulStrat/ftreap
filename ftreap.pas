@@ -49,7 +49,7 @@ type
     class function IsEmpty(const node: TTreapNode): boolean; inline;
 
     (* Insert key @code(k) in tree rooted at @code(node). *)
-    class function Insert(var node: TTreapNode; const k: T): boolean; inline;
+    class procedure Insert(var node: TTreapNode; const k: T); inline;
 
     (* Check if tree rooted at @code(root) node contains key @code(k). *)
     class function Contains(node: TTreapNode; const k: T): boolean;
@@ -194,14 +194,14 @@ begin
   UpdateSize(node);
 end;
 
-class function TTreapNode.Insert(var node: TTreapNode; const k: T): boolean;
+class procedure TTreapNode.Insert(var node: TTreapNode; const k: T);
   inline;
 var
-  l, r: TTreapNode;
+  l: TTreapNode = nil;
+  r: TTreapNode = nil;
 begin
   Divide(node, k, l, r);
   node := Meld(l, Meld(TTreapNode.Create(k), r));
-  Exit(True);
 end;
 
 class function TTreapNode.Contains(node: TTreapNode; const k: T): boolean;
