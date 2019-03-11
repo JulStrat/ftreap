@@ -83,6 +83,10 @@ implementation
 
 uses SysUtils;
 
+{$if not declared(EArgumentNilException)}
+type EArgumentNilException = class(EArgumentException);
+{$endif}
+
 constructor TTreapNode.Create(const k: T);
 begin
   FKey := k;
