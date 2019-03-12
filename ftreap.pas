@@ -1,6 +1,7 @@
 {$mode objfpc}{$H+}{$J-}
 {$warnings on}
 {$hints on}
+{$R+}
 
 unit ftreap;
 
@@ -22,11 +23,13 @@ type
   public
     (* Tree node constructor. *)
     constructor Create(const k: T);
+
     (* Tree node destructor. *)
     destructor Destroy; override;
 
     (* Returns number of keys in the tree rooted at @code(node). *)
     class function GetSize(const node: TTreapNode): SizeUInt; inline;
+
     (* Recalculates number of keys in the tree rooted at @code(node) after insert, delete operations. *)
     class procedure UpdateSize(const node: TTreapNode); inline;
 
@@ -34,32 +37,38 @@ type
 
     (* Creates new tree from two trees, where @code(Min(r) >= Max(l)). *)
     class function Meld(l, r: TTreapNode): TTreapNode;
+
     (* Divides tree into two trees. Where @code(Max(l) <= k). *)
     class procedure Divide(node: TTreapNode; k: T; var l, r: TTreapNode);
+
     (* Divides tree into two trees. Where @code(Size(l) = pos + 1). *)
-    class procedure DivideAt(node: TTreapNode; const pos: SizeUInt; var l, r: TTreapNode);
+    class procedure DivideAt(node: TTreapNode; const pos: SizeUInt;
+      var l, r: TTreapNode);
 
     (* Returns @true if tree rooted at @code(node) is empty, @false otherwise *)
     class function IsEmpty(const node: TTreapNode): boolean; inline;
 
-    class function Append(node: TTreapNode; const k: T): TTreapNode;
-
     (* Insert key @code(k) in tree rooted at @code(node). *)
-    class function Insert(var node: TTreapNode; const k: T): boolean; inline;
+    class procedure Insert(var node: TTreapNode; const k: T); inline;
+
     (* Check if tree rooted at @code(root) node contains key @code(k). *)
     class function Contains(node: TTreapNode; const k: T): boolean;
 
     class function GetPosition(node: TTreapNode; const k: T): SizeUInt;
+
+    (* @raises(EArgumentNilException) @raises(EArgumentOutOfRangeException) *)
     class function GetAt(node: TTreapNode; pos: SizeUInt): T;
 
-    (* @deprecated *)
+    (* @raises(EArgumentNilException) *)
     class function Min(node: TTreapNode): T;
-    (* @deprecated *)
+
+    (* @raises(EArgumentNilException) *)
     class function Max(node: TTreapNode): T;
 
     (* Removes key from the tree.
        @returns(@true if successful, @false otherwise) *)
     class function Remove(var node: TTreapNode; const k: T): boolean;
+
     (* Removes key from the given position.
        @returns(@true if successful, @false otherwise) *)
     class function RemoveAt(var node: TTreapNode; const pos: SizeUInt): T;
@@ -68,13 +77,15 @@ type
     class procedure DestroyTreap(var node: TTreapNode);
 
     class function CheckStucture(node: TTreapNode): boolean;
-    class procedure ClassInfo;
-    class procedure StuctureInfo(node: TTreapNode);
   end;
 
 implementation
 
-uses SysUtils, TypInfo;
+uses SysUtils;
+
+{$if not declared(EArgumentNilException)}
+type EArgumentNilException = class(EArgumentException);
+{$endif}
 
 constructor TTreapNode.Create(const k: T);
 begin
@@ -92,6 +103,7 @@ begin
   inherited;
 end;
 
+// PASSED
 class function TTreapNode.GetSize(const node: TTreapNode): SizeUInt; inline;
 begin
   if node <> nil then
@@ -99,6 +111,7 @@ begin
   Exit(0);
 end;
 
+// PASSED
 class procedure TTreapNode.UpdateSize(const node: TTreapNode); inline;
 begin
   if node <> nil then
@@ -111,21 +124,23 @@ var
 begin
   if node <> nil then
   begin
-     n := Meld(node.FLeft, node.FRight);
-     FreeAndNil(node);
-     node := n
+    n := Meld(node.FLeft, node.FRight);
+    FreeAndNil(node);
+    node := n;
   end;
 end;
 
 class function TTreapNode.IsEmpty(const node: TTreapNode): boolean; inline;
 begin
-  Exit(GetSize(node) = 0);
+  Exit(node = nil);
 end;
 
 class function TTreapNode.Meld(l, r: TTreapNode): TTreapNode;
 begin
-  if l = nil then Exit(r);
-  if r = nil then Exit(l);
+  if l = nil then
+    Exit(r);
+  if r = nil then
+    Exit(l);
   if l.FPriority > r.FPriority then
   begin
     l.FRight := Meld(l.FRight, r);
@@ -149,7 +164,6 @@ begin
     r := nil;
     Exit;
   end;
-
   if pos <= GetSize(node.FLeft) then
   begin
     DivideAt(node.FLeft, pos, l, node.FLeft);
@@ -184,20 +198,14 @@ begin
   UpdateSize(node);
 end;
 
-class function TTreapNode.Append(node: TTreapNode; const k: T): TTreapNode;
-
-begin
-  Result := Meld(node, TTreapNode.Create(k));
-end;
-
-class function TTreapNode.Insert(var node: TTreapNode; const k: T): boolean;
+class procedure TTreapNode.Insert(var node: TTreapNode; const k: T);
   inline;
 var
-  l, r: TTreapNode;
+  l: TTreapNode = nil;
+  r: TTreapNode = nil;
 begin
   Divide(node, k, l, r);
   node := Meld(l, Meld(TTreapNode.Create(k), r));
-  Exit(True);
 end;
 
 class function TTreapNode.Contains(node: TTreapNode; const k: T): boolean;
@@ -235,38 +243,43 @@ begin
 end;
 
 class function TTreapNode.GetAt(node: TTreapNode; pos: SizeUInt): T;
-var 
-    lsize: SizeUInt;
+var
+  lsize: SizeUInt;
 begin
-    if (node = nil) or (pos > GetSize(node) - 1) then
-      raise Exception.Create('Invalid position.');
-      
-    while node <> nil do
+  if node = nil then
+    raise EArgumentNilException.Create('Set is empty.');
+  if pos > GetSize(node) - 1 then
+    raise EArgumentOutOfRangeException.Create('Position is out of range.');
+  while node <> nil do
+  begin
+    lsize := GetSize(node.FLeft);
+    if pos = lsize then
+      exit(node.FKey);
+    if pos > lsize then
     begin
-        lsize := GetSize(node.FLeft);	
-        if pos = lsize then 
-        	exit(node.FKey);
-        if pos > lsize then
-        begin
-            node := node.FRight;
-            pos := pos - lsize - 1
-        end    
-        else 
-        	node := node.FLeft
-    end;        
-end;    
+      node := node.FRight;
+      pos := pos - lsize - 1;
+    end
+    else
+      node := node.FLeft;
+  end;
+end;
 
+// PASSED
 class function TTreapNode.Min(node: TTreapNode): T;
 begin
-  Assert(node <> nil);
+  if node = nil then
+    raise EArgumentNilException.Create('Set is empty.');
   while node.FLeft <> nil do
     node := node.FLeft;
   Exit(node.FKey);
 end;
 
+// PASSED
 class function TTreapNode.Max(node: TTreapNode): T;
 begin
-  Assert(node <> nil);
+  if node = nil then
+    raise EArgumentNilException.Create('Set is empty.');
   while node.FRight <> nil do
     node := node.FRight;
   Exit(node.FKey);
@@ -275,8 +288,8 @@ end;
 class function TTreapNode.Remove(var node: TTreapNode; const k: T): boolean;
 var
   n: TTreapNode;
-
 begin
+  Result := False;
   if node <> nil then
   begin
     if k < node.FKey then
@@ -299,7 +312,6 @@ begin
       Exit(True);
     end;
   end;
-  Exit(False);
 end;
 
 class function TTreapNode.RemoveAt(var node: TTreapNode; const pos: SizeUInt): T;
@@ -348,11 +360,13 @@ begin
   begin
     Result := Result and CheckStucture(node.FLeft);
     Result := Result and CheckStucture(node.FRight);
-    Result := Result and (GetSize(node) = GetSize(node.FLeft) + GetSize(node.FRight) + 1);
+    Result := Result and (GetSize(node) = GetSize(node.FLeft) +
+      GetSize(node.FRight) + 1);
     if node.FLeft <> nil then
     begin
       Result := Result and (node.FPriority >= node.FLeft.FPriority);
-      Result := Result and ((node.FKey > node.FLeft.FKey) or (node.FKey = node.FLeft.FKey));
+      Result := Result and ((node.FKey > node.FLeft.FKey) or
+        (node.FKey = node.FLeft.FKey));
     end;
     if node.FRight <> nil then
     begin
@@ -360,26 +374,6 @@ begin
       Result := Result and (node.FKey < node.FRight.FKey);
     end;
   end;
-end;
-
-class procedure TTreapNode.ClassInfo;
-begin
-  WriteLn('*** Class Info ***');
-  //WriteLn('Default       - ', Default(T));
-  WriteLn('TypeInfo      - ', TTypeInfo(TypeInfo(T)^).Name);
-  WriteLn('SizeOf        - ', SizeOf(T));
-  //WriteLn('IsManagedType - ', IsManagedType(T));
-  //WriteLn('HasWeakRef    - ', HasWeakRef(T));
-  //WriteLn('GetTypeKind   - ', GetTypeKind(T));
-  WriteLn('*** Class Info ***');
-end;
-
-class procedure TTreapNode.StuctureInfo(node: TTreapNode);
-begin
-  if GetSize(node) <> 0 then
-    WriteLn('Size - ', GetSize(node), '. Left subtree size - ', GetSize(node.FLeft),
-      '. Right subtree size - ', GetSize(node.FRight), '. Ratio - ',
-      GetSize(node.FLeft) / GetSize(node.FRight));
 end;
 
 end.

@@ -1,41 +1,15 @@
 {$mode objfpc}{$H+}{$J-}
-{$MODESWITCH ADVANCEDRECORDS}
 {$warnings on}
 {$hints on}
+{$R+}
 
 program ftreapapp;
 
 uses
   ftreap;
 
-(*
-type
-  TStudent = record
-    sname: String;
-    sage: LongInt;
-    class operator < (const A, B: TStudent): Boolean;
-    class operator > (const A, B: TStudent): Boolean;
-    class operator = (const A, B: TStudent): Boolean;
-  end;
-
-  class operator TStudent.< (const A, B: TStudent): Boolean;
-  begin
-    Result := A.sage < B.sage;
-  end;
-
-  class operator TStudent.> (const A, B: TStudent): Boolean;
-  begin
-    Result := A.sage > B.sage;
-  end;
-
-  class operator TStudent.= (const A, B: TStudent): Boolean;
-  begin
-    Result := (A.sage = B.sage) and (A.sname = B.sname);
-  end;
-*)
 type
   TIntTreapNode = specialize TTreapNode<LongInt>;
-  //TStTreapNode = specialize TTreapNode<TStudent>;
 
 const
   NODES_NUM = 100;
@@ -80,6 +54,7 @@ begin
   for i := 0 to NODES_NUM - 1 do
   begin
     Assert(TIntTreapNode.Contains(ra, ta[i]));
+    Assert(not TIntTreapNode.Contains(ra, 1));
   end;
 
   WriteLn('Check treap GetPosition method.');
@@ -144,7 +119,7 @@ begin
 
   WriteLn('Check treap structure - ', TIntTreapNode.CheckStucture(ra));
   WriteLn('Size - ', TIntTreapNode.GetSize(ra));
-  TIntTreapNode.StuctureInfo(ra);
+
   if ra <> nil then
     WriteLn(ra.FKey);
   WriteLn('PASSED...');
