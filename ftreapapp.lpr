@@ -1,4 +1,5 @@
 {$mode objfpc}{$H+}{$J-}
+{$ASSERTIONS ON}
 {$warnings on}
 {$hints on}
 {$R+}
