@@ -1,4 +1,5 @@
 {$mode objfpc}{$H+}{$J-}
+{$ASSERTIONS ON}
 {$warnings on}
 {$hints on}
 {$R+}
@@ -6,6 +7,12 @@
 unit ftreap;
 
 interface
+
+uses SysUtils;
+
+{$if not declared(EArgumentException)}
+type EArgumentNilException = class(EArgumentException);
+{$endif}
 
 type
   generic TTreapNode<T> = class
@@ -21,6 +28,8 @@ type
     // Right subtree reference
     FRight: TTreapNode;
   public
+    //type TKeyArray = array of T;
+
     (* Tree node constructor. *)
     constructor Create(const k: T);
 
@@ -52,7 +61,7 @@ type
     class procedure Insert(var node: TTreapNode; const k: T); inline;
 
     (* Check if tree rooted at @code(root) node contains key @code(k). *)
-    class function Contains(node: TTreapNode; const k: T): boolean;
+    class function Contains(node: TTreapNode; const k: T): boolean; inline;
 
     class function GetPosition(node: TTreapNode; const k: T): SizeUInt;
 
@@ -73,6 +82,8 @@ type
        @returns(@true if successful, @false otherwise) *)
     class function RemoveAt(var node: TTreapNode; const pos: SizeUInt): T;
 
+    //class function ToArray(node: TTreapNode): TKeyArray;
+
     (* Destroy tree. *)
     class procedure DestroyTreap(var node: TTreapNode);
 
@@ -80,12 +91,6 @@ type
   end;
 
 implementation
-
-uses SysUtils;
-
-{$if not declared(EArgumentNilException)}
-type EArgumentNilException = class(EArgumentException);
-{$endif}
 
 constructor TTreapNode.Create(const k: T);
 begin
@@ -198,8 +203,7 @@ begin
   UpdateSize(node);
 end;
 
-class procedure TTreapNode.Insert(var node: TTreapNode; const k: T);
-  inline;
+class procedure TTreapNode.Insert(var node: TTreapNode; const k: T); inline;
 var
   l: TTreapNode = nil;
   r: TTreapNode = nil;
@@ -208,16 +212,17 @@ begin
   node := Meld(l, Meld(TTreapNode.Create(k), r));
 end;
 
-class function TTreapNode.Contains(node: TTreapNode; const k: T): boolean;
+// PASSED (IF LOG ?)
+class function TTreapNode.Contains(node: TTreapNode; const k: T): boolean; inline;
 begin
   while node <> nil do
   begin
-    if node.FKey < k then
-      node := node.FRight
-    else if node.FKey > k then
-      node := node.FLeft
-    else
+    if k = node.FKey then
       Exit(True);
+    if k > node.FKey then
+      node := node.FRight
+    else
+      node := node.FLeft
   end;
   Exit(False);
 end;
@@ -244,7 +249,7 @@ end;
 
 class function TTreapNode.GetAt(node: TTreapNode; pos: SizeUInt): T;
 var
-  lsize: SizeUInt;
+  lsize: SizeUInt = 0;
 begin
   if node = nil then
     raise EArgumentNilException.Create('Set is empty.');
@@ -254,7 +259,7 @@ begin
   begin
     lsize := GetSize(node.FLeft);
     if pos = lsize then
-      exit(node.FKey);
+      Exit(node.FKey);
     if pos > lsize then
     begin
       node := node.FRight;
@@ -376,4 +381,6 @@ begin
   end;
 end;
 
+initialization
+  //Randomize;
 end.

@@ -1,4 +1,5 @@
 {$mode objfpc}{$H+}{$J-}
+{$ASSERTIONS ON}
 {$warnings on}
 {$hints on}
 {$R+}
@@ -82,7 +83,6 @@ begin
     WriteLn(ra.FKey);
   WriteLn('PASSED...');
 
-  ReadLn();
   (*
   i := 5;
   while i < 1000000 do
@@ -123,7 +123,7 @@ begin
   if ra <> nil then
     WriteLn(ra.FKey);
   WriteLn('PASSED...');
-  ReadLn();
+
   TIntTreapNode.DestroyTreap(ra);
   Assert(ra = nil);
   Assert(TIntTreapNode.GetSize(ra) = 0);
