@@ -8,19 +8,19 @@
       <Unit0>
         <Filename Value="ftreapapp.lpr"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
-        <TopLine Value="92"/>
+        <TopLine Value="104"/>
         <CursorPos Y="126"/>
-        <UsageCount Value="38"/>
+        <UsageCount Value="39"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="ftreap.pas"/>
         <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
         <TopLine Value="211"/>
         <CursorPos X="18" Y="221"/>
-        <UsageCount Value="38"/>
+        <UsageCount Value="39"/>
         <Loaded Value="True"/>
       </Unit1>
       <Unit2>
