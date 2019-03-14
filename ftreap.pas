@@ -10,9 +10,9 @@ interface
 
 uses SysUtils;
 
-{$if not declared(EArgumentException)}
+//{$if not declared(EArgumentException)}
 type EArgumentNilException = class(EArgumentException);
-{$endif}
+//{$endif}
 
 type
   generic TTreapNode<T> = class
