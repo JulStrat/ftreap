@@ -1,6 +1,6 @@
 language: generic
 sudo: true
-dist: xenial
+dist: trusty
 
 os:
   - linux
@@ -11,6 +11,8 @@ before_install:
         brew update > /dev/null;
         brew install fpc > /dev/null;
       else
+        sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu $(lsb_release -sc) universe";
+        sudo apt-get update;
         sudo apt -q install fpc;
       fi
 
