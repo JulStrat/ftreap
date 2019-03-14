@@ -1,6 +1,6 @@
 language: generic
 sudo: true
-dist: precise
+dist: xenial
 
 os:
   - linux
