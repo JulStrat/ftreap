@@ -9,6 +9,7 @@ See [Wiki](https://github.com/JulStrat/ftreap/wiki) for more info.
 ## Built With
 
 * [Lazarus](https://www.lazarus-ide.org/) - The professional Free Pascal RAD IDE.
+* [PasDoc](https://github.com/pasdoc/pasdoc) - Documentation tool for ObjectPascal (Free Pascal, Lazarus, Delphi).
 
 ## License
 
