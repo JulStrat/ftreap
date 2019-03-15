@@ -2,7 +2,7 @@
 {$ASSERTIONS ON}
 {$warnings on}
 {$hints on}
-{$R+}
+{$R+}{$Q+}
 
 unit ftreap;
 
@@ -227,6 +227,7 @@ begin
   Exit(False);
 end;
 
+// PASSED
 class function TTreapNode.GetPosition(node: TTreapNode; const k: T): SizeUInt;
 var
   pos: SizeUInt;
@@ -234,19 +235,20 @@ begin
   pos := 0;
   while node <> nil do
   begin
-    if node.FKey < k then
+    if k = node.FKey then
+      Exit(pos + GetSize(node.FLeft));
+    if k > node.FKey then
     begin
       pos := pos + GetSize(node.FLeft) + 1;
       node := node.FRight;
     end
-    else if node.FKey > k then
-      node := node.FLeft
     else
-      Exit(pos + GetSize(node.FLeft));
+      node := node.FLeft;
   end;
   raise Exception.Create('No such key');
 end;
 
+// PASSED
 class function TTreapNode.GetAt(node: TTreapNode; pos: SizeUInt): T;
 var
   lsize: SizeUInt = 0;
@@ -268,6 +270,7 @@ begin
     else
       node := node.FLeft;
   end;
+  raise Exception.Create('Unreachable point.');
 end;
 
 // PASSED
@@ -290,6 +293,7 @@ begin
   Exit(node.FKey);
 end;
 
+// CALL REMOVENODE IF FOUND
 class function TTreapNode.Remove(var node: TTreapNode; const k: T): boolean;
 var
   n: TTreapNode;
@@ -297,25 +301,19 @@ begin
   Result := False;
   if node <> nil then
   begin
-    if k < node.FKey then
-    begin
-      Result := Remove(node.FLeft, k);
-      if Result then
-        UpdateSize(node);
-    end
-    else if k > node.FKey then
-    begin
-      Result := Remove(node.FRight, k);
-      if Result then
-        UpdateSize(node);
-    end
-    else
+    if k = node.FKey then
     begin
       n := node;
       node := Meld(node.FLeft, node.FRight);
       FreeAndNil(n);
       Exit(True);
     end;
+    if k > node.FKey then
+      Result := Remove(node.FRight, k)
+    else
+      Result := Remove(node.FLeft, k);
+    if Result then
+      UpdateSize(node);
   end;
 end;
 
@@ -382,5 +380,5 @@ begin
 end;
 
 initialization
-  //Randomize;
+  Randomize;
 end.
