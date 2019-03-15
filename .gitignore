@@ -30,7 +30,6 @@
 
 *.bat
 
-
 # Debug files
 *.dSYM/
 *.dbg
@@ -43,6 +42,8 @@
 # Pascal
 *.res
 *.lps
+*.ppu
+*.pds
 lib/
 backup/
 
