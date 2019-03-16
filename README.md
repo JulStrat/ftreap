@@ -4,7 +4,7 @@
 # ftreap
 
 Order statistic tree based on Treap data structure.
-See [Wiki](wiki) for more info.
+See [Wiki](https://github.com/JulStrat/ftreap/wiki) for more info.
 
 ## Built With
 
