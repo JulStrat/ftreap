@@ -44,6 +44,7 @@
 *.lps
 *.ppu
 *.pds
+*.lpi
 lib/
 backup/
 
