@@ -9,13 +9,13 @@ See [Wiki](https://github.com/JulStrat/ftreap/wiki) for more info.
 
 ## Motivation
 
-<div style="text-align: justify">
+<p style="text-align: justify">
 Why another treap implementation? The story begins from [SPOJ](https://www.spoj.com/) problem [ALLIN1](https://www.spoj.com/problems/ALLIN1/). 
 All accepted solutions was in C/C++ and one in D-DMD. I asked myself - why not Pascal? 
 My first attempt was based on records (mode DELPHI) - time 2.28s. 
 After reading Michalis Kamburelis excellent [Modern Object Pascal Introduction for Programmers](https://castle-engine.io/modern_pascal_introduction.html) I started ```ftreap```.
 So, here we are.
-</div>
+</p>
 
 ## Built With
 
