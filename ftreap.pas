@@ -10,16 +10,14 @@ interface
 
 uses SysUtils;
 
-//{$if not declared(EArgumentException)}
 type EArgumentNilException = class(EArgumentException);
-//{$endif}
 
 type
   generic TTreapNode<T> = class
   private
     // Key
     FKey: T;
-    // Random heap prority
+    // Random heap priority
     FPriority: extended;
     // Number of nodes in subtree
     FSize: SizeUInt;
@@ -28,8 +26,6 @@ type
     // Right subtree reference
     FRight: TTreapNode;
   public
-    //type TKeyArray = array of T;
-
     (* Tree node constructor. *)
     constructor Create(const k: T);
 
