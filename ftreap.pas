@@ -42,8 +42,6 @@ type
     (* Recalculates number of keys in the tree rooted at @code(node) after insert, delete operations. *)
     class procedure UpdateSize(const node: TTreapNode); inline;
 
-    class procedure RemoveNode(var node: TTreapNode); inline;
-
     (* Creates new tree from two trees, where @code(Min(r) >= Max(l)). *)
     class function Meld(l, r: TTreapNode): TTreapNode;
 
@@ -67,12 +65,6 @@ type
 
     (* @raises(EArgumentNilException) @raises(EArgumentOutOfRangeException) *)
     class function GetAt(node: TTreapNode; pos: SizeUInt): T;
-
-    (* @raises(EArgumentNilException) *)
-    class function Min(node: TTreapNode): T;
-
-    (* @raises(EArgumentNilException) *)
-    class function Max(node: TTreapNode): T;
 
     (* Removes key from the tree.
        @returns(@true if successful, @false otherwise) *)
@@ -123,18 +115,6 @@ begin
     node.FSize := GetSize(node.FLeft) + GetSize(node.FRight) + 1;
 end;
 
-class procedure TTreapNode.RemoveNode(var node: TTreapNode); inline;
-var
-  n: TTreapNode;
-begin
-  if node <> nil then
-  begin
-    n := Meld(node.FLeft, node.FRight);
-    FreeAndNil(node);
-    node := n;
-  end;
-end;
-
 class function TTreapNode.IsEmpty(const node: TTreapNode): boolean; inline;
 begin
   Exit(node = nil);
@@ -149,15 +129,14 @@ begin
   if l.FPriority > r.FPriority then
   begin
     l.FRight := Meld(l.FRight, r);
-    UpdateSize(l);
     Result := l;
   end
   else
   begin
     r.FLeft := Meld(l, r.FLeft);
-    UpdateSize(r);
     Result := r;
   end;
+  UpdateSize(Result);
 end;
 
 class procedure TTreapNode.DivideAt(node: TTreapNode; const pos: SizeUInt;
@@ -182,6 +161,7 @@ begin
   UpdateSize(node);
 end;
 
+// DivideRight
 class procedure TTreapNode.Divide(node: TTreapNode; k: T; var l, r: TTreapNode);
 begin
   if node = nil then
@@ -212,7 +192,7 @@ begin
   node := Meld(l, Meld(TTreapNode.Create(k), r));
 end;
 
-// PASSED (IF LOG ?)
+// PASSED
 class function TTreapNode.Contains(node: TTreapNode; const k: T): boolean; inline;
 begin
   while node <> nil do
@@ -273,27 +253,6 @@ begin
   raise Exception.Create('Unreachable point.');
 end;
 
-// PASSED
-class function TTreapNode.Min(node: TTreapNode): T;
-begin
-  if node = nil then
-    raise EArgumentNilException.Create('Set is empty.');
-  while node.FLeft <> nil do
-    node := node.FLeft;
-  Exit(node.FKey);
-end;
-
-// PASSED
-class function TTreapNode.Max(node: TTreapNode): T;
-begin
-  if node = nil then
-    raise EArgumentNilException.Create('Set is empty.');
-  while node.FRight <> nil do
-    node := node.FRight;
-  Exit(node.FKey);
-end;
-
-// CALL REMOVENODE IF FOUND
 class function TTreapNode.Remove(var node: TTreapNode; const k: T): boolean;
 var
   n: TTreapNode;
@@ -317,31 +276,28 @@ begin
   end;
 end;
 
+// RWRT
 class function TTreapNode.RemoveAt(var node: TTreapNode; const pos: SizeUInt): T;
 var
   n: TTreapNode;
 begin
-  Assert(node <> nil);
-  Assert(pos < GetSize(node));
-
-  if pos < GetSize(node.FLeft) then
-  begin
-    Result := RemoveAt(node.FLeft, pos);
-    UpdateSize(node);
-  end
-  else if pos > GetSize(node.FLeft) then
-  begin
-    Result := RemoveAt(node.FRight, pos - GetSize(node.FLeft) - 1);
-    UpdateSize(node);
-  end
-  else
+  if node = nil then
+    raise EArgumentNilException.Create('Set is empty.');
+  if pos > GetSize(node) - 1 then
+    raise EArgumentOutOfRangeException.Create('Position is out of range.');
+  if pos = GetSize(node.FLeft) then
   begin
     Result := node.FKey;
     n := node;
     node := Meld(node.FLeft, node.FRight);
     FreeAndNil(n);
+    Exit;
   end;
-
+  if pos > GetSize(node.FLeft) then
+    Result := RemoveAt(node.FRight, pos - GetSize(node.FLeft) - 1)
+  else
+    Result := RemoveAt(node.FLeft, pos);
+  UpdateSize(node);
 end;
 
 class procedure TTreapNode.DestroyTreap(var node: TTreapNode);

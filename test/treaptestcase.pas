@@ -130,7 +130,7 @@ begin
   try
     begin
       for i := 0 to KEYS_NUMBER - 1 do
-        AssertEquals(0, TIntTreapNode.Min(root));
+        AssertEquals(0, TIntTreapNode.GetAt(root, 0));
     end;
   except
     Fail('Invalid min key!');
@@ -140,11 +140,15 @@ end;
 procedure TTreapTestCase.TestMax;
 var
   i: LongInt;
+  s: SizeUInt;
 begin
   try
     begin
+      s := TIntTreapNode.GetSize(root);
       for i := 0 to KEYS_NUMBER - 1 do
-        AssertEquals(2 * (KEYS_NUMBER - 1), TIntTreapNode.Max(root));
+      begin
+        AssertEquals(2 * (KEYS_NUMBER - 1), TIntTreapNode.GetAt(root, s-1));
+      end;
     end;
   except
     Fail('Invalid max key!');
