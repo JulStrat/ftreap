@@ -10,8 +10,6 @@ interface
 
 uses SysUtils;
 
-type EArgumentNilException = class(EArgumentException);
-
 type
   generic TTreapNode<T> = class
   private
@@ -59,7 +57,7 @@ type
 
     class function GetPosition(node: TTreapNode; const k: T): SizeUInt;
 
-    (* @raises(EArgumentNilException) @raises(EArgumentOutOfRangeException) *)
+    (* @raises(EArgumentException) *)
     class function GetAt(node: TTreapNode; pos: SizeUInt): T;
 
     (* Removes key from the tree.
@@ -69,8 +67,6 @@ type
     (* Removes key from the given position.
        @returns(@true if successful, @false otherwise) *)
     class function RemoveAt(var node: TTreapNode; const pos: SizeUInt): T;
-
-    //class function ToArray(node: TTreapNode): TKeyArray;
 
     (* Destroy tree. *)
     class procedure DestroyTreap(var node: TTreapNode);
@@ -229,10 +225,8 @@ class function TTreapNode.GetAt(node: TTreapNode; pos: SizeUInt): T;
 var
   lsize: SizeUInt = 0;
 begin
-  if node = nil then
-    raise EArgumentNilException.Create('Set is empty.');
-  if pos > GetSize(node) - 1 then
-    raise EArgumentOutOfRangeException.Create('Position is out of range.');
+  if (node = nil) or (pos > GetSize(node) - 1) then
+    raise EArgumentException.Create('Set is empty or position is out of range.');
   while node <> nil do
   begin
     lsize := GetSize(node.FLeft);
@@ -277,10 +271,8 @@ class function TTreapNode.RemoveAt(var node: TTreapNode; const pos: SizeUInt): T
 var
   n: TTreapNode;
 begin
-  if node = nil then
-    raise EArgumentNilException.Create('Set is empty.');
-  if pos > GetSize(node) - 1 then
-    raise EArgumentOutOfRangeException.Create('Position is out of range.');
+  if (node = nil) or (pos > GetSize(node) - 1) then
+    raise EArgumentException.Create('Set is empty or position is out of range.');
   if pos = GetSize(node.FLeft) then
   begin
     Result := node.FKey;

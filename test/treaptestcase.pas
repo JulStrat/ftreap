@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, fpcunit, testutils, testregistry, ftreap;
 
 const
-  KEYS_NUMBER = 1000000;
+  KEYS_NUMBER = 2000000;
 
 type
   TIntTreapNode = specialize TTreapNode<longint>;
@@ -113,8 +113,8 @@ begin
     begin
       for i := 0 to KEYS_NUMBER - 1 do
       begin
-        TIntTreapNode.Remove(root, 2 * i);
-        AssertEquals(False, TIntTreapNode.Contains(root, 2 * i));
+        AssertEquals(True, TIntTreapNode.Remove(root, 2 * i));
+        //AssertEquals(False, TIntTreapNode.Contains(root, 2 * i));
       end;
       AssertEquals(0, TIntTreapNode.GetSize(root));
     end;
