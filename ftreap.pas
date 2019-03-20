@@ -1,4 +1,5 @@
 {$mode objfpc}{$H+}{$J-}
+{$PACKRECORDS 32}
 {$ASSERTIONS ON}
 {$warnings on}
 {$hints on}
@@ -54,6 +55,11 @@ type
 
     (* Check if tree rooted at @code(root) node contains key @code(k). *)
     class function Contains(node: TTreapNode; const k: T): boolean; inline;
+
+    (* Number of keys less than @code(k) *)
+    class function BisectLeft(node: TTreapNode; const k: T): SizeUInt;
+    (* Number of keys less or equal than @code(k) *)
+    class function BisectRight(node: TTreapNode; const k: T): SizeUInt;
 
     class function GetPosition(node: TTreapNode; const k: T): SizeUInt;
 
@@ -199,12 +205,45 @@ begin
   Exit(False);
 end;
 
+class function TTreapNode.BisectLeft(node: TTreapNode; const k: T): SizeUInt;
+var
+  pos: SizeUInt = 0;
+begin
+  while node <> nil do
+  begin
+    if k > node.FKey then
+    begin
+      pos := pos + GetSize(node.FLeft) + 1;
+      node := node.FRight;
+    end
+    else
+      node := node.FLeft;
+  end;
+  Exit(pos);
+end;
+
+class function TTreapNode.BisectRight(node: TTreapNode; const k: T): SizeUInt;
+var
+  pos: SizeUInt = 0;
+begin
+  while node <> nil do
+  begin
+    if k < node.FKey then
+      node := node.FLeft
+    else
+    begin
+      pos := pos + GetSize(node.FLeft) + 1;
+      node := node.FRight;
+    end;
+  end;
+  Exit(pos);
+end;
+
 // PASSED
 class function TTreapNode.GetPosition(node: TTreapNode; const k: T): SizeUInt;
 var
-  pos: SizeUInt;
+  pos: SizeUInt = 0;
 begin
-  pos := 0;
   while node <> nil do
   begin
     if k = node.FKey then

@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, fpcunit, testutils, testregistry, ftreap;
 
 const
-  KEYS_NUMBER = 2000000;
+  KEYS_NUMBER = 1000000;
 
 type
   TIntTreapNode = specialize TTreapNode<longint>;

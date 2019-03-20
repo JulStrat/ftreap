@@ -34,6 +34,8 @@ begin
   WriteLn('Heap CurrHeapUsed - ', GetFPCHeapStatus().CurrHeapUsed);
   WriteLn('Heap CurrHeapFree - ', GetFPCHeapStatus().CurrHeapFree);
 
+  WriteLn('InstanceSize - ', TIntTreapNode.InstanceSize);
+
   SetLength(ta, NODES_NUM);
   for i := 0 to NODES_NUM - 1 do
   begin
@@ -69,6 +71,23 @@ begin
   Assert(not TIntTreapNode.Contains(ra, MAX_KEY + 1));
   Assert(not TIntTreapNode.Contains(ra, MAX_KEY + 2));
   WriteLn('PASSED...');
+
+  WriteLn('Check treap BisectLeft method.');
+  for i := 0 to NODES_NUM - 1 do
+  begin
+    writeLn('Key - ', ta[i], ' BL - ', TIntTreapNode.BisectLeft(ra, ta[i]));
+    Assert(i = TIntTreapNode.BisectLeft(ra, ta[i]));
+  end;
+  WriteLn('PASSED...');
+
+  WriteLn('Check treap BisectRight method.');
+  for i := 0 to NODES_NUM - 1 do
+  begin
+    writeLn('Key - ', ta[i], ' BR - ', TIntTreapNode.BisectRight(ra, ta[i]));
+    Assert(i+1 = TIntTreapNode.BisectRight(ra, ta[i]));
+  end;
+  WriteLn('PASSED...');
+
 
   WriteLn('Check treap DeleteAt method.');
   for i := 0 to NODES_NUM - 1 do
