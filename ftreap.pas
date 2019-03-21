@@ -1,5 +1,4 @@
 {$mode objfpc}{$H+}{$J-}
-//{$PACKRECORDS 32}
 {$ASSERTIONS ON}
 {$warnings on}
 {$hints on}

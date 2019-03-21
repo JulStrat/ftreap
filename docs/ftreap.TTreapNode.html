@@ -90,6 +90,14 @@
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>class function <b><a  href="ftreap.TTreapNode.html#BisectLeft">BisectLeft</a></b>(node: <a  href="ftreap.TTreapNode.html">TTreapNode</a>; const k: T): SizeUInt;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>class function <b><a  href="ftreap.TTreapNode.html#BisectRight">BisectRight</a></b>(node: <a  href="ftreap.TTreapNode.html">TTreapNode</a>; const k: T): SizeUInt;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>class function <b><a  href="ftreap.TTreapNode.html#GetPosition">GetPosition</a></b>(node: <a  href="ftreap.TTreapNode.html">TTreapNode</a>; const k: T): SizeUInt;</code></td>
 </tr>
 <tr class="list2">
@@ -233,7 +241,7 @@ Divides tree into two trees. Where <code>Max(l) &lt;= k</code>.</p>
 </tr>
 <tr><td colspan="2">
 <p>
-Divides tree into two trees. Where <code>Size(l) = <acronym class="mispelling" title="suggestions: PPS, Po's, pis, pois, pose, poss, posy, ops, PS, Post, pods, pols, pons, pops, post, pots, pros, pod, posh, PO, Po, OS, Os, P's, p's, pas, pus, PBS, PCs, PMS, PMs, POW, Poe, poi, pow, pox, Cos, DOS, Los, Pol, Ros, SOS, SOs, cos, dos, gos, hos, mos, nos, pol, pop, pot, sos">pos</acronym> + 1</code>.</p>
+Divides tree into two trees. Where <code>Size(l) = pos + 1</code>.</p>
 </td></tr>
 </table>
 <table class="detail wide_list">
@@ -269,6 +277,26 @@ Check if tree rooted at <code>root</code> node contains key <code>k</code>.</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><span id="BisectLeft"></span><code>class function <b>BisectLeft</b>(node: <a  href="ftreap.TTreapNode.html">TTreapNode</a>; const k: T): SizeUInt;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Number of keys less than <code>k</code></p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><span id="BisectRight"></span><code>class function <b>BisectRight</b>(node: <a  href="ftreap.TTreapNode.html">TTreapNode</a>; const k: T): SizeUInt;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Number of keys less or equal <code>k</code></p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><span id="GetPosition"></span><code>class function <b>GetPosition</b>(node: <a  href="ftreap.TTreapNode.html">TTreapNode</a>; const k: T): SizeUInt;</code></td>
 </tr>
 <tr><td colspan="2">
@@ -280,13 +308,9 @@ Check if tree rooted at <code>root</code> node contains key <code>k</code>.</p>
 <td class="itemcode"><span id="GetAt"></span><code>class function <b>GetAt</b>(node: <a  href="ftreap.TTreapNode.html">TTreapNode</a>; pos: SizeUInt): T;</code></td>
 </tr>
 <tr><td colspan="2">
-<p>
- </p>
-<h6 class="description_section">Exceptions raised</h6>
+&nbsp;<h6 class="description_section">Exceptions raised</h6>
 <dl class="exceptions_raised">
-<dt><a class="normal" href="ftreap.EArgumentNilException.html">EArgumentNilException</a></dt>
-<dd></dd>
-<dt><code>EArgumentOutOfRangeException</code></dt>
+<dt><code>EArgumentException</code></dt>
 <dd></dd>
 </dl>
 </td></tr>
@@ -311,7 +335,7 @@ Removes key from the tree. </p>
 <p>
 Removes key from the given position. </p>
 <h6 class="description_section">Returns</h6>
-<p class="return"><code>True</code> if successful, <code>False</code> otherwise</p></td></tr>
+<p class="return">key</p></td></tr>
 </table>
 <table class="detail wide_list">
 <tr class="list">
