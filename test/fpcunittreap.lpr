@@ -3,6 +3,7 @@ program fpcunittreap;
 {$mode objfpc}{$H+}
 
 uses
+  // {$ifopt D-}CMem,{$endif}
   Interfaces, Forms, GuiTestRunner, treaptestcase;
 
 {$R *.res}

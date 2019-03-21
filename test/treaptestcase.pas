@@ -24,6 +24,8 @@ type
     procedure TestFindExisting;
     procedure TestFindNotExisting;
     procedure TestGetPosition;
+    procedure TestBisectLeft;
+    procedure TestBisectRight;
     procedure TestGetAt;
     procedure TestRemove;
     procedure TestMin;
@@ -90,6 +92,36 @@ begin
     Fail('GetPosition failed!');
   end;
 end;
+
+procedure TTreapTestCase.TestBisectLeft;
+var
+  i: longint;
+begin
+  try
+    begin
+      for i := 0 to KEYS_NUMBER - 1 do
+        AssertEquals(i, TIntTreapNode.BisectLeft(root, 2 * i));
+    end;
+  except
+    Fail('BisectLeft failed!');
+  end;
+end;
+
+procedure TTreapTestCase.TestBisectRight;
+var
+  i: longint;
+begin
+  try
+    begin
+      for i := 0 to KEYS_NUMBER - 1 do
+        AssertEquals(i+1, TIntTreapNode.BisectRight(root, 2 * i));
+    end;
+  except
+    Fail('BisectRight failed!');
+  end;
+end;
+
+
 
 procedure TTreapTestCase.TestGetAt;
 var

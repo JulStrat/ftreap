@@ -1,5 +1,5 @@
 {$mode objfpc}{$H+}{$J-}
-{$PACKRECORDS 32}
+//{$PACKRECORDS 32}
 {$ASSERTIONS ON}
 {$warnings on}
 {$hints on}
@@ -58,7 +58,7 @@ type
 
     (* Number of keys less than @code(k) *)
     class function BisectLeft(node: TTreapNode; const k: T): SizeUInt;
-    (* Number of keys less or equal than @code(k) *)
+    (* Number of keys less or equal @code(k) *)
     class function BisectRight(node: TTreapNode; const k: T): SizeUInt;
 
     class function GetPosition(node: TTreapNode; const k: T): SizeUInt;
@@ -71,7 +71,7 @@ type
     class function Remove(var node: TTreapNode; const k: T): boolean;
 
     (* Removes key from the given position.
-       @returns(@true if successful, @false otherwise) *)
+       @returns(key) *)
     class function RemoveAt(var node: TTreapNode; const pos: SizeUInt): T;
 
     (* Destroy tree. *)
@@ -200,7 +200,7 @@ begin
     if k > node.FKey then
       node := node.FRight
     else
-      node := node.FLeft
+      node := node.FLeft;
   end;
   Exit(False);
 end;
