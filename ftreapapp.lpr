@@ -177,6 +177,6 @@ begin
   Assert(ra = nil);
   Assert(TIntTreapNode.GetSize(ra) = 0);
   TImpIntTreapNode.DestroyTreap(ria);
-  ReadLn();
+  //ReadLn();
 
 end.
