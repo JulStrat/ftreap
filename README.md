@@ -3,8 +3,9 @@
 
 # ftreap
 
-[Order statistic tree](https://en.wikipedia.org/wiki/Order_statistic_tree) based on [Treap](https://en.wikipedia.org/wiki/Treap) data structure.
-Compact ObjectPascal ```generic class TTreapNode```.
+[Order statistic tree](https://en.wikipedia.org/wiki/Order_statistic_tree) based on [Treap](https://en.wikipedia.org/wiki/Treap) data structure and 
+powerful Implicit Treap for interval operations.
+Compact ObjectPascal ```generic class TTreapNode``` and ```generic class TImplicitTreapNode```.
 See [Wiki](https://github.com/JulStrat/ftreap/wiki) for more info.
 
 ## Motivation
