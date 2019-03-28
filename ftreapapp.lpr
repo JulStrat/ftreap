@@ -11,6 +11,7 @@ uses
 
 type
   TIntTreapNode = specialize TTreapNode<LongInt>;
+  TImpIntTreapNode = specialize TImplicitTreapNode<LongInt>;
 
 const
   NODES_NUM = 100;
@@ -18,6 +19,7 @@ const
 
 var
   ra: TIntTreapNode = nil;
+  ria: TImpIntTreapNode = nil;
   ta: array of longint;
   i, j: longint;
 
@@ -146,5 +148,35 @@ begin
   TIntTreapNode.DestroyTreap(ra);
   Assert(ra = nil);
   Assert(TIntTreapNode.GetSize(ra) = 0);
+
+  WriteLn('Implicit Treap test ...');
+  for i := 0 to NODES_NUM - 1 do
+  begin
+    TImpIntTreapNode.InsertAt(ria, 0, ta[i]);
+  end;
+
+  Assert(True = TImpIntTreapNode.CheckStucture(ria));
+  WriteLn('Check implicit treap structure PASSED...');
+
+  for i := 0 to NODES_NUM - 1 do
+  begin
+    j := TImpIntTreapNode.GetAt(ria, i);
+    WriteLn(j);
+    Assert(ta[NODES_NUM-1-i] = j);
+  end;
+  WriteLn('InsertAt PASSED...');
+
+  for i := 0 to NODES_NUM - 1 do
+  begin
+    j := TImpIntTreapNode.RemoveAt(ria, 0);
+    WriteLn(j);
+    Assert(ta[NODES_NUM-1-i] = j);
+  end;
+  WriteLn('RemoveAt PASSED...');
+
+  Assert(ra = nil);
+  Assert(TIntTreapNode.GetSize(ra) = 0);
+  TImpIntTreapNode.DestroyTreap(ria);
+  ReadLn();
 
 end.
