@@ -79,8 +79,64 @@ type
     class function CheckStucture(node: TTreapNode): boolean;
   end;
 
-implementation
+  generic TImplicitTreapNode<T> = class
+  private
+    // Value
+    FValue: T;
+    // Random heap priority
+    FPriority: extended;
+    // Number of nodes in subtree
+    FSize: SizeUInt;
+    // Left subtree reference
+    FLeft: TImplicitTreapNode;
+    // Right subtree reference
+    FRight: TImplicitTreapNode;
+  public
+    (* Tree node constructor. *)
+    constructor Create(const v: T);
 
+    (* Tree node destructor. *)
+    destructor Destroy; override;
+
+    (* Returns number of keys in the tree rooted at @code(node). *)
+    class function GetSize(const node: TImplicitTreapNode): SizeUInt; inline;
+
+    (* Recalculates number of nodes in the tree rooted at @code(node) after insert, delete operations. *)
+    class procedure UpdateSize(const node: TImplicitTreapNode); inline;
+
+    (* Creates new tree from two trees *)
+    class function Meld(l, r: TImplicitTreapNode): TImplicitTreapNode;
+
+    (* Divides tree into two trees. Where @code(Size(l) = pos + 1). *)
+    class procedure DivideAt(node: TImplicitTreapNode; const pos: SizeUInt;
+      var l, r: TImplicitTreapNode);
+
+    (* Returns @true if tree rooted at @code(node) is empty, @false otherwise *)
+    class function IsEmpty(const node: TImplicitTreapNode): boolean; inline;
+
+    (* Insert value @code(k) at position in tree rooted at @code(node). *)
+    class procedure InsertAt(var node: TImplicitTreapNode; const pos: SizeUInt; const v: T); inline;
+
+    (* @raises(EArgumentException) *)
+    class function GetAt(node: TImplicitTreapNode; pos: SizeUInt): T;
+
+    //class function UpdateAt(node: TImplicitTreapNode; pos: SizeUInt; const v: T): T;    
+  
+    (* Removes value from the given position.
+       @returns(key) *)
+    class function RemoveAt(var node: TImplicitTreapNode; const pos: SizeUInt): T;
+
+    (* Destroy tree. *)
+    class procedure DestroyTreap(var node: TImplicitTreapNode);
+
+    class function CheckStucture(node: TImplicitTreapNode): boolean;
+  end;
+  
+  
+implementation
+//
+// TTreapNode Class methods
+//
 constructor TTreapNode.Create(const k: T);
 begin
   FKey := k;
@@ -358,6 +414,168 @@ begin
       Result := Result and (node.FPriority >= node.FRight.FPriority);
       Result := Result and (node.FKey < node.FRight.FKey);
     end;
+  end;
+end;
+
+//
+// TImplicitTreapNode Class methods
+//
+constructor TImplicitTreapNode.Create(const v: T);
+begin
+  FValue := v;
+  FPriority := Random;
+  FSize := 1;
+  FLeft := nil;
+  FRight := nil;
+end;
+
+destructor TImplicitTreapNode.Destroy;
+begin
+  FLeft := nil;
+  FRight := nil;
+  inherited;
+end;
+
+// PASSED
+class function TImplicitTreapNode.GetSize(const node: TImplicitTreapNode): SizeUInt; inline;
+begin
+  if node <> nil then
+    Exit(node.FSize);
+  Exit(0);
+end;
+
+// PASSED
+class procedure TImplicitTreapNode.UpdateSize(const node: TImplicitTreapNode); inline;
+begin
+  if node <> nil then
+    node.FSize := GetSize(node.FLeft) + GetSize(node.FRight) + 1;
+end;
+
+class function TImplicitTreapNode.IsEmpty(const node: TImplicitTreapNode): boolean; inline;
+begin
+  Exit(node = nil);
+end;
+
+class function TImplicitTreapNode.Meld(l, r: TImplicitTreapNode): TImplicitTreapNode;
+begin
+  if l = nil then
+    Exit(r);
+  if r = nil then
+    Exit(l);
+  if l.FPriority > r.FPriority then
+  begin
+    l.FRight := Meld(l.FRight, r);
+    Result := l;
+  end
+  else
+  begin
+    r.FLeft := Meld(l, r.FLeft);
+    Result := r;
+  end;
+  UpdateSize(Result);
+end;
+
+class procedure TImplicitTreapNode.DivideAt(node: TImplicitTreapNode; const pos: SizeUInt;
+  var l, r: TImplicitTreapNode);
+begin
+  if node = nil then
+  begin
+    l := nil;
+    r := nil;
+    Exit;
+  end;
+  if pos <= GetSize(node.FLeft) then
+  begin
+    DivideAt(node.FLeft, pos, l, node.FLeft);
+    r := node;
+  end
+  else
+  begin
+    DivideAt(node.FRight, pos - GetSize(node.FLeft) - 1, node.FRight, r);
+    l := node;
+  end;
+  UpdateSize(node);
+end;
+
+class procedure TImplicitTreapNode.InsertAt(var node: TImplicitTreapNode; const pos: SizeUInt; const v: T); inline;
+var
+  l: TImplicitTreapNode = nil;
+  r: TImplicitTreapNode = nil;
+begin
+  DivideAt(node, pos, l, r);
+  node := Meld(l, Meld(TImplicitTreapNode.Create(v), r));
+end;
+
+// PASSED
+class function TImplicitTreapNode.GetAt(node: TImplicitTreapNode; pos: SizeUInt): T;
+var
+  lsize: SizeUInt = 0;
+begin
+  if (node = nil) or (pos > GetSize(node) - 1) then
+    raise EArgumentException.Create('Set is empty or position is out of range.');
+  while node <> nil do
+  begin
+    lsize := GetSize(node.FLeft);
+    if pos = lsize then
+      Exit(node.FValue);
+    if pos > lsize then
+    begin
+      node := node.FRight;
+      pos := pos - lsize - 1;
+    end
+    else
+      node := node.FLeft;
+  end;
+  raise Exception.Create('Unreachable point.');
+end;
+
+// RWRT
+class function TImplicitTreapNode.RemoveAt(var node: TImplicitTreapNode; const pos: SizeUInt): T;
+var
+  n: TImplicitTreapNode;
+begin
+  if (node = nil) or (pos > GetSize(node) - 1) then
+    raise EArgumentException.Create('Set is empty or position is out of range.');
+  if pos = GetSize(node.FLeft) then
+  begin
+    Result := node.FValue;
+    n := node;
+    node := Meld(node.FLeft, node.FRight);
+    FreeAndNil(n);
+    Exit;
+  end;
+  if pos > GetSize(node.FLeft) then
+    Result := RemoveAt(node.FRight, pos - GetSize(node.FLeft) - 1)
+  else
+    Result := RemoveAt(node.FLeft, pos);
+  UpdateSize(node);
+end;
+
+class procedure TImplicitTreapNode.DestroyTreap(var node: TImplicitTreapNode);
+begin
+  if node <> nil then
+  begin
+    DestroyTreap(node.FLeft);
+    DestroyTreap(node.FRight);
+    FreeAndNil(node);
+  end;
+end;
+
+class function TImplicitTreapNode.CheckStucture(node: TImplicitTreapNode): boolean;
+begin
+  Result := True;
+  if node = nil then
+    Exit(Result);
+  with node do
+  begin
+    Result := Result and CheckStucture(node.FLeft);
+    Result := Result and CheckStucture(node.FRight);
+    Result := Result and (GetSize(node) = GetSize(node.FLeft) +
+      GetSize(node.FRight) + 1);
+    if node.FLeft <> nil then
+      Result := Result and (node.FPriority >= node.FLeft.FPriority);
+    if node.FRight <> nil then
+      Result := Result and (node.FPriority >= node.FRight.FPriority);
   end;
 end;
 
