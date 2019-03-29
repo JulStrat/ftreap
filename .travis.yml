@@ -16,8 +16,8 @@ before_install:
         sudo apt-get update;
         sudo apt -q install fpc;
       else
-        wget "https://github.com/newpascal/newpascal/releases/download/np-v1.0.56/newpascal.zip";
-        unzip -qq newpascal.zip;
+        wget -q "https://github.com/newpascal/newpascal/releases/download/np-v1.0.56/newpascal.zip";
+        unzip -q newpascal.zip;
         ./newpascal/configure.bat;
         export PATH="$PATH":"$PWD/newpascal/fpc/bin/i386-win32/";
       fi
