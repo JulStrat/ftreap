@@ -42,7 +42,7 @@ type
     (* Divides tree into two trees. Where @code(Max(l) <= k). *)
     class procedure Divide(node: TTreapNode; k: T; var l, r: TTreapNode);
 
-    (* Divides tree into two trees. Where @code(Size(l) = pos + 1). *)
+    (* Divides tree into two trees. Where @code(Size(l) = pos). *)
     class procedure DivideAt(node: TTreapNode; const pos: SizeUInt;
       var l, r: TTreapNode);
 
@@ -107,7 +107,7 @@ type
     (* Creates new tree from two trees *)
     class function Meld(l, r: TImplicitTreapNode): TImplicitTreapNode;
 
-    (* Divides tree into two trees. Where @code(Size(l) = pos + 1). *)
+    (* Divides tree into two trees. Where @code(Size(l) = pos). *)
     class procedure DivideAt(node: TImplicitTreapNode; const pos: SizeUInt;
       var l, r: TImplicitTreapNode);
 
@@ -199,19 +199,19 @@ begin
   begin
     l := nil;
     r := nil;
-    Exit;
+    Exit
   end;
-  if pos <= GetSize(node.FLeft) then
+  if pos > GetSize(node.FLeft) then
   begin
-    DivideAt(node.FLeft, pos, l, node.FLeft);
-    r := node;
+    DivideAt(node.FRight, pos - GetSize(node.FLeft) - 1, node.FRight, r);
+    l := node
   end
   else
   begin
-    DivideAt(node.FRight, pos - GetSize(node.FLeft) - 1, node.FRight, r);
-    l := node;
+    DivideAt(node.FLeft, pos, l, node.FLeft);
+    r := node
   end;
-  UpdateSize(node);
+  UpdateSize(node)
 end;
 
 // DivideRight
@@ -426,14 +426,14 @@ begin
   FPriority := Random;
   FSize := 1;
   FLeft := nil;
-  FRight := nil;
+  FRight := nil
 end;
 
 destructor TImplicitTreapNode.Destroy;
 begin
   FLeft := nil;
   FRight := nil;
-  inherited;
+  inherited
 end;
 
 // PASSED
@@ -441,19 +441,19 @@ class function TImplicitTreapNode.GetSize(const node: TImplicitTreapNode): SizeU
 begin
   if node <> nil then
     Exit(node.FSize);
-  Exit(0);
+  Exit(0)
 end;
 
 // PASSED
 class procedure TImplicitTreapNode.UpdateSize(const node: TImplicitTreapNode); inline;
 begin
   if node <> nil then
-    node.FSize := GetSize(node.FLeft) + GetSize(node.FRight) + 1;
+    node.FSize := GetSize(node.FLeft) + GetSize(node.FRight) + 1
 end;
 
 class function TImplicitTreapNode.IsEmpty(const node: TImplicitTreapNode): boolean; inline;
 begin
-  Exit(node = nil);
+  Exit(node = nil)
 end;
 
 class function TImplicitTreapNode.Meld(l, r: TImplicitTreapNode): TImplicitTreapNode;
@@ -465,14 +465,14 @@ begin
   if l.FPriority > r.FPriority then
   begin
     l.FRight := Meld(l.FRight, r);
-    Result := l;
+    Result := l
   end
   else
   begin
     r.FLeft := Meld(l, r.FLeft);
-    Result := r;
+    Result := r
   end;
-  UpdateSize(Result);
+  UpdateSize(Result)
 end;
 
 class procedure TImplicitTreapNode.DivideAt(node: TImplicitTreapNode; const pos: SizeUInt;
@@ -482,28 +482,27 @@ begin
   begin
     l := nil;
     r := nil;
-    Exit;
+    Exit
   end;
-  if pos <= GetSize(node.FLeft) then
+  if pos > GetSize(node.FLeft) then
   begin
-    DivideAt(node.FLeft, pos, l, node.FLeft);
-    r := node;
+    DivideAt(node.FRight, pos - GetSize(node.FLeft) - 1, node.FRight, r);
+    l := node
   end
   else
   begin
-    DivideAt(node.FRight, pos - GetSize(node.FLeft) - 1, node.FRight, r);
-    l := node;
+    DivideAt(node.FLeft, pos, l, node.FLeft);
+    r := node
   end;
-  UpdateSize(node);
+  UpdateSize(node)
 end;
 
 class procedure TImplicitTreapNode.InsertAt(var node: TImplicitTreapNode; const pos: SizeUInt; const v: T); inline;
 var
-  l: TImplicitTreapNode = nil;
-  r: TImplicitTreapNode = nil;
+  l, r: TImplicitTreapNode;
 begin
   DivideAt(node, pos, l, r);
-  node := Meld(l, Meld(TImplicitTreapNode.Create(v), r));
+  node := Meld(l, Meld(TImplicitTreapNode.Create(v), r))
 end;
 
 // PASSED
@@ -521,12 +520,12 @@ begin
     if pos > lsize then
     begin
       node := node.FRight;
-      pos := pos - lsize - 1;
+      pos := pos - lsize - 1
     end
     else
-      node := node.FLeft;
+      node := node.FLeft
   end;
-  raise Exception.Create('Unreachable point.');
+  raise Exception.Create('Unreachable point.')
 end;
 
 // RWRT
@@ -557,7 +556,7 @@ begin
   begin
     DestroyTreap(node.FLeft);
     DestroyTreap(node.FRight);
-    FreeAndNil(node);
+    FreeAndNil(node)
   end;
 end;
 
