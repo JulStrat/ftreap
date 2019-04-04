@@ -24,6 +24,8 @@ Here some testing results on [IDEONE](https://ideone.com/0YvvRx).
 | ----------------------- | ------ | ------ | ------ | ------ | ------- |
 | Insert                  | 0.08s  | 0.19s  | 0.42s  | 1.06s  | 2.58s   |
 
+[FTREAP](http://tpcg.io/bWiG94) vs FCL-STL gset.
+
 ## Built With
 
 * [Lazarus](https://www.lazarus-ide.org/) - The professional Free Pascal RAD IDE.

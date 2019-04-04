@@ -16,10 +16,10 @@ before_install:
         sudo apt-get update;
         sudo apt -q install fpc;
       else
-        wget -q "https://github.com/newpascal/newpascal/releases/download/np-v1.0.56/newpascal.zip";
-        unzip -q newpascal.zip;
-        ./newpascal/configure.bat;
-        export PATH="$PATH":"$PWD/newpascal/fpc/bin/i386-win32/";
+        wget -q ftp://ftp.freepascal.org/pub/fpc/snapshot/v33/i386-win32/fpc-3.3.1.i386-win32.zip;
+        mkdir fpc;
+        unzip -q -d fpc fpc-3.3.1.i386-win32.zip;
+        export PATH="$PATH":"$PWD/fpc/bin/i386-win32/";
       fi
 
 install:
@@ -27,5 +27,3 @@ install:
   
 script:
   - ./ftreapapp
-
-
