@@ -18,7 +18,7 @@ const
   MAX_KEY = 1000;
 
 var
-  ra: TIntTreapNode = nil;
+  ra, ln, rn: TIntTreapNode;
   ria: TImpIntTreapNode = nil;
   ta: array of longint;
   i, j: longint;
@@ -122,7 +122,42 @@ begin
   Assert(ra = nil);
   Assert(TIntTreapNode.GetSize(ra) = 0);
 
+  for i := 0 to NODES_NUM - 1 do
+  begin
+    TIntTreapNode.Insert(ra, ta[i]);
+  end;
+  WriteLn('DivideRight test ...');
+  for i := 0 to NODES_NUM - 1 do
+  begin
+    TIntTreapNode.DivideRight(ra, ta[i], ln, rn);
+    Assert(TIntTreapNode.Contains(ln, ta[i]));
+    Assert(not TIntTreapNode.Contains(rn, ta[i]));
+    ra := TIntTreapNode.Meld(ln, rn);
+  end;
+
+  WriteLn('Check treap structure - ', TIntTreapNode.CheckStucture(ra));
+  WriteLn('Size - ', TIntTreapNode.GetSize(ra));
+
+  WriteLn('DivideLeft test ...');
+  for i := 0 to NODES_NUM - 1 do
+  begin
+    TIntTreapNode.DivideLeft(ra, ta[i], ln, rn);
+    Assert(TIntTreapNode.Contains(rn, ta[i]));
+    Assert(not TIntTreapNode.Contains(ln, ta[i]));
+    ra := TIntTreapNode.Meld(ln, rn);
+  end;
+
+  WriteLn('Check treap structure - ', TIntTreapNode.CheckStucture(ra));
+  WriteLn('Size - ', TIntTreapNode.GetSize(ra));
+
+  TIntTreapNode.DestroyTreap(ra);
+  Assert(ra = nil);
+  Assert(TIntTreapNode.GetSize(ra) = 0);
+
+  WriteLn('-----------------------');
   WriteLn('Implicit Treap test ...');
+  WriteLn('-----------------------');
+
   for i := 0 to NODES_NUM - 1 do
   begin
     TImpIntTreapNode.InsertAt(ria, 0, ta[i]);
@@ -147,9 +182,11 @@ begin
   end;
   WriteLn('RemoveAt PASSED...');
 
-  Assert(ra = nil);
-  Assert(TIntTreapNode.GetSize(ra) = 0);
+  Assert(ria = nil);
+  Assert(TImpIntTreapNode.GetSize(ria) = 0);
   TImpIntTreapNode.DestroyTreap(ria);
-  //ReadLn();
+
+
+  ReadLn();
 
 end.

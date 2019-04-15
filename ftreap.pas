@@ -40,7 +40,10 @@ type
     class function Meld(l, r: TTreapNode): TTreapNode;
 
     (* Divides tree into two trees. Where @code(Max(l) <= k). *)
-    class procedure Divide(node: TTreapNode; k: T; var l, r: TTreapNode);
+    class procedure DivideRight(node: TTreapNode; k: T; var l, r: TTreapNode);
+
+    (* Divides tree into two trees. Where @code(Max(l) < k). *)
+    class procedure DivideLeft(node: TTreapNode; k: T; var l, r: TTreapNode);
 
     (* Divides tree into two trees. Where @code(Size(l) = pos). *)
     class procedure DivideAt(node: TTreapNode; const pos: SizeUInt;
@@ -214,8 +217,7 @@ begin
   UpdateSize(node)
 end;
 
-// DivideRight
-class procedure TTreapNode.Divide(node: TTreapNode; k: T; var l, r: TTreapNode);
+class procedure TTreapNode.DivideRight(node: TTreapNode; k: T; var l, r: TTreapNode);
 begin
   if node = nil then
   begin
@@ -225,13 +227,34 @@ begin
   end;
   if k < node.FKey then
   begin
-    Divide(node.FLeft, k, l, node.FLeft);
+    DivideRight(node.FLeft, k, l, node.FLeft);
     r := node;
   end
   else
   begin
-    Divide(node.FRight, k, node.FRight, r);
+    DivideRight(node.FRight, k, node.FRight, r);
     l := node;
+  end;
+  UpdateSize(node);
+end;
+
+class procedure TTreapNode.DivideLeft(node: TTreapNode; k: T; var l, r: TTreapNode);
+begin
+  if node = nil then
+  begin
+    l := nil;
+    r := nil;
+    Exit;
+  end;
+  if k > node.FKey then
+  begin
+    DivideLeft(node.FRight, k, node.FRight, r);
+    l := node;
+  end
+  else
+  begin
+    DivideLeft(node.FLeft, k, l, node.FLeft);
+    r := node;
   end;
   UpdateSize(node);
 end;
@@ -241,7 +264,7 @@ var
   l: TTreapNode = nil;
   r: TTreapNode = nil;
 begin
-  Divide(node, k, l, r);
+  DivideRight(node, k, l, r);
   node := Meld(l, Meld(TTreapNode.Create(k), r));
 end;
 
