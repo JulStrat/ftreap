@@ -67,6 +67,8 @@ type
 
     (* @raises(EArgumentException) *)
     class function GetAt(node: TTreapNode; pos: SizeUInt): T;
+    class function Min(node: TTreapNode): T;
+    class function Max(node: TTreapNode): T;
 
     (* Removes key from the tree.
        @returns(@true if successful, @false otherwise) *)
@@ -359,6 +361,26 @@ begin
   end;
   raise Exception.Create('Unreachable point.');
 end;
+
+// Min, Max
+class function TTreapNode.Min(node: TTreapNode): T;
+begin
+  if node = nil then
+    raise EArgumentException.Create('Set is empty.');
+  while node.FLeft <> nil do
+    node := node.FLeft;
+  Exit(node.FKey);
+end;
+
+class function TTreapNode.Max(node: TTreapNode): T;
+begin
+  if node = nil then
+    raise EArgumentException.Create('Set is empty.');
+  while node.FRight <> nil do
+    node := node.FRight;
+  Exit(node.FKey);
+end;
+// Min, Max
 
 class function TTreapNode.Remove(var node: TTreapNode; const k: T): boolean;
 var

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>ftreap: Class TImplicitTreapNode</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="PasDoc 0.15.0">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<table class="container"><tr><td class="navigation">
+<p><a href="AllUnits.html" class="navigation">Units</a></p><p><a href="ClassHierarchy.html" class="navigation">Class Hierarchy</a></p><p><a href="AllClasses.html" class="navigation">Classes, Interfaces, Objects and Records</a></p><p><a href="AllTypes.html" class="navigation">Types</a></p><p><a href="AllVariables.html" class="navigation">Variables</a></p><p><a href="AllConstants.html" class="navigation">Constants</a></p><p><a href="AllFunctions.html" class="navigation">Functions and Procedures</a></p><p><a href="AllIdentifiers.html" class="navigation">Identifiers</a></p></td><td class="content">
+<span id="TImplicitTreapNode"></span><h1 class="cio">Class TImplicitTreapNode</h1>
+<div class="sections">
+<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Hierarchy">Hierarchy</a></div><div class="one_section"><a class="section" href="#PasDoc-Fields">Fields</a></div><div class="one_section"><a class="section" href="#PasDoc-Methods">Methods</a></div><div class="one_section">Properties</div></div>
+<span id="PasDoc-Description"></span><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a  href="ftreap.html">ftreap</a></p>
+<h2 class="declaration">Declaration</h2>
+<p class="declaration">
+<code>type generic TImplicitTreapNode&lt;T&gt; = class(TObject)</code></p>
+<h2 class="description">Description</h2>
+<span id="PasDoc-Hierarchy"></span><h2 class="hierarchy">Hierarchy</h2>
+<ul class="hierarchy"><li class="ancestor">TObject</li>
+<li class="thisitem">TImplicitTreapNode</li></ul><h2 class="overview">Overview</h2>
+<span id="PasDoc-Fields"></span><h3 class="summary">Fields</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code><b><a  href="ftreap.TImplicitTreapNode.html#FValue">FValue</a></b>: T;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code><b><a  href="ftreap.TImplicitTreapNode.html#FPriority">FPriority</a></b>: extended;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code><b><a  href="ftreap.TImplicitTreapNode.html#FSize">FSize</a></b>: SizeUInt;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code><b><a  href="ftreap.TImplicitTreapNode.html#FLeft">FLeft</a></b>: <a  href="ftreap.TImplicitTreapNode.html">TImplicitTreapNode</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code><b><a  href="ftreap.TImplicitTreapNode.html#FRight">FRight</a></b>: <a  href="ftreap.TImplicitTreapNode.html">TImplicitTreapNode</a>;</code></td>
+</tr>
+</table>
+<span id="PasDoc-Methods"></span><h3 class="summary">Methods</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>constructor <b><a  href="ftreap.TImplicitTreapNode.html#Create">Create</a></b>(const v: T);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>destructor <b><a  href="ftreap.TImplicitTreapNode.html#Destroy">Destroy</a></b>; override;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>class function <b><a  href="ftreap.TImplicitTreapNode.html#GetSize">GetSize</a></b>(const node: <a  href="ftreap.TImplicitTreapNode.html">TImplicitTreapNode</a>): SizeUInt; inline;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>class procedure <b><a  href="ftreap.TImplicitTreapNode.html#UpdateSize">UpdateSize</a></b>(const node: <a  href="ftreap.TImplicitTreapNode.html">TImplicitTreapNode</a>); inline;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>class function <b><a  href="ftreap.TImplicitTreapNode.html#Meld">Meld</a></b>(l, r: <a  href="ftreap.TImplicitTreapNode.html">TImplicitTreapNode</a>): <a  href="ftreap.TImplicitTreapNode.html">TImplicitTreapNode</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>class procedure <b><a  href="ftreap.TImplicitTreapNode.html#DivideAt">DivideAt</a></b>(node: <a  href="ftreap.TImplicitTreapNode.html">TImplicitTreapNode</a>; const pos: SizeUInt; var l, r: <a  href="ftreap.TImplicitTreapNode.html">TImplicitTreapNode</a>);</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>class function <b><a  href="ftreap.TImplicitTreapNode.html#IsEmpty">IsEmpty</a></b>(const node: <a  href="ftreap.TImplicitTreapNode.html">TImplicitTreapNode</a>): boolean; inline;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>class procedure <b><a  href="ftreap.TImplicitTreapNode.html#InsertAt">InsertAt</a></b>(var node: <a  href="ftreap.TImplicitTreapNode.html">TImplicitTreapNode</a>; const pos: SizeUInt; const v: T); inline;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>class function <b><a  href="ftreap.TImplicitTreapNode.html#GetAt">GetAt</a></b>(node: <a  href="ftreap.TImplicitTreapNode.html">TImplicitTreapNode</a>; pos: SizeUInt): T;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>class function <b><a  href="ftreap.TImplicitTreapNode.html#RemoveAt">RemoveAt</a></b>(var node: <a  href="ftreap.TImplicitTreapNode.html">TImplicitTreapNode</a>; const pos: SizeUInt): T;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>class procedure <b><a  href="ftreap.TImplicitTreapNode.html#DestroyTreap">DestroyTreap</a></b>(var node: <a  href="ftreap.TImplicitTreapNode.html">TImplicitTreapNode</a>);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>class function <b><a  href="ftreap.TImplicitTreapNode.html#CheckStucture">CheckStucture</a></b>(node: <a  href="ftreap.TImplicitTreapNode.html">TImplicitTreapNode</a>): boolean;</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Fields</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><span id="FValue"></span><code><b>FValue</b>: T;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Value</p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><span id="FPriority"></span><code><b>FPriority</b>: extended;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Random heap priority</p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><span id="FSize"></span><code><b>FSize</b>: SizeUInt;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Number of nodes in subtree</p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><span id="FLeft"></span><code><b>FLeft</b>: <a  href="ftreap.TImplicitTreapNode.html">TImplicitTreapNode</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Left subtree reference</p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><span id="FRight"></span><code><b>FRight</b>: <a  href="ftreap.TImplicitTreapNode.html">TImplicitTreapNode</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Right subtree reference</p>
+</td></tr>
+</table>
+<h3 class="detail">Methods</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><span id="Create"></span><code>constructor <b>Create</b>(const v: T);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Tree node constructor.</p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><span id="Destroy"></span><code>destructor <b>Destroy</b>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Tree node destructor.</p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><span id="GetSize"></span><code>class function <b>GetSize</b>(const node: <a  href="ftreap.TImplicitTreapNode.html">TImplicitTreapNode</a>): SizeUInt; inline;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Returns number of keys in the tree rooted at <code>node</code>.</p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><span id="UpdateSize"></span><code>class procedure <b>UpdateSize</b>(const node: <a  href="ftreap.TImplicitTreapNode.html">TImplicitTreapNode</a>); inline;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Recalculates number of nodes in the tree rooted at <code>node</code> after insert, delete operations.</p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><span id="Meld"></span><code>class function <b>Meld</b>(l, r: <a  href="ftreap.TImplicitTreapNode.html">TImplicitTreapNode</a>): <a  href="ftreap.TImplicitTreapNode.html">TImplicitTreapNode</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Creates new tree from two trees</p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><span id="DivideAt"></span><code>class procedure <b>DivideAt</b>(node: <a  href="ftreap.TImplicitTreapNode.html">TImplicitTreapNode</a>; const pos: SizeUInt; var l, r: <a  href="ftreap.TImplicitTreapNode.html">TImplicitTreapNode</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Divides tree into two trees. Where <code>Size(l) = pos</code>.</p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><span id="IsEmpty"></span><code>class function <b>IsEmpty</b>(const node: <a  href="ftreap.TImplicitTreapNode.html">TImplicitTreapNode</a>): boolean; inline;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Returns <code>True</code> if tree rooted at <code>node</code> is empty, <code>False</code> otherwise</p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><span id="InsertAt"></span><code>class procedure <b>InsertAt</b>(var node: <a  href="ftreap.TImplicitTreapNode.html">TImplicitTreapNode</a>; const pos: SizeUInt; const v: T); inline;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Insert value <code>k</code> at position in tree rooted at <code>node</code>.</p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><span id="GetAt"></span><code>class function <b>GetAt</b>(node: <a  href="ftreap.TImplicitTreapNode.html">TImplicitTreapNode</a>; pos: SizeUInt): T;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;<h6 class="description_section">Exceptions raised</h6>
+<dl class="exceptions_raised">
+<dt><code>EArgumentException</code></dt>
+<dd></dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><span id="RemoveAt"></span><code>class function <b>RemoveAt</b>(var node: <a  href="ftreap.TImplicitTreapNode.html">TImplicitTreapNode</a>; const pos: SizeUInt): T;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Removes value from the given position. </p>
+<h6 class="description_section">Returns</h6>
+<p class="return">key</p></td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><span id="DestroyTreap"></span><code>class procedure <b>DestroyTreap</b>(var node: <a  href="ftreap.TImplicitTreapNode.html">TImplicitTreapNode</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Destroy tree.</p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><span id="CheckStucture"></span><code>class function <b>CheckStucture</b>(node: <a  href="ftreap.TImplicitTreapNode.html">TImplicitTreapNode</a>): boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<hr><span class="appinfo"><em>Generated by <a  href="https://github.com/pasdoc/pasdoc/wiki">PasDoc 0.15.0</a>. </em>
+</span>
+</td></tr></table></body></html>

@@ -162,7 +162,7 @@ begin
   try
     begin
       for i := 0 to KEYS_NUMBER - 1 do
-        AssertEquals(0, TIntTreapNode.GetAt(root, 0));
+        AssertEquals(0, TIntTreapNode.Min(root));
     end;
   except
     Fail('Invalid min key!');
@@ -179,7 +179,7 @@ begin
       s := TIntTreapNode.GetSize(root);
       for i := 0 to KEYS_NUMBER - 1 do
       begin
-        AssertEquals(2 * (KEYS_NUMBER - 1), TIntTreapNode.GetAt(root, s-1));
+        AssertEquals(2 * (KEYS_NUMBER - 1), TIntTreapNode.Max(root));
       end;
     end;
   except
