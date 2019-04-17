@@ -7,7 +7,7 @@
 program ftreapapp;
 
 uses
-  ftreap;
+  ftreap, rtreap;
 
 type
   TIntTreapNode = specialize TTreapNode<LongInt>;
@@ -58,11 +58,18 @@ begin
     Assert(i = TIntTreapNode.GetPosition(ra, ta[i]));
   end;
 
+  WriteLn('Check treap GetAt method.');
+  for i := 0 to NODES_NUM - 1 do
+  begin
+    Assert(2*i = TIntTreapNode.GetAt(ra, i));
+  end;
+  WriteLn('PASSED...');
+  (*
   Assert(not TIntTreapNode.Contains(ra, -1));
   Assert(not TIntTreapNode.Contains(ra, MAX_KEY + 1));
   Assert(not TIntTreapNode.Contains(ra, MAX_KEY + 2));
   WriteLn('PASSED...');
-
+  *)
   WriteLn('Check treap BisectLeft method.');
   for i := 0 to NODES_NUM - 1 do
   begin
@@ -79,7 +86,6 @@ begin
   end;
   WriteLn('PASSED...');
 
-
   WriteLn('Check treap DeleteAt method.');
   for i := 0 to NODES_NUM - 1 do
   begin
@@ -93,9 +99,7 @@ begin
     WriteLn(ra.FKey);
   WriteLn('PASSED...');
 
-  (*
-    ra := TIntTreapNode.Append(ra, i);
-  *)
+
   TIntTreapNode.DestroyTreap(ra);
 
   // Assert error
@@ -114,9 +118,9 @@ begin
   WriteLn('Check treap structure - ', TIntTreapNode.CheckStucture(ra));
   WriteLn('Size - ', TIntTreapNode.GetSize(ra));
 
-  if ra <> nil then
-    WriteLn(ra.FKey);
-  WriteLn('PASSED...');
+  //if ra <> nil then
+  //  WriteLn(ra.FKey);
+  //WriteLn('PASSED...');
 
   TIntTreapNode.DestroyTreap(ra);
   Assert(ra = nil);
@@ -132,7 +136,7 @@ begin
     TIntTreapNode.DivideRight(ra, ta[i], ln, rn);
     Assert(TIntTreapNode.Contains(ln, ta[i]));
     Assert(not TIntTreapNode.Contains(rn, ta[i]));
-    ra := TIntTreapNode.Meld(ln, rn);
+    ra := TIntTreapNode.Meld(ln, rn) as TIntTreapNode;
   end;
 
   WriteLn('Check treap structure - ', TIntTreapNode.CheckStucture(ra));
@@ -144,7 +148,7 @@ begin
     TIntTreapNode.DivideLeft(ra, ta[i], ln, rn);
     Assert(TIntTreapNode.Contains(rn, ta[i]));
     Assert(not TIntTreapNode.Contains(ln, ta[i]));
-    ra := TIntTreapNode.Meld(ln, rn);
+    ra := TIntTreapNode.Meld(ln, rn)  as TIntTreapNode;
   end;
 
   WriteLn('Check treap structure - ', TIntTreapNode.CheckStucture(ra));
@@ -187,6 +191,6 @@ begin
   TImpIntTreapNode.DestroyTreap(ria);
 
 
-  //ReadLn();
+  ReadLn();
 
 end.

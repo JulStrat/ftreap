@@ -121,8 +121,6 @@ begin
   end;
 end;
 
-
-
 procedure TTreapTestCase.TestGetAt;
 var
   i: longint;
