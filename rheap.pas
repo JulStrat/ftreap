@@ -1,5 +1,6 @@
-unit rtreap;
-{$mode objfpc}{$H+}
+unit rheap;
+
+{$mode objfpc}{$H+}{$J-}
 interface
 
 uses
@@ -20,7 +21,7 @@ type
     constructor Create;
     destructor Destroy;
 
-    class function IsEmpty(const node: TTreapNodeBase): Boolean; static; inline;
+    class function IsEmpty(const node: TTreapNodeBase): boolean; static; inline;
 
     (* Returns number of keys in the tree rooted at @code(node). *)
     class function GetSize(const node: TTreapNodeBase): SizeUInt; static; inline;
@@ -35,7 +36,7 @@ type
     class procedure DivideAt(node: TTreapNodeBase; const pos: SizeUInt;
       var l, r: TTreapNodeBase);
 
-    end;
+  end;
 
 
 implementation
@@ -45,7 +46,7 @@ begin
   FPriority := Random;
   FSize := 1;
   FLeft := nil;
-  FRight := nil
+  FRight := nil;
 end;
 
 destructor TTreapNodeBase.Destroy;
@@ -59,7 +60,7 @@ class function TTreapNodeBase.GetSize(const node: TTreapNodeBase): SizeUInt; inl
 begin
   if node <> nil then
     Exit(node.FSize);
-  Exit(0)
+  Exit(0);
 end;
 
 class procedure TTreapNodeBase.UpdateSize(const node: TTreapNodeBase); inline;
@@ -70,7 +71,7 @@ end;
 
 class function TTreapNodeBase.IsEmpty(const node: TTreapNodeBase): boolean; inline;
 begin
-  Exit(node = nil)
+  Exit(node = nil);
 end;
 
 class function TTreapNodeBase.Meld(l, r: TTreapNodeBase): TTreapNodeBase;
@@ -82,39 +83,38 @@ begin
   if l.FPriority > r.FPriority then
   begin
     l.FRight := Meld(l.FRight, r);
-    Result := l
+    Result := l;
   end
   else
   begin
     r.FLeft := Meld(l, r.FLeft);
-    Result := r
+    Result := r;
   end;
-  UpdateSize(Result)
+  UpdateSize(Result);
 end;
 
-class procedure TTreapNodeBase.DivideAt(node: TTreapNodeBase; const pos: SizeUInt;
-  var l, r: TTreapNodeBase);
+class procedure TTreapNodeBase.DivideAt(node: TTreapNodeBase;
+  const pos: SizeUInt; var l, r: TTreapNodeBase);
 begin
   if node = nil then
   begin
     l := nil;
     r := nil;
-    Exit
+    Exit;
   end;
   if pos > GetSize(node.FLeft) then
   begin
     DivideAt(node.FRight, pos - GetSize(node.FLeft) - 1, node.FRight, r);
-    l := node
+    l := node;
   end
   else
   begin
     DivideAt(node.FLeft, pos, l, node.FLeft);
-    r := node
+    r := node;
   end;
-  UpdateSize(node)
+  UpdateSize(node);
 end;
 
 initialization
   Randomize;
 end.
-

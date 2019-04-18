@@ -5,7 +5,7 @@ unit treaptestcase;
 interface
 
 uses
-  Classes, SysUtils, fpcunit, testutils, testregistry, ftreap;
+  Classes, SysUtils, fpcunit, testutils, testregistry, treap;
 
 const
   KEYS_NUMBER = 1000000;

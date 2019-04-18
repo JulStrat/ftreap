@@ -7,7 +7,7 @@
 program ftreapapp;
 
 uses
-  ftreap, rtreap;
+  treap, itreap;
 
 type
   TIntTreapNode = specialize TTreapNode<LongInt>;
