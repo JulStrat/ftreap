@@ -20,13 +20,13 @@ type
     constructor Create;
     destructor Destroy;
 
-    class function IsEmpty(const node: TTreapNodeBase): boolean; inline;
+    class function IsEmpty(const node: TTreapNodeBase): Boolean; static; inline;
 
     (* Returns number of keys in the tree rooted at @code(node). *)
-    class function GetSize(const node: TTreapNodeBase): SizeUInt; inline;
+    class function GetSize(const node: TTreapNodeBase): SizeUInt; static; inline;
 
     (* Recalculates number of keys in the tree rooted at @code(node) after insert, delete operations. *)
-    class procedure UpdateSize(const node: TTreapNodeBase); inline;
+    class procedure UpdateSize(const node: TTreapNodeBase); static; inline;
 
     (* Creates new tree from two trees. *)
     class function Meld(l, r: TTreapNodeBase): TTreapNodeBase;
