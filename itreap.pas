@@ -6,7 +6,7 @@ uses
 
 type
 
-generic TImplicitTreapNode<T> = class(TTreapNodeBase)
+generic TImplicitTreapNode<T> = class(TRandomHeapNode)
 private
   // Value
   FValue: T;
@@ -15,7 +15,7 @@ public
   constructor Create(const v: T);
 
   (* Tree node destructor. *)
-  destructor Destroy;
+  destructor Destroy; override;
 
   (* Insert value @code(k) at position in tree rooted at @code(node). *)
   class procedure InsertAt(var node: TImplicitTreapNode; const pos: SizeUInt; const v: T); inline;
@@ -54,7 +54,7 @@ class procedure TImplicitTreapNode.InsertAt(var node: TImplicitTreapNode; const 
 var
   l, r: TImplicitTreapNode;
 begin
-  DivideAt(node, pos, TTreapNodeBase(l), TTreapNodeBase(r));
+  DivideAt(node, pos, TRandomHeapNode(l), TRandomHeapNode(r));
   node := TImplicitTreapNode(Meld(l, Meld(TImplicitTreapNode.Create(v), r)))
 end;
 

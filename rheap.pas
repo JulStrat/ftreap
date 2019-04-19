@@ -7,41 +7,41 @@ uses
   Classes, SysUtils;
 
 type
-  TTreapNodeBase = class(TObject)
+  TRandomHeapNode = class(TObject)
   public
     // Random heap priority
     FPriority: extended;
-    // Number of nodes in treap
+    // Number of nodes in heap
     FSize: SizeUInt;
     // Left subtree reference
-    FLeft: TTreapNodeBase;
+    FLeft: TRandomHeapNode;
     // Right subtree reference
-    FRight: TTreapNodeBase;
+    FRight: TRandomHeapNode;
 
     constructor Create;
-    destructor Destroy;
+    destructor Destroy; override;
 
-    class function IsEmpty(const node: TTreapNodeBase): boolean; static; inline;
+    class function IsEmpty(const node: TRandomHeapNode): boolean; static; inline;
 
     (* Returns number of keys in the tree rooted at @code(node). *)
-    class function GetSize(const node: TTreapNodeBase): SizeUInt; static; inline;
+    class function GetSize(const node: TRandomHeapNode): SizeUInt; static; inline;
 
     (* Recalculates number of keys in the tree rooted at @code(node) after insert, delete operations. *)
-    class procedure UpdateSize(const node: TTreapNodeBase); static; inline;
+    class procedure UpdateSize(const node: TRandomHeapNode); static; inline;
 
     (* Creates new tree from two trees. *)
-    class function Meld(l, r: TTreapNodeBase): TTreapNodeBase;
+    class function Meld(l, r: TRandomHeapNode): TRandomHeapNode;
 
     (* Divides tree into two trees. Where @code(Size(l) = pos). *)
-    class procedure DivideAt(node: TTreapNodeBase; const pos: SizeUInt;
-      var l, r: TTreapNodeBase);
+    class procedure DivideAt(node: TRandomHeapNode; const pos: SizeUInt;
+      var l, r: TRandomHeapNode);
 
   end;
 
 
 implementation
 
-constructor TTreapNodeBase.Create();
+constructor TRandomHeapNode.Create();
 begin
   FPriority := Random;
   FSize := 1;
@@ -49,32 +49,32 @@ begin
   FRight := nil;
 end;
 
-destructor TTreapNodeBase.Destroy;
+destructor TRandomHeapNode.Destroy;
 begin
   FLeft := nil;
   FRight := nil;
   inherited;
 end;
 
-class function TTreapNodeBase.GetSize(const node: TTreapNodeBase): SizeUInt; inline;
+class function TRandomHeapNode.GetSize(const node: TRandomHeapNode): SizeUInt; inline;
 begin
   if node <> nil then
     Exit(node.FSize);
   Exit(0);
 end;
 
-class procedure TTreapNodeBase.UpdateSize(const node: TTreapNodeBase); inline;
+class procedure TRandomHeapNode.UpdateSize(const node: TRandomHeapNode); inline;
 begin
   if node <> nil then
     node.FSize := GetSize(node.FLeft) + GetSize(node.FRight) + 1;
 end;
 
-class function TTreapNodeBase.IsEmpty(const node: TTreapNodeBase): boolean; inline;
+class function TRandomHeapNode.IsEmpty(const node: TRandomHeapNode): boolean; inline;
 begin
   Exit(node = nil);
 end;
 
-class function TTreapNodeBase.Meld(l, r: TTreapNodeBase): TTreapNodeBase;
+class function TRandomHeapNode.Meld(l, r: TRandomHeapNode): TRandomHeapNode;
 begin
   if l = nil then
     Exit(r);
@@ -93,8 +93,8 @@ begin
   UpdateSize(Result);
 end;
 
-class procedure TTreapNodeBase.DivideAt(node: TTreapNodeBase;
-  const pos: SizeUInt; var l, r: TTreapNodeBase);
+class procedure TRandomHeapNode.DivideAt(node: TRandomHeapNode;
+  const pos: SizeUInt; var l, r: TRandomHeapNode);
 begin
   if node = nil then
   begin

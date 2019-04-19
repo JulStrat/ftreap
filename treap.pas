@@ -11,7 +11,7 @@ interface
 uses Classes, SysUtils, rheap;
 
 type
-  generic TTreapNode<T> = class(TTreapNodeBase)
+  generic TTreapNode<T> = class(TRandomHeapNode)
   private
     // Key
     FKey: T;
@@ -20,7 +20,7 @@ type
     constructor Create(const k: T);
 
     (* Tree node destructor. *)
-    destructor Destroy;
+    destructor Destroy; override;
 
     (* Divides tree into two trees. Where @code(Max(l) <= k). *)
     class procedure DivideRight(node: TTreapNode; k: T; var l, r: TTreapNode);
@@ -303,17 +303,12 @@ begin
 end;
 
 class function TTreapNode.CheckStucture(node: TTreapNode): boolean;
-var
-  l, r: TTreapNode;
 begin
   Result := True;
   if node = nil then
     Exit(Result);
   with node do
   begin
-    //l := node.FLeft as TTreapNode;
-    //r := node.FRight as TTreapNode;
-
     Result := Result and CheckStucture(TTreapNode(node.FLeft));
     Result := Result and CheckStucture(TTreapNode(node.FRight));
     Result := Result and (GetSize(node) = GetSize(node.FLeft) +
