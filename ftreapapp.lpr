@@ -132,6 +132,7 @@ begin
   WriteLn('-----------------------');
   WriteLn('Implicit Treap test ...');
   WriteLn('-----------------------');
+  WriteLn('TImpIntTreapNode instanceSize - ', TImpIntTreapNode.InstanceSize);
 
   for i := 0 to NODES_NUM - 1 do
   begin

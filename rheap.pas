@@ -30,14 +30,13 @@ type
     class procedure UpdateSize(const node: TRandomHeapNode); static; inline;
 
     (* Creates new tree from two trees. *)
-    class function Meld(l, r: TRandomHeapNode): TRandomHeapNode;
+    class function Meld(l, r: TRandomHeapNode): TRandomHeapNode; static;
 
     (* Divides tree into two trees. Where @code(Size(l) = pos). *)
     class procedure DivideAt(node: TRandomHeapNode; const pos: SizeUInt;
-      var l, r: TRandomHeapNode);
+      var l, r: TRandomHeapNode); static;
 
   end;
-
 
 implementation
 
@@ -46,32 +45,32 @@ begin
   FPriority := Random;
   FSize := 1;
   FLeft := nil;
-  FRight := nil;
+  FRight := nil
 end;
 
 destructor TRandomHeapNode.Destroy;
 begin
   FLeft := nil;
   FRight := nil;
-  inherited;
+  inherited
 end;
 
-class function TRandomHeapNode.GetSize(const node: TRandomHeapNode): SizeUInt; inline;
+class function TRandomHeapNode.GetSize(const node: TRandomHeapNode): SizeUInt;
 begin
   if node <> nil then
     Exit(node.FSize);
-  Exit(0);
+  Exit(0)
 end;
 
-class procedure TRandomHeapNode.UpdateSize(const node: TRandomHeapNode); inline;
+class procedure TRandomHeapNode.UpdateSize(const node: TRandomHeapNode);
 begin
   if node <> nil then
-    node.FSize := GetSize(node.FLeft) + GetSize(node.FRight) + 1;
+    node.FSize := GetSize(node.FLeft) + GetSize(node.FRight) + 1
 end;
 
-class function TRandomHeapNode.IsEmpty(const node: TRandomHeapNode): boolean; inline;
+class function TRandomHeapNode.IsEmpty(const node: TRandomHeapNode): boolean;
 begin
-  Exit(node = nil);
+  Exit(node = nil)
 end;
 
 class function TRandomHeapNode.Meld(l, r: TRandomHeapNode): TRandomHeapNode;
@@ -83,14 +82,14 @@ begin
   if l.FPriority > r.FPriority then
   begin
     l.FRight := Meld(l.FRight, r);
-    Result := l;
+    Result := l
   end
   else
   begin
     r.FLeft := Meld(l, r.FLeft);
-    Result := r;
+    Result := r
   end;
-  UpdateSize(Result);
+  UpdateSize(Result)
 end;
 
 class procedure TRandomHeapNode.DivideAt(node: TRandomHeapNode;
@@ -100,19 +99,19 @@ begin
   begin
     l := nil;
     r := nil;
-    Exit;
+    Exit
   end;
   if pos > GetSize(node.FLeft) then
   begin
     DivideAt(node.FRight, pos - GetSize(node.FLeft) - 1, node.FRight, r);
-    l := node;
+    l := node
   end
   else
   begin
     DivideAt(node.FLeft, pos, l, node.FLeft);
-    r := node;
+    r := node
   end;
-  UpdateSize(node);
+  UpdateSize(node)
 end;
 
 initialization
