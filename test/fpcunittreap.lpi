@@ -113,7 +113,7 @@
         <IsPartOfProject Value="True"/>
       </Unit1>
       <Unit2>
-        <Filename Value="..\ftreap.pas"/>
+        <Filename Value="..\treap.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit2>
     </Units>
