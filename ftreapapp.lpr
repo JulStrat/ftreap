@@ -7,7 +7,7 @@
 program ftreapapp;
 
 uses
-  treap, itreap;
+  treap, itreap, rheap;
 
 type
   TIntTreapNode = specialize TTreapNode<LongInt>;
@@ -26,6 +26,7 @@ var
 begin
   //TIntTreapNode.ClassInfo;
   WriteLn('TIntTreapNode instanceSize - ', TIntTreapNode.InstanceSize);
+  WriteLn('TRandomHeapNode instanceSize - ', TRandomHeapNode.InstanceSize);
 
   SetLength(ta, NODES_NUM);
   for i := 0 to NODES_NUM - 1 do
@@ -43,6 +44,7 @@ begin
   if ra <> nil then
     WriteLn(ra.FKey);
   WriteLn('PASSED...');
+  //ReadLn();
 
   WriteLn('Check treap Contains method.');
   for i := 0 to NODES_NUM - 1 do

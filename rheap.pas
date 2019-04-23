@@ -36,6 +36,8 @@ type
     class procedure DivideAt(node: TRandomHeapNode; const pos: SizeUInt;
       var l, r: TRandomHeapNode); static;
 
+    class procedure PostUpdate(const node: TRandomHeapNode); virtual;
+
   end;
 
 implementation
@@ -89,7 +91,8 @@ begin
     r.FLeft := Meld(l, r.FLeft);
     Result := r
   end;
-  UpdateSize(Result)
+  UpdateSize(Result);
+  PostUpdate(Result)
 end;
 
 class procedure TRandomHeapNode.DivideAt(node: TRandomHeapNode;
@@ -112,6 +115,10 @@ begin
     r := node
   end;
   UpdateSize(node)
+end;
+
+class procedure TRandomHeapNode.PostUpdate(const node: TRandomHeapNode);
+begin
 end;
 
 initialization
