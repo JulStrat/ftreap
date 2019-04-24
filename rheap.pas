@@ -20,7 +20,6 @@ type
 
     constructor Create;
     destructor Destroy; override;
-
     class function IsEmpty(const node: TRandomHeapNode): boolean; static; inline;
 
     (* Returns number of keys in the tree rooted at @code(node). *)
@@ -33,8 +32,11 @@ type
     class function Meld(l, r: TRandomHeapNode): TRandomHeapNode;
 
     (* Divides tree into two trees. Where @code(Size(l) = pos). *)
-    class procedure DivideAt(node: TRandomHeapNode; const pos: SizeUInt;
+    class procedure DivideAt(node: TRandomHeapNode; pos: SizeUInt;
       var l, r: TRandomHeapNode);
+
+    class function FirstNode(node: TRandomHeapNode): TRandomHeapNode;
+    class function LastNode(node: TRandomHeapNode): TRandomHeapNode;
 
     class procedure PostUpdate(const node: TRandomHeapNode); virtual;
 
@@ -96,7 +98,7 @@ begin
 end;
 
 class procedure TRandomHeapNode.DivideAt(node: TRandomHeapNode;
-  const pos: SizeUInt; var l, r: TRandomHeapNode);
+  pos: SizeUInt; var l, r: TRandomHeapNode);
 begin
   if node = nil then
   begin
@@ -116,6 +118,20 @@ begin
   end;
   UpdateSize(node);
   PostUpdate(node)
+end;
+
+class function TRandomHeapNode.FirstNode(node: TRandomHeapNode): TRandomHeapNode;
+begin
+  while node.FLeft <> nil do
+    node := node.FLeft;
+  Exit(node);
+end;
+
+class function TRandomHeapNode.LastNode(node: TRandomHeapNode): TRandomHeapNode;
+begin
+  while node.FRight <> nil do
+    node := node.FRight;
+  Exit(node);
 end;
 
 class procedure TRandomHeapNode.PostUpdate(const node: TRandomHeapNode);

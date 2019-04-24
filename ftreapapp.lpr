@@ -127,6 +127,8 @@ begin
   WriteLn('Size - ', TIntTreapNode.GetSize(ra));
   WriteLn('PASSED...');
 
+  WriteLn('MIN KEY - ', TIntTreapNode.Min(ra));
+  WriteLn('MAX KEY - ', TIntTreapNode.Max(ra));
   TIntTreapNode.DestroyTreap(ra);
   Assert(ra = nil);
   Assert(TIntTreapNode.GetSize(ra) = 0);

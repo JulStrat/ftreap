@@ -16,10 +16,7 @@ type
     // Key
     FKey: T;
   public
-    (* Tree node constructor. *)
     constructor Create(const k: T);
-
-    (* Tree node destructor. *)
     destructor Destroy; override;
 
     (* Divides tree into two trees. Where @code(Max(l) <= k). *)
@@ -220,25 +217,19 @@ begin
   raise Exception.Create('Unreachable point.');
 end;
 
-// Min, Max
 class function TTreapNode.Min(node: TTreapNode): T;
 begin
   if node = nil then
     raise EArgumentException.Create('Set is empty.');
-  while node.FLeft <> nil do
-    node := TTreapNode(node.FLeft);
-  Exit(node.FKey);
+  Exit(TTreapNode(FirstNode(node)).FKey);
 end;
 
 class function TTreapNode.Max(node: TTreapNode): T;
 begin
   if node = nil then
     raise EArgumentException.Create('Set is empty.');
-  while node.FRight <> nil do
-    node := TTreapNode(node.FRight);
-  Exit(node.FKey);
+  Exit(TTreapNode(LastNode(node)).FKey);
 end;
-// Min, Max
 
 class function TTreapNode.Remove(var node: TTreapNode; const k: T): boolean;
 var
