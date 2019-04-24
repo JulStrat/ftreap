@@ -30,11 +30,11 @@ type
     class procedure UpdateSize(const node: TRandomHeapNode); static; inline;
 
     (* Creates new tree from two trees. *)
-    class function Meld(l, r: TRandomHeapNode): TRandomHeapNode; static;
+    class function Meld(l, r: TRandomHeapNode): TRandomHeapNode;
 
     (* Divides tree into two trees. Where @code(Size(l) = pos). *)
     class procedure DivideAt(node: TRandomHeapNode; const pos: SizeUInt;
-      var l, r: TRandomHeapNode); static;
+      var l, r: TRandomHeapNode);
 
     class procedure PostUpdate(const node: TRandomHeapNode); virtual;
 
@@ -114,7 +114,8 @@ begin
     DivideAt(node.FLeft, pos, l, node.FLeft);
     r := node
   end;
-  UpdateSize(node)
+  UpdateSize(node);
+  PostUpdate(node)
 end;
 
 class procedure TRandomHeapNode.PostUpdate(const node: TRandomHeapNode);

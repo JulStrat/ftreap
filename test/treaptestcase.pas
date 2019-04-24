@@ -30,6 +30,7 @@ type
     procedure TestRemove;
     procedure TestMin;
     procedure TestMax;
+    procedure TestRandom;
   end;
 
 implementation
@@ -183,6 +184,14 @@ begin
   except
     Fail('Invalid max key!');
   end;
+end;
+
+procedure TTreapTestCase.TestRandom;
+var
+  i: LongInt;
+begin
+  for i := 0 to KEYS_NUMBER - 1 do
+    TIntTreapNode.Insert(root, Random(1000000000));
 end;
 
 procedure TTreapTestCase.SetUp;

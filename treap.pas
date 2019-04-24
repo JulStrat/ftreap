@@ -53,6 +53,7 @@ type
     (* Removes key from the given position.
        @returns(key) *)
     class function RemoveAt(var node: TTreapNode; const pos: SizeUInt): T;
+    class procedure PostUpdate(const node: TRandomHeapNode); override;
 
     (* Destroy tree. *)
     class procedure DestroyTreap(var node: TTreapNode);
@@ -264,6 +265,11 @@ begin
     if Result then
       UpdateSize(node);
   end;
+end;
+
+class procedure TTreapNode.PostUpdate(const node: TRandomHeapNode);
+begin
+  //WriteLn('Call from treap - ', TTreapNode(node).FKey);
 end;
 
 // RWRT
