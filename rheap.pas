@@ -1,49 +1,46 @@
 unit rheap;
 
-{$mode objfpc}{$H+}{$J-}
+//{$mode objfpc}{$H+}{$J-}
+{$mode delphi}
 interface
 
 uses
   Classes, SysUtils;
 
 type
-  TRandomHeapNode = class(TObject)
+  TRandomHeap = class(TObject)
   public
-    // Random heap priority
-    FPriority: extended;
-    // Number of nodes in heap
-    FSize: SizeUInt;
-    // Left subtree reference
-    FLeft: TRandomHeapNode;
-    // Right subtree reference
-    FRight: TRandomHeapNode;
 
-    constructor Create;
-    destructor Destroy; override;
-    class function IsEmpty(const node: TRandomHeapNode): boolean; static; inline;
+  type
+    PRandomHeapNode = ^TRandomHeapNode;
+    TRandomHeapNode = object
+      FPriority: extended;
+      FSize: SizeInt;
+      FLeft: PRandomHeapNode;
+      FRight: PRandomHeapNode;
+    end;
+  //var
+  //  FRoot: PRandomHeapNode;
+    //constructor Create;
+    //destructor Destroy; override;
+    //class function IsEmpty(const node: TRandomHeapNode): boolean; static; inline;
 
-    (* Returns number of keys in the tree rooted at @code(node). *)
-    class function GetSize(const node: TRandomHeapNode): SizeUInt; static; inline;
+    class function GetSize(node: PRandomHeapNode): SizeInt; static; inline;
+    class procedure UpdateSize(node: PRandomHeapNode); static; inline;
 
-    (* Recalculates number of keys in the tree rooted at @code(node) after insert, delete operations. *)
-    class procedure UpdateSize(const node: TRandomHeapNode); static; inline;
-
-    (* Creates new tree from two trees. *)
-    class function Meld(l, r: TRandomHeapNode): TRandomHeapNode;
-
-    (* Divides tree into two trees. Where @code(Size(l) = pos). *)
-    class procedure DivideAt(node: TRandomHeapNode; pos: SizeUInt;
-      var l, r: TRandomHeapNode);
-
+    class function Meld(l, r: PRandomHeapNode): PRandomHeapNode;
+    class procedure DivideAt(node: PRandomHeapNode; pos: SizeInt;
+      var l, r: PRandomHeapNode);
+    (*
     class function FirstNode(node: TRandomHeapNode): TRandomHeapNode;
     class function LastNode(node: TRandomHeapNode): TRandomHeapNode;
 
     class procedure PostUpdate(const node: TRandomHeapNode); virtual;
-
+    *)
   end;
 
 implementation
-
+(*
 constructor TRandomHeapNode.Create();
 begin
   FPriority := Random;
@@ -58,26 +55,29 @@ begin
   FRight := nil;
   inherited
 end;
+*)
 
-class function TRandomHeapNode.GetSize(const node: TRandomHeapNode): SizeUInt;
+class function TRandomHeap.GetSize(node: PRandomHeapNode): SizeInt;
 begin
   if node <> nil then
     Exit(node.FSize);
   Exit(0)
 end;
 
-class procedure TRandomHeapNode.UpdateSize(const node: TRandomHeapNode);
+class procedure TRandomHeap.UpdateSize(node: PRandomHeapNode);
 begin
   if node <> nil then
     node.FSize := GetSize(node.FLeft) + GetSize(node.FRight) + 1
 end;
 
+(*
 class function TRandomHeapNode.IsEmpty(const node: TRandomHeapNode): boolean;
 begin
   Exit(node = nil)
 end;
+*)
 
-class function TRandomHeapNode.Meld(l, r: TRandomHeapNode): TRandomHeapNode;
+class function TRandomHeap.Meld(l, r: PRandomHeapNode): PRandomHeapNode;
 begin
   if l = nil then
     Exit(r);
@@ -94,11 +94,11 @@ begin
     Result := r
   end;
   UpdateSize(Result);
-  PostUpdate(Result)
+  //PostUpdate(Result)
 end;
 
-class procedure TRandomHeapNode.DivideAt(node: TRandomHeapNode;
-  pos: SizeUInt; var l, r: TRandomHeapNode);
+class procedure TRandomHeap.DivideAt(node: PRandomHeapNode;
+  pos: SizeInt; var l, r: PRandomHeapNode);
 begin
   if node = nil then
   begin
@@ -117,9 +117,10 @@ begin
     r := node
   end;
   UpdateSize(node);
-  PostUpdate(node)
+  //PostUpdate(node)
 end;
 
+(*
 class function TRandomHeapNode.FirstNode(node: TRandomHeapNode): TRandomHeapNode;
 begin
   while node.FLeft <> nil do
@@ -137,7 +138,7 @@ end;
 class procedure TRandomHeapNode.PostUpdate(const node: TRandomHeapNode);
 begin
 end;
-
+*)
 initialization
   Randomize;
 end.

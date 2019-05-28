@@ -1,6 +1,7 @@
 unit treaptestcase;
 
-{$mode objfpc}{$H+}
+//{$mode objfpc}{$H+}
+{$mode delphi}
 
 interface
 
@@ -11,7 +12,7 @@ const
   KEYS_NUMBER = 1000000;
 
 type
-  TIntTreapNode = specialize TTreapNode<longint>;
+  TIntTreapNode = TTreap<longint>;
 
   TTreapTestCase = class(TTestCase)
   protected
@@ -28,8 +29,8 @@ type
     procedure TestBisectRight;
     procedure TestGetAt;
     procedure TestRemove;
-    procedure TestMin;
-    procedure TestMax;
+    //procedure TestMin;
+    //procedure TestMax;
     procedure TestRandom;
   end;
 
@@ -44,8 +45,8 @@ procedure TTreapTestCase.TestStructure;
 begin
   try
     begin
-      AssertEquals(True, TIntTreapNode.CheckStucture(root));
-      AssertEquals(KEYS_NUMBER, TIntTreapNode.GetSize(root));
+      AssertEquals(True, TIntTreapNode.CheckStucture(root.FRoot));
+      AssertEquals(KEYS_NUMBER, TIntTreapNode.GetSize(root.FRoot));
     end;
   except
     Fail('Invalid Treap structure!');
@@ -59,7 +60,7 @@ begin
   try
     begin
       for i := 0 to KEYS_NUMBER - 1 do
-        AssertEquals(True, TIntTreapNode.Contains(root, 2 * i));
+        AssertEquals(True, root.Contains(2 * i));
     end;
   except
     Fail('Find existing key failed!');
@@ -73,7 +74,7 @@ begin
   try
     begin
       for i := 0 to KEYS_NUMBER - 1 do
-        AssertEquals(False, TIntTreapNode.Contains(root, 2 * i + 1));
+        AssertEquals(False, root.Contains(2 * i + 1));
     end;
   except
     Fail('Find not existing key failed!');
@@ -87,7 +88,7 @@ begin
   try
     begin
       for i := 0 to KEYS_NUMBER - 1 do
-        AssertEquals(i, TIntTreapNode.GetPosition(root, 2 * i));
+        AssertEquals(i, root.GetPosition(2 * i));
     end;
   except
     Fail('GetPosition failed!');
@@ -101,7 +102,7 @@ begin
   try
     begin
       for i := 0 to KEYS_NUMBER - 1 do
-        AssertEquals(i, TIntTreapNode.BisectLeft(root, 2 * i));
+        AssertEquals(i, root.BisectLeft(2 * i));
     end;
   except
     Fail('BisectLeft failed!');
@@ -115,7 +116,7 @@ begin
   try
     begin
       for i := 0 to KEYS_NUMBER - 1 do
-        AssertEquals(i+1, TIntTreapNode.BisectRight(root, 2 * i));
+        AssertEquals(i+1, root.BisectRight(2 * i));
     end;
   except
     Fail('BisectRight failed!');
@@ -129,7 +130,7 @@ begin
   try
     begin
       for i := 0 to KEYS_NUMBER - 1 do
-        AssertEquals(2 * i, TIntTreapNode.GetAt(root, i));
+        AssertEquals(2 * i, root.GetAt(i));
     end;
   except
     Fail('GetAt failed!');
@@ -144,16 +145,17 @@ begin
     begin
       for i := 0 to KEYS_NUMBER - 1 do
       begin
-        AssertEquals(True, TIntTreapNode.Remove(root, 2 * i));
+        AssertEquals(True, root.Remove(2 * i));
         //AssertEquals(False, TIntTreapNode.Contains(root, 2 * i));
       end;
-      AssertEquals(0, TIntTreapNode.GetSize(root));
+      AssertEquals(0, TIntTreapNode.GetSize(root.FRoot));
     end;
   except
     Fail('GetPosition failed!');
   end;
 end;
 
+(*
 procedure TTreapTestCase.TestMin;
 var
   i: LongInt;
@@ -175,7 +177,7 @@ var
 begin
   try
     begin
-      s := TIntTreapNode.GetSize(root);
+      s := TIntTreapNode.GetSize(root.FRoot);
       for i := 0 to KEYS_NUMBER - 1 do
       begin
         AssertEquals(2 * (KEYS_NUMBER - 1), TIntTreapNode.Max(root));
@@ -185,26 +187,27 @@ begin
     Fail('Invalid max key!');
   end;
 end;
-
+*)
 procedure TTreapTestCase.TestRandom;
 var
   i: LongInt;
 begin
   for i := 0 to KEYS_NUMBER - 1 do
-    TIntTreapNode.Insert(root, Random(1000000000));
+    root.Insert(Random(1000000000));
 end;
 
 procedure TTreapTestCase.SetUp;
 var
   i: longint;
 begin
+  root := TIntTreapNode.Create;
   for i := 0 to KEYS_NUMBER - 1 do
-    TIntTreapNode.Insert(root, 2 * i);
+    root.Insert(2 * i);
 end;
 
 procedure TTreapTestCase.TearDown;
 begin
-  TIntTreapNode.DestroyTreap(root);
+  TIntTreapNode.DestroyTreap(root.FRoot);
 end;
 
 initialization
