@@ -27,7 +27,7 @@ begin
   //TIntTreapNode.ClassInfo;
   WriteLn('TIntTreapNode instanceSize - ', TIntTreapNode.InstanceSize);
   WriteLn('TRandomHeapNode instanceSize - ', TRandomHeapNode.InstanceSize);
-  ReadLn;
+  //ReadLn;
   SetLength(ta, NODES_NUM);
   for i := 0 to NODES_NUM - 1 do
   begin
