@@ -183,6 +183,6 @@ begin
   TImpIntTreapNode.DestroyTreap(ria);
   *)
 
-  ReadLn();
+  //ReadLn();
 
 end.
