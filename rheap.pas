@@ -1,32 +1,27 @@
 unit rheap;
 
-//{$mode objfpc}{$H+}{$J-}
 {$mode delphi}
+
 interface
 
 uses
   Classes, SysUtils;
 
 type
-  TRandomHeap = class(TObject)
+  TRandomHeap = class
   public
 
   type
     PRandomHeapNode = ^TRandomHeapNode;
     TRandomHeapNode = object
-      FPriority: extended;
-      FSize: SizeInt;
+      FPriority: Single;
       FLeft: PRandomHeapNode;
       FRight: PRandomHeapNode;
+      FSize: SizeInt;
     end;
-  //var
-  //  FRoot: PRandomHeapNode;
-    //constructor Create;
-    //destructor Destroy; override;
-    //class function IsEmpty(const node: TRandomHeapNode): boolean; static; inline;
 
-    class function GetSize(node: PRandomHeapNode): SizeInt; static; inline;
-    class procedure UpdateSize(node: PRandomHeapNode); static; inline;
+    class function GetSize(const node: PRandomHeapNode): SizeInt; static; inline;
+    class procedure UpdateSize(const node: PRandomHeapNode); static; inline;
 
     class function Meld(l, r: PRandomHeapNode): PRandomHeapNode;
     class procedure DivideAt(node: PRandomHeapNode; pos: SizeInt;
@@ -34,48 +29,24 @@ type
     (*
     class function FirstNode(node: TRandomHeapNode): TRandomHeapNode;
     class function LastNode(node: TRandomHeapNode): TRandomHeapNode;
-
     class procedure PostUpdate(const node: TRandomHeapNode); virtual;
     *)
   end;
 
 implementation
-(*
-constructor TRandomHeapNode.Create();
-begin
-  FPriority := Random;
-  FSize := 1;
-  FLeft := nil;
-  FRight := nil
-end;
 
-destructor TRandomHeapNode.Destroy;
-begin
-  FLeft := nil;
-  FRight := nil;
-  inherited
-end;
-*)
-
-class function TRandomHeap.GetSize(node: PRandomHeapNode): SizeInt;
+class function TRandomHeap.GetSize(const node: PRandomHeapNode): SizeInt;
 begin
   if node <> nil then
     Exit(node.FSize);
   Exit(0)
 end;
 
-class procedure TRandomHeap.UpdateSize(node: PRandomHeapNode);
+class procedure TRandomHeap.UpdateSize(const node: PRandomHeapNode);
 begin
   if node <> nil then
     node.FSize := GetSize(node.FLeft) + GetSize(node.FRight) + 1
 end;
-
-(*
-class function TRandomHeapNode.IsEmpty(const node: TRandomHeapNode): boolean;
-begin
-  Exit(node = nil)
-end;
-*)
 
 class function TRandomHeap.Meld(l, r: PRandomHeapNode): PRandomHeapNode;
 begin

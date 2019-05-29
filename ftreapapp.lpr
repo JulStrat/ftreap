@@ -1,9 +1,4 @@
-//{$mode objfpc}{$H+}{$J-}
 {$mode delphi}
-{$ASSERTIONS ON}
-{$warnings on}
-{$hints on}
-{$R+}
 
 program ftreapapp;
 
@@ -143,8 +138,8 @@ begin
   *)
   WriteLn('PASSED...');
   //TTreap<LongInt>.DestroyTreap(ra.FRoot);
-  WriteLn('Size - ', TTreap<LongInt>.GetSize(ra.FRoot));
-  FreeAndNil(ra);
+  //WriteLn('Size - ', TTreap<LongInt>.GetSize(ra.FRoot));
+  ra.Free;
 
   //Assert(ra = nil);
 
@@ -183,6 +178,6 @@ begin
   TImpIntTreapNode.DestroyTreap(ria);
   *)
 
-  ReadLn();
+  //ReadLn();
 
 end.

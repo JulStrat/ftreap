@@ -1,10 +1,4 @@
-//{$mode objfpc}{$H+}{$J-}
 {$mode delphi}
-{$ASSERTIONS ON}
-{$warnings on}
-{$hints on}
-{$R+}{$Q+}
-
 unit treap;
 
 interface
@@ -23,7 +17,9 @@ type
   var
     FRoot: PTreapNode;
 
-    //constructor Create(const k: T);
+    constructor Create;
+    destructor Destroy; override;
+
     class function CreateNode(k: T): PTreapNode;
     class procedure DivideRight(node: PTreapNode; k: T; var l, r: PTreapNode);
     class procedure DivideLeft(node: PTreapNode; k: T; var l, r: PTreapNode);
@@ -48,7 +44,6 @@ type
     function Remove(k: T): boolean;
     function RemoveAt(pos: SizeInt): T;
     //class procedure PostUpdate(const node: PTreapNode); override;
-    destructor Destroy; override;
 
   end;
 
@@ -56,13 +51,12 @@ implementation
 //
 // TTreapNode Class methods
 //
-(*
-constructor TTreap<T>.Create(const k: T);
+
+constructor TTreap<T>.Create();
 begin
   inherited Create;
-  FKey := k;
+  FRoot := nil;
 end;
-*)
 
 class function TTreap<T>.CreateNode(k: T): PTreapNode;
 var
@@ -70,10 +64,10 @@ var
 begin
   node := New(PTreapNode);
   node.FPriority := Random;
-  node.FSize := 1;
-  node.FKey := k;
   node.FLeft := nil;
   node.FRight := nil;
+  node.FSize := 1;
+  node.FKey := k;
   Result := node;
 end;
 
@@ -81,6 +75,7 @@ class procedure TTreap<T>.DestroyNode(node: PTreapNode);
 begin
   node.FLeft := nil;
   node.FRight := nil;
+  node.FSize := 0;
   Dispose(node);
 end;
 
@@ -90,6 +85,7 @@ begin
   begin
     DestroyTreap(PTreapNode(node.FLeft));
     DestroyTreap(PTreapNode(node.FRight));
+    //WriteLn('Destroying Node - ', node.FKey);
     DestroyNode(node);
   end;
 end;
@@ -97,7 +93,8 @@ end;
 destructor TTreap<T>.Destroy;
 begin
   DestroyTreap(FRoot);
-  //inherited;
+  FRoot := nil;
+  inherited;
 end;
 
 class procedure TTreap<T>.DivideRight(node: PTreapNode; k: T; var l, r: PTreapNode);
