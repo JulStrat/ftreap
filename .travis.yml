@@ -24,6 +24,8 @@ before_install:
 
 install:
   - fpc ftreapapp.lpr
+  - fpc -O3 -XX -CX ftreapbench.lpr
   
 script:
   - ./ftreapapp
+  - ./ftreapbench
