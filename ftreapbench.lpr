@@ -5,17 +5,17 @@ uses
   SysUtils, treap;
 
 type
-  TInt64TreapNode = TTreap<Int64>;
+  TInt64Treap = TTreap<Int64>;
 
 var
-  ra: TInt64TreapNode;
-  i: longint;
-  tck: DWORD;
+  ra: TInt64Treap;
+  i: LongInt;
+  tck: QWORD;
 
 begin
-  ra := TInt64TreapNode.Create;
+  ra := TInt64Treap.Create;
   tck := GetTickCount64();
-  for i := 0 to 1000000 - 1 do
+  for i := 1 to 1000000 do
   begin
     ra.Insert(Random(9223372036854775807));
   end;
