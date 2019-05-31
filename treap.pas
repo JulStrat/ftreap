@@ -141,8 +141,7 @@ end;
 
 procedure TTreap<T>.Insert(k: T);
 var
-  l: PTreapNode = nil;
-  r: PTreapNode = nil;
+  l, r: PTreapNode;
 begin
   DivideRight(FRoot, k, l, r);
   l := PTreapNode(Meld(l, CreateNode(k)));
@@ -270,10 +269,7 @@ end;
 
 function TTreap<T>.Remove(k: T): boolean;
 var
-  l: PTreapNode = nil;
-  r: PTreapNode = nil;
-  m: PTreapNode = nil;
-
+  l, m, r: PTreapNode;
 begin
   DivideLeft(FRoot, k, l, r);
   DivideRight(r, k, m, r);
@@ -292,10 +288,7 @@ end;
 // RWRT
 function TTreap<T>.RemoveAt(pos: SizeInt): T;
 var
-  l: PTreapNode = nil;
-  r: PTreapNode = nil;
-  m: PTreapNode = nil;
-
+  l, m, r: PTreapNode;
 begin
   DivideAt(FRoot, pos, l, r);
   DivideAt(r, 1, m, r);
