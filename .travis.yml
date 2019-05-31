@@ -20,6 +20,7 @@ before_install:
         mkdir fpc;
         unzip -q -d fpc fpc-3.3.1.i386-win32.zip;
         export PATH="$PATH":"$PWD/fpc/bin/i386-win32/";
+        fpcmkcfg -d basepath="$PWD/fpc" -o ./fpc.cfg;
       fi
 
 install:
