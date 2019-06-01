@@ -38,8 +38,8 @@ type
     function GetPosition(k: T): SizeInt;
     function GetAt(pos: SizeInt): T;
 
-    //class function Min(node: PTreapNode): T;
-    //class function Max(node: PTreapNode): T;
+    function Min: T;
+    function Max: T;
 
     function Remove(k: T): boolean;
     function RemoveAt(pos: SizeInt): T;
@@ -223,49 +223,42 @@ begin
     else
       node := PTreapNode(node.FLeft);
   end;
-  raise Exception.Create('No such key');
+  Exit(-1);
 end;
 
 // PASSED
 function TTreap<T>.GetAt(pos: SizeInt): T;
 var
   node: PTreapNode;
-  lsize: SizeInt = 0;
 begin
-  node := FRoot;
-  if (node = nil) or (pos > GetSize(node) - 1) then
-    raise EArgumentException.Create('Set is empty or position is out of range.');
-  while node <> nil do
-  begin
-    lsize := GetSize(node.FLeft);
-    if pos = lsize then
-      Exit(node.FKey);
-    if pos > lsize then
-    begin
-      node := PTreapNode(node.FRight);
-      pos := pos - lsize - 1;
-    end
-    else
-      node := PTreapNode(node.FLeft);
-  end;
-  raise Exception.Create('Unreachable point.');
+  node := PTreapNode(KthLeaf(FRoot, pos));
+  if (node = nil) then
+    Result := Default(T)
+  else
+    Result := node.FKey;
 end;
 
-(*
-class function TTreap<T>.Min(node: TTreapNode): T;
+function TTreap<T>.Min: T;
+var
+  node: PTreapNode;
 begin
-  if node = nil then
-    raise EArgumentException.Create('Set is empty.');
-  Exit(TTreapNode(FirstNode(node)).FKey);
+  node := PTreapNode(FirstLeaf(FRoot));
+  if (node = nil) then
+    Result := Default(T)
+  else
+    Result := node.FKey;
 end;
 
-class function TTreap<T>.Max(node: TTreapNode): T;
+function TTreap<T>.Max: T;
+var
+  node: PTreapNode;
 begin
-  if node = nil then
-    raise EArgumentException.Create('Set is empty.');
-  Exit(TTreapNode(LastNode(node)).FKey);
+  node := PTreapNode(LastLeaf(FRoot));
+  if (node = nil) then
+    Result := Default(T)
+  else
+    Result := node.FKey;
 end;
-*)
 
 function TTreap<T>.Remove(k: T): boolean;
 var

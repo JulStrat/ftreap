@@ -5,9 +5,10 @@ program ftreapapp;
 uses
   SysUtils, treap, itreap, rheap;
 
-(*
+
 type
-  TIntTreapNode = TTreapNode<LongInt>;
+  TIntTreap = TTreap<LongInt>;
+(*
   TImpIntTreapNode = specialize TImplicitTreapNode<LongInt>;
 *)
 const
@@ -15,14 +16,14 @@ const
   MAX_KEY = 1000;
 
 var
-  ra, ln, rn: TTreap<LongInt>;
+  ra, ln, rn: TIntTreap;
   //ria: TImplicitTreapNode<LongInt>;
   ta: array of longint;
   i, j: longint;
 
 begin
   //TIntTreapNode.ClassInfo;
-  WriteLn('TTreap<LongInt> instanceSize - ', TTreap<LongInt>.InstanceSize);
+  WriteLn('TTreap<LongInt> instanceSize - ', TIntTreap.InstanceSize);
   WriteLn('TRandomHeap instanceSize - ', TRandomHeap.InstanceSize);
 
   SetLength(ta, NODES_NUM);
@@ -31,15 +32,15 @@ begin
     ta[i] := 2*i; //Random(MAX_KEY);
   end;
 
-  ra := TTreap<LongInt>.Create;
+  ra := TIntTreap.Create;
 
   for i := 0 to NODES_NUM - 1 do
   begin
     ra.Insert(ta[i]);
   end;
 
-  WriteLn('Check treap structure - ', TTreap<LongInt>.CheckStucture(ra.FRoot));
-  WriteLn('Size - ', TTreap<LongInt>.GetSize(ra.FRoot));
+  WriteLn('Check treap structure - ', TIntTreap.CheckStucture(ra.FRoot));
+  WriteLn('Size - ', TIntTreap.GetSize(ra.FRoot));
   if ra <> nil then
     WriteLn(ra.FRoot.FKey);
   WriteLn('PASSED...');
@@ -90,21 +91,21 @@ begin
     j := ra.RemoveAt(0);
     WriteLn(j);
   end;
-  WriteLn('Check treap structure - ', TTreap<LongInt>.CheckStucture(ra.FRoot));
-  WriteLn('Size - ', TTreap<LongInt>.GetSize(ra.FRoot));
+  WriteLn('Check treap structure - ', TIntTreap.CheckStucture(ra.FRoot));
+  WriteLn('Size - ', TIntTreap.GetSize(ra.FRoot));
   WriteLn('PASSED...');
 
-  TTreap<LongInt>.DestroyTreap(ra.FRoot);
-  WriteLn('Check treap structure - ', TTreap<LongInt>.CheckStucture(ra.FRoot));
-  WriteLn('Size - ', TTreap<LongInt>.GetSize(ra.FRoot));
+  TIntTreap.DestroyTreap(ra.FRoot);
+  WriteLn('Check treap structure - ', TIntTreap.CheckStucture(ra.FRoot));
+  WriteLn('Size - ', TIntTreap.GetSize(ra.FRoot));
 
   for i := 0 to NODES_NUM - 1 do
   begin
     ra.Insert(ta[i]);
   end;
 
-  WriteLn('Check treap structure - ', TTreap<LongInt>.CheckStucture(ra.FRoot));
-  WriteLn('Size - ', TTreap<LongInt>.GetSize(ra.FRoot));
+  WriteLn('Check treap structure - ', TIntTreap.CheckStucture(ra.FRoot));
+  WriteLn('Size - ', TIntTreap.GetSize(ra.FRoot));
 
   (*
   WriteLn('DivideRight test ...');
@@ -132,13 +133,11 @@ begin
   WriteLn('PASSED...');
   *)
 
-  (*
-  WriteLn('MIN KEY - ', TIntTreapNode.Min(ra));
-  WriteLn('MAX KEY - ', TIntTreapNode.Max(ra));
-  *)
+  WriteLn('MIN KEY - ', ra.Min);
+  WriteLn('MAX KEY - ', ra.Max);
+  WriteLn('Size - ', TIntTreap.GetSize(ra.FRoot));
   WriteLn('PASSED...');
-  //TTreap<LongInt>.DestroyTreap(ra.FRoot);
-  //WriteLn('Size - ', TTreap<LongInt>.GetSize(ra.FRoot));
+
   ra.Free;
 
   //Assert(ra = nil);

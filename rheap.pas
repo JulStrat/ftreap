@@ -26,9 +26,11 @@ type
     class function Meld(l, r: PRandomHeapNode): PRandomHeapNode;
     class procedure DivideAt(node: PRandomHeapNode; pos: SizeInt;
       var l, r: PRandomHeapNode);
+
+    class function FirstLeaf(node: PRandomHeapNode): PRandomHeapNode; static;
+    class function LastLeaf(node: PRandomHeapNode): PRandomHeapNode; static;
+    class function KthLeaf(node: PRandomHeapNode; k: SizeInt): PRandomHeapNode; static;
     (*
-    class function FirstNode(node: TRandomHeapNode): TRandomHeapNode;
-    class function LastNode(node: TRandomHeapNode): TRandomHeapNode;
     class procedure PostUpdate(const node: TRandomHeapNode); virtual;
     *)
   end;
@@ -91,21 +93,41 @@ begin
   //PostUpdate(node)
 end;
 
-(*
-class function TRandomHeapNode.FirstNode(node: TRandomHeapNode): TRandomHeapNode;
+class function TRandomHeap.FirstLeaf(node: PRandomHeapNode): PRandomHeapNode;
 begin
   while node.FLeft <> nil do
     node := node.FLeft;
   Exit(node);
 end;
 
-class function TRandomHeapNode.LastNode(node: TRandomHeapNode): TRandomHeapNode;
+class function TRandomHeap.LastLeaf(node: PRandomHeapNode): PRandomHeapNode;
 begin
   while node.FRight <> nil do
     node := node.FRight;
   Exit(node);
 end;
 
+class function TRandomHeap.KthLeaf(node: PRandomHeapNode; k: SizeInt): PRandomHeapNode;
+var
+  lsize: SizeInt = 0;
+begin
+  while node <> nil do
+  begin
+    lsize := GetSize(node.FLeft);
+    if k = lsize then
+      Exit(node);
+    if k > lsize then
+    begin
+      node := node.FRight;
+      k := k - lsize - 1;
+    end
+    else
+      node := node.FLeft;
+  end;
+  Exit(node);
+end;
+
+(*
 class procedure TRandomHeapNode.PostUpdate(const node: TRandomHeapNode);
 begin
 end;
