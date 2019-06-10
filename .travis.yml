@@ -5,8 +5,9 @@ dist: xenial
 os:
   - linux
   - osx
-  - osx_image: xcode10.2
   - windows
+
+osx_image: xcode10.2
 
 before_install:
     - if [[ $TRAVIS_OS_NAME == osx ]]; then
