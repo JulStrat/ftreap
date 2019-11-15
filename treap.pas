@@ -1,5 +1,7 @@
-{$mode delphi}
 unit treap;
+{$ifdef FPC}
+{$mode delphi}
+{$endif}
 
 interface
 
@@ -76,6 +78,7 @@ begin
   node.FLeft := nil;
   node.FRight := nil;
   node.FSize := 0;
+  node.FKey := Default(T);
   Dispose(node);
 end;
 
@@ -231,7 +234,7 @@ function TTreap<T>.GetAt(pos: SizeInt): T;
 var
   node: PTreapNode;
 begin
-  node := PTreapNode(KthLeaf(FRoot, pos));
+  node := PTreapNode(KthNode(FRoot, pos));
   if (node = nil) then
     Result := Default(T)
   else
@@ -242,7 +245,7 @@ function TTreap<T>.Min: T;
 var
   node: PTreapNode;
 begin
-  node := PTreapNode(FirstLeaf(FRoot));
+  node := PTreapNode(FirstNode(FRoot));
   if (node = nil) then
     Result := Default(T)
   else
@@ -253,7 +256,7 @@ function TTreap<T>.Max: T;
 var
   node: PTreapNode;
 begin
-  node := PTreapNode(LastLeaf(FRoot));
+  node := PTreapNode(LastNode(FRoot));
   if (node = nil) then
     Result := Default(T)
   else

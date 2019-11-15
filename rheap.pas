@@ -1,6 +1,7 @@
 unit rheap;
-
+{$ifdef FPC}
 {$mode delphi}
+{$endif}
 
 interface
 
@@ -27,9 +28,9 @@ type
     class procedure DivideAt(node: PRandomHeapNode; pos: SizeInt;
       var l, r: PRandomHeapNode);
 
-    class function FirstLeaf(node: PRandomHeapNode): PRandomHeapNode; static;
-    class function LastLeaf(node: PRandomHeapNode): PRandomHeapNode; static;
-    class function KthLeaf(node: PRandomHeapNode; k: SizeInt): PRandomHeapNode; static;
+    class function FirstNode(node: PRandomHeapNode): PRandomHeapNode; static; inline;
+    class function LastNode(node: PRandomHeapNode): PRandomHeapNode; static; inline;
+    class function KthNode(node: PRandomHeapNode; k: SizeInt): PRandomHeapNode; static;
     (*
     class procedure PostUpdate(const node: TRandomHeapNode); virtual;
     *)
@@ -40,8 +41,9 @@ implementation
 class function TRandomHeap.GetSize(const node: PRandomHeapNode): SizeInt;
 begin
   if node <> nil then
-    Exit(node.FSize);
-  Exit(0)
+    Result := node.FSize
+  else
+    Result := 0;
 end;
 
 class procedure TRandomHeap.UpdateSize(const node: PRandomHeapNode);
@@ -93,21 +95,21 @@ begin
   //PostUpdate(node)
 end;
 
-class function TRandomHeap.FirstLeaf(node: PRandomHeapNode): PRandomHeapNode;
+class function TRandomHeap.FirstNode(node: PRandomHeapNode): PRandomHeapNode;
 begin
   while node.FLeft <> nil do
     node := node.FLeft;
-  Exit(node);
+  Result := node;
 end;
 
-class function TRandomHeap.LastLeaf(node: PRandomHeapNode): PRandomHeapNode;
+class function TRandomHeap.LastNode(node: PRandomHeapNode): PRandomHeapNode;
 begin
   while node.FRight <> nil do
     node := node.FRight;
-  Exit(node);
+  Result := node;
 end;
 
-class function TRandomHeap.KthLeaf(node: PRandomHeapNode; k: SizeInt): PRandomHeapNode;
+class function TRandomHeap.KthNode(node: PRandomHeapNode; k: SizeInt): PRandomHeapNode;
 var
   lsize: SizeInt = 0;
 begin
@@ -115,7 +117,7 @@ begin
   begin
     lsize := GetSize(node.FLeft);
     if k = lsize then
-      Exit(node);
+      break;
     if k > lsize then
     begin
       node := node.FRight;
@@ -124,7 +126,7 @@ begin
     else
       node := node.FLeft;
   end;
-  Exit(node);
+  Result := node;
 end;
 
 (*

@@ -1,7 +1,8 @@
 unit itreap;
-//{$mode objfpc}{$H+}{$J-}
+{$ifdef FPC}
 {$mode delphi}
-{$inline on}
+{$endif}
+
 interface
 uses
   Classes, SysUtils, rheap;
