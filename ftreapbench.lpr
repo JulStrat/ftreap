@@ -115,7 +115,7 @@ begin
   WriteLn('<gset> nodes - ', S.Size);
   S.Free;
 
-  ReadLn;
+  { ReadLn; }
 
 end.
 

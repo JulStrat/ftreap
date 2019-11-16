@@ -24,6 +24,35 @@ Here some testing results on [IDEONE](https://ideone.com/0YvvRx).
 | ----------------------- | ------ | ------ | ------ | ------ | ------- |
 | Insert                  | 0.08s  | 0.19s  | 0.42s  | 1.06s  | 2.58s   |
 
+ftreapbench output on Win32
+```
+Random
+----------
+Ticks <treap> create - 3712
+Ticks <treap> search - 2465
+Ticks <treap> delete - 4509
+Treap nodes - 1000000
+----------
+Ticks <gset> create - 2793
+Ticks <gset> search - 1622
+Ticks <gset> delete - 4321
+<gset> nodes - 1000000
+
+
+
+Key = i*i
+----------
+Ticks <treap> create - 2277
+Ticks <treap> search - 1077
+Ticks <treap> delete - 2199
+Treap nodes - 0
+----------
+Ticks <gset> create - 1638
+Ticks <gset> search - 858
+Ticks <gset> delete - 2372
+<gset> nodes - 0
+```
+
 [FTREAP](http://tpcg.io/bWiG94) vs FCL-STL gset.
 
 ## Built With
