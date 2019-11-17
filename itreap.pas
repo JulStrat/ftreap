@@ -18,7 +18,9 @@ TImplicitTreap<T> = class(TRandomHeap)
   var
     FRoot: PImplicitTreapNode;
 
-    //constructor Create(const k: T);
+    constructor Create;
+    destructor Destroy; override;
+
     class function CreateNode(v: T): PImplicitTreapNode;
     class procedure DestroyNode(node: PImplicitTreapNode);
     class procedure DestroyTreap(node: PImplicitTreapNode);
@@ -28,24 +30,36 @@ TImplicitTreap<T> = class(TRandomHeap)
     function GetAt(pos: SizeInt): T;
     function RemoveAt(pos: SizeInt): T;
 
-    destructor Destroy; override;
-
 end;
 
 implementation
+
+constructor TImplicitTreap<T>.Create();
+begin
+  inherited Create;
+  FRoot := nil;
+end;
+
 class function TImplicitTreap<T>.CreateNode(v: T): PImplicitTreapNode;
 var
   node: PImplicitTreapNode;
 begin
   node := New(PImplicitTreapNode);
   node.FPriority := Random;
+  node.FLeft := nil;
+  node.FRight := nil;
+  node.FSize := 1;
   node.FValue := v;
   Result := node;
 end;
 
 class procedure TImplicitTreap<T>.DestroyNode(node: PImplicitTreapNode);
 begin
-  FreeAndNil(node);
+  node.FLeft := nil;
+  node.FRight := nil;
+  node.FSize := 0;
+  node.FValue := Default(T);
+  Dispose(node);
 end;
 
 class procedure TImplicitTreap<T>.DestroyTreap(node: PImplicitTreapNode);
@@ -61,6 +75,8 @@ end;
 destructor TImplicitTreap<T>.Destroy;
 begin
   DestroyTreap(FRoot);
+  FRoot := nil;
+  inherited;
   //inherited;
 end;
 

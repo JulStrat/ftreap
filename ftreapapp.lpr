@@ -1,10 +1,9 @@
-{$mode delphi}
-
 program ftreapapp;
-
+{$ifdef FPC}
+{$mode delphi}
+{$endif}
 uses
-  SysUtils, treap, itreap, rheap;
-
+  Classes, SysUtils, treap, itreap;
 
 type
   TIntTreap = TTreap<LongInt>;
@@ -24,7 +23,7 @@ var
 begin
   //TIntTreapNode.ClassInfo;
   WriteLn('TTreap<LongInt> instanceSize - ', TIntTreap.InstanceSize);
-  WriteLn('TRandomHeap instanceSize - ', TRandomHeap.InstanceSize);
+  //WriteLn('TRandomHeap instanceSize - ', TRandomHeap.InstanceSize);
 
   SetLength(ta, NODES_NUM);
   for i := 0 to NODES_NUM - 1 do
