@@ -3,26 +3,27 @@ program ftreapapp;
 {$mode delphi}
 {$endif}
 uses
-  Classes, SysUtils, treap, itreap;
+  //Classes, SysUtils,
+  treap, itreap;
 
 type
   TIntTreap = TTreap<LongInt>;
-(*
-  TImpIntTreapNode = specialize TImplicitTreapNode<LongInt>;
-*)
+  TImpIntTreap = TImplicitTreap<LongInt>;
+
 const
   NODES_NUM = 100;
   MAX_KEY = 1000;
 
 var
   ra, ln, rn: TIntTreap;
-  //ria: TImplicitTreapNode<LongInt>;
+  ria: TImpIntTreap;
   ta: array of longint;
   i, j: longint;
 
 begin
   //TIntTreapNode.ClassInfo;
-  WriteLn('TTreap<LongInt> instanceSize - ', TIntTreap.InstanceSize);
+  WriteLn('TTreap<LongInt> node size - ', SizeOf(TIntTreap.TreapNode));
+  WriteLn('TImplicitTreap<LongInt> node size - ', SizeOf(TImpIntTreap.TImplicitTreapNode));
   //WriteLn('TRandomHeap instanceSize - ', TRandomHeap.InstanceSize);
 
   SetLength(ta, NODES_NUM);
@@ -43,7 +44,7 @@ begin
   if ra <> nil then
     WriteLn(ra.FRoot.FKey);
   WriteLn('PASSED...');
-  //ReadLn();
+  ReadLn();
 
   WriteLn('Check treap Contains method.');
   for i := 0 to NODES_NUM - 1 do
@@ -61,10 +62,10 @@ begin
   end;
   WriteLn('PASSED...');
 
-  WriteLn('Check treap GetAt method.');
+  WriteLn('Check treap Select method.');
   for i := 0 to NODES_NUM - 1 do
   begin
-    Assert(2*i = ra.GetAt(i));
+    Assert(2*i = ra.Select(i));
   end;
   WriteLn('PASSED...');
 
@@ -141,23 +142,24 @@ begin
 
   //Assert(ra = nil);
 
-  (*
+  ria := TImpIntTreap.Create;
+
   WriteLn('-----------------------');
   WriteLn('Implicit Treap test ...');
   WriteLn('-----------------------');
-  WriteLn('TImpIntTreapNode instanceSize - ', TImpIntTreapNode.InstanceSize);
+  //WriteLn('TImpIntTreapNode instanceSize - ', TImpIntTreapNode.InstanceSize);
 
   for i := 0 to NODES_NUM - 1 do
   begin
-    TImpIntTreapNode.InsertAt(ria, 0, ta[i]);
+    ria.InsertAt(0, ta[i]);
   end;
 
-  Assert(True = TImpIntTreapNode.CheckStucture(ria));
+  Assert(TImpIntTreap.CheckStucture(ria.FRoot));
   WriteLn('Check implicit treap structure PASSED...');
 
   for i := 0 to NODES_NUM - 1 do
   begin
-    j := TImpIntTreapNode.GetAt(ria, i);
+    j := ria.Select(i);
     WriteLn(j);
     Assert(ta[NODES_NUM-1-i] = j);
   end;
@@ -165,17 +167,14 @@ begin
 
   for i := 0 to NODES_NUM - 1 do
   begin
-    j := TImpIntTreapNode.RemoveAt(ria, 0);
+    j := ria.RemoveAt(0);
     WriteLn(j);
     Assert(ta[NODES_NUM-1-i] = j);
   end;
   WriteLn('RemoveAt PASSED...');
 
-  Assert(ria = nil);
-  Assert(TImpIntTreapNode.GetSize(ria) = 0);
-  TImpIntTreapNode.DestroyTreap(ria);
-  *)
-
-  //ReadLn();
+  Assert(TImpIntTreap.GetSize(ria.FRoot) = 0);
+  ria.Free;
+  ReadLn();
 
 end.

@@ -5,8 +5,7 @@ unit rheap;
 
 interface
 
-uses
-  Classes, SysUtils;
+// uses Classes, SysUtils;
 
 type
   TRandomHeap = class
@@ -21,8 +20,8 @@ type
       FSize: SizeInt;
     end;
 
-    class function GetSize(const node: PRandomHeapNode): SizeInt; static; inline;
-    class procedure UpdateSize(const node: PRandomHeapNode); static; inline;
+    class function GetSize(node: PRandomHeapNode): SizeInt; static; inline;
+    class procedure UpdateSize(node: PRandomHeapNode); static; inline;
 
     class function Meld(l, r: PRandomHeapNode): PRandomHeapNode;
     class procedure DivideAt(node: PRandomHeapNode; pos: SizeInt;
@@ -38,7 +37,7 @@ type
 
 implementation
 
-class function TRandomHeap.GetSize(const node: PRandomHeapNode): SizeInt;
+class function TRandomHeap.GetSize(node: PRandomHeapNode): SizeInt;
 begin
   if node <> nil then
     Result := node.FSize
@@ -46,7 +45,7 @@ begin
     Result := 0;
 end;
 
-class procedure TRandomHeap.UpdateSize(const node: PRandomHeapNode);
+class procedure TRandomHeap.UpdateSize(node: PRandomHeapNode);
 begin
   if node <> nil then
     node.FSize := GetSize(node.FLeft) + GetSize(node.FRight) + 1

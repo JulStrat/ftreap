@@ -5,7 +5,9 @@ unit treap;
 
 interface
 
-uses Classes, SysUtils, rheap;
+uses
+  //Classes, SysUtils,
+  rheap;
 
 type
   TTreap<T> = class(TRandomHeap)
@@ -38,7 +40,7 @@ type
     function BisectRight(k: T): SizeInt;
 
     function GetPosition(k: T): SizeInt;
-    function GetAt(pos: SizeInt): T;
+    function Select(pos: SizeInt): T;
 
     function Min: T;
     function Max: T;
@@ -77,7 +79,7 @@ class procedure TTreap<T>.DestroyNode(node: PTreapNode);
 begin
   node.FLeft := nil;
   node.FRight := nil;
-  node.FSize := 0;
+  //node.FSize := 0;
   node.FKey := Default(T);
   Dispose(node);
 end;
@@ -229,16 +231,15 @@ begin
   Exit(-1);
 end;
 
-// PASSED
-function TTreap<T>.GetAt(pos: SizeInt): T;
+function TTreap<T>.Select(pos: SizeInt): T;
 var
   node: PTreapNode;
 begin
   node := PTreapNode(KthNode(FRoot, pos));
-  if (node = nil) then
-    Result := Default(T)
+  if (node <> nil) then
+    Result := node.FKey
   else
-    Result := node.FKey;
+    Result := Default(T);
 end;
 
 function TTreap<T>.Min: T;
@@ -246,10 +247,10 @@ var
   node: PTreapNode;
 begin
   node := PTreapNode(FirstNode(FRoot));
-  if (node = nil) then
-    Result := Default(T)
+  if (node <> nil) then
+    Result := node.FKey
   else
-    Result := node.FKey;
+    Result := Default(T);
 end;
 
 function TTreap<T>.Max: T;
@@ -257,12 +258,13 @@ var
   node: PTreapNode;
 begin
   node := PTreapNode(LastNode(FRoot));
-  if (node = nil) then
-    Result := Default(T)
+  if (node <> nil) then
+    Result := node.FKey
   else
-    Result := node.FKey;
+    Result := Default(T);
 end;
 
+{ Removes all nodes with key = k }
 function TTreap<T>.Remove(k: T): boolean;
 var
   l, m, r: PTreapNode;
@@ -274,35 +276,18 @@ begin
   Result := True;
 end;
 
-(*
-class procedure TTreapNode.PostUpdate(const node: TRandomHeapNode);
-begin
-  //WriteLn('Call from treap - ', TTreapNode(node).FKey);
-end;
-*)
-
-// RWRT
 function TTreap<T>.RemoveAt(pos: SizeInt): T;
 var
   l, m, r: PTreapNode;
 begin
   DivideAt(FRoot, pos, l, r);
   DivideAt(r, 1, m, r);
-  Result := m.FKey;
+  if m <> nil then
+    Result := m.FKey
+  else
+    Result := Default(T);
   FRoot := PTreapNode(Meld(l, r));
 end;
-
-(*
-class procedure TTreap<T>.DestroyTreap(var node: TTreapNode);
-begin
-  if node <> nil then
-  begin
-    DestroyTreap(TTreapNode(node.FLeft));
-    DestroyTreap(TTreapNode(node.FRight));
-    FreeAndNil(node);
-  end;
-end;
-*)
 
 class function TTreap<T>.CheckStucture(node: PTreapNode): boolean;
 begin
@@ -326,6 +311,13 @@ begin
   end;
 
 end;
+
+(*
+class procedure TTreapNode.PostUpdate(const node: TRandomHeapNode);
+begin
+  //WriteLn('Call from treap - ', TTreapNode(node).FKey);
+end;
+*)
 
 initialization
   Randomize;

@@ -5,7 +5,8 @@ unit itreap;
 
 interface
 uses
-  Classes, SysUtils, rheap;
+  // Classes, SysUtils,
+  rheap;
 
 type
 
@@ -27,7 +28,7 @@ TImplicitTreap<T> = class(TRandomHeap)
     class function CheckStucture(node: PImplicitTreapNode): boolean;
 
     procedure InsertAt(pos: SizeInt; v: T);
-    function GetAt(pos: SizeInt): T;
+    function Select(pos: SizeInt): T;
     function RemoveAt(pos: SizeInt): T;
 
 end;
@@ -57,7 +58,6 @@ class procedure TImplicitTreap<T>.DestroyNode(node: PImplicitTreapNode);
 begin
   node.FLeft := nil;
   node.FRight := nil;
-  node.FSize := 0;
   node.FValue := Default(T);
   Dispose(node);
 end;
@@ -77,54 +77,39 @@ begin
   DestroyTreap(FRoot);
   FRoot := nil;
   inherited;
-  //inherited;
 end;
 
 procedure TImplicitTreap<T>.InsertAt(pos: SizeInt; v: T);
 var
   l, r: PImplicitTreapNode;
 begin
-  DivideAt(FRoot, pos, PImplicitTreapNode(l), PImplicitTreapNode(r));
+  DivideAt(FRoot, pos, l, r);
   FRoot := PImplicitTreapNode(Meld(l, Meld(CreateNode(v), r)))
 end;
 
-// PASSED
-function TImplicitTreap<T>.GetAt(pos: SizeInt): T;
+function TImplicitTreap<T>.Select(pos: SizeInt): T;
 var
-  lsize: SizeInt = 0;
   node: PImplicitTreapNode;
 begin
-  node := FRoot;
-  if (node = nil) or (pos > GetSize(node) - 1) then
-    raise EArgumentException.Create('Set is empty or position is out of range.');
-  node := FRoot;
-  while node <> nil do
-  begin
-    lsize := GetSize(node.FLeft);
-    if pos = lsize then
-      Exit(node.FValue);
-    if pos > lsize then
-    begin
-      node := PImplicitTreapNode(node.FRight);
-      pos := pos - lsize - 1
-    end
-    else
-      node := PImplicitTreapNode(node.FLeft)
-  end;
-  raise Exception.Create('Unreachable point.')
+  node := PImplicitTreapNode(KthNode(FRoot, pos));
+  if (node <> nil) then
+    Result := node.FValue
+  else
+    Result := Default(T);
 end;
 
-// RWRT
+// RWRT ?
 function TImplicitTreap<T>.RemoveAt(pos: SizeInt): T;
 var
-  l: PImplicitTreapNode = nil;
-  r: PImplicitTreapNode = nil;
-  m: PImplicitTreapNode = nil;
-
+  l, m, r: PImplicitTreapNode;
 begin
   DivideAt(FRoot, pos, l, r);
   DivideAt(r, 1, m, r);
-  Result := m.FValue;
+  if (m <> nil) then
+    Result := m.FValue
+  else
+    Result := Default(T);
+  DestroyTreap(PImplicitTreapNode(m));
   FRoot := PImplicitTreapNode(Meld(l, r));
 end;
 
@@ -133,16 +118,14 @@ begin
   Result := True;
   if node = nil then
     Exit(Result);
-
-
-    Result := Result and CheckStucture(PImplicitTreapNode(node.FLeft));
-    Result := Result and CheckStucture(PImplicitTreapNode(node.FRight));
-    Result := Result and (GetSize(node) = GetSize(node.FLeft) +
-      GetSize(node.FRight) + 1);
-    if node.FLeft <> nil then
-      Result := Result and (node.FPriority >= node.FLeft.FPriority);
-    if node.FRight <> nil then
-      Result := Result and (node.FPriority >= node.FRight.FPriority);
+  Result := Result and CheckStucture(PImplicitTreapNode(node.FLeft));
+  Result := Result and CheckStucture(PImplicitTreapNode(node.FRight));
+  Result := Result and (GetSize(node) = GetSize(node.FLeft) +
+    GetSize(node.FRight) + 1);
+  if node.FLeft <> nil then
+    Result := Result and (node.FPriority >= node.FLeft.FPriority);
+  if node.FRight <> nil then
+    Result := Result and (node.FPriority >= node.FRight.FPriority);
 end;
 
 end.
